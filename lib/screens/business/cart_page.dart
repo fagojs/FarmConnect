@@ -148,7 +148,7 @@ class _CartPageState extends State<CartPage> {
               child: TabBarView(
                 children: [
                   buildCurrentOrders(),
-                  //buildOrderHistory(),
+                  buildOrderHistory(),
                 ],
               ),
             ),
@@ -212,6 +212,86 @@ class _CartPageState extends State<CartPage> {
           Icon(Icons.remove_shopping_cart, size: 100, color: Colors.grey),
           Text(
             'Your Cart is Deleted!!',
+            style: TextStyle(fontSize: 24),
+          ),
+          Text('Browse for local farm products and fill your cart'),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              // Navigate back to home to add items to cart
+              Navigator.pushReplacementNamed(context, '/home');
+            },
+            child: Text('Add to Cart'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Build the Order History Section
+Widget buildOrderHistory() {
+  return orderHistory.isEmpty
+      ? buildEmptyOrderHistory()
+      : Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: orderHistory.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListTile(
+                          title: Text(
+                              "Code ${orderHistory[index]["code"]} - ${orderHistory[index]["status"]}"),
+                          subtitle: Text(orderHistory[index]["date"]),
+                        ),
+                        ...orderHistory[index]["products"].map<Widget>((product) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("${product["name"]}"),
+                                Text("${product["quantity"]} kg"),
+                                Text("\$${product["price"]}"),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text("Address: ${orderHistory[index]["address"]}"),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text("Total: \$${orderHistory[index]["total"]}"),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+            IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                deleteOrderHistory(); // Correct function to delete order history
+              },
+            ),
+          ],
+        );
+}
+Widget buildEmptyOrderHistory() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.remove_red_eye, size: 100, color: Colors.grey),
+          Text(
+            'Order History Deleted!!',
             style: TextStyle(fontSize: 24),
           ),
           Text('Browse for local farm products and fill your cart'),
