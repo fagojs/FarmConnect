@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './product_details.dart';
+import './cart_page.dart';
 
 class BusinessOwnerHomePage extends StatefulWidget {
   @override
@@ -260,17 +261,43 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 0, // Set to 0 to highlight Home
-        onTap: (index) {
-          // Navigate to respective pages based on selected index
-        },
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.category), label: 'Categories'),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
+        selectedItemColor: Colors.orange,
+        unselectedItemColor: Colors.black,
+        currentIndex: 0, // This keeps the Cart page active
+        onTap: (int index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => BusinessOwnerHomePage()),
+                );
+              break;
+            case 1:
+              // Navigator.pushReplacement(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => CategoryPage()),
+              //   );
+              break;
+            case 2:
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => CartPage()),
+                );
+              break;
+            case 3:
+              // Navigator.pushReplacement(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => ProfilePage()),
+              //   );
+              break;
+          }
+        },
       ),
     );
   }
