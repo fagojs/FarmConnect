@@ -82,8 +82,8 @@ class _CartPageState extends State<CartPage> {
         title: Text('CART'),
         actions: [
           IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: deleteCart,
+            icon: Icon(Icons.language),
+            onPressed: (){},
           ),
         ],
       ),
@@ -201,7 +201,7 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  // Bottom part of "Current Orders" Section
+ // Building the Current Orders section with delete icon for each product
 Widget buildCurrentOrders() {
   return cartItems.isEmpty
       ? buildEmptyCart()
@@ -213,58 +213,94 @@ Widget buildCurrentOrders() {
                 itemBuilder: (context, index) {
                   return Card(
                     margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: ListTile(
-                      leading: Container(
-                        width: 50,
-                        height: 50,
-                        color: Colors.grey[300],
-                      ),
-                      title: Text(cartItems[index]["name"]),
-                      subtitle: Text("\$${cartItems[index]["price"]}/kg"),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.remove),
-                            onPressed: () => decrementQuantity(index),
+                    child: Row(
+                      children: [
+                        // Product Information
+                        Expanded(
+                          child: ListTile(
+                            leading: Container(
+                              width: 50,
+                              height: 50,
+                              color: Colors.grey[300],
+                            ),
+                            title: Text(cartItems[index]["name"]),
+                            subtitle: Text("\$${cartItems[index]["price"]}/kg"),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.remove),
+                                  onPressed: () => decrementQuantity(index),
+                                ),
+                                Text(cartItems[index]["quantity"].toString()),
+                                IconButton(
+                                  icon: Icon(Icons.add),
+                                  onPressed: () => incrementQuantity(index),
+                                ),
+                              ],
+                            ),
                           ),
-                          Text(cartItems[index]["quantity"].toString()),
-                          IconButton(
-                            icon: Icon(Icons.add),
-                            onPressed: () => incrementQuantity(index),
-                          ),
-                        ],
-                      ),
+                        ),
+                        // Delete Icon
+                        IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red),
+                          onPressed: () {
+                            // Remove specific product and show snackbar
+                            setState(() {
+                              cartItems.removeAt(index);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Product removed from cart'),
+                                  duration: Duration(seconds: 2),
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
+                            });
+                          },
+                        ),
+                      ],
                     ),
                   );
                 },
               ),
             ),
+            // Total and Checkout Button
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Total: \$${getTotal().toStringAsFixed(2)}',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Navigate to Checkout Page
-                      Navigator.pushNamed(context, '/checkout');
-                    },
-                    child: Row(
-                      children: [
-                        Text('Checkout'),
-                        Icon(Icons.arrow_forward),
-                      ],
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
-                    ),
-                  ),
-                ],
+              child: Builder(
+                builder: (BuildContext context) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Total: \$${getTotal().toStringAsFixed(2)}',
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          // Display the snackbar when clicking the delete button
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Product removed from cart'),
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                          // Navigate to Checkout Page
+                          Navigator.pushNamed(context, '/checkout');
+                        },
+                        child: Row(
+                          children: [
+                            Text('Checkout'),
+                            Icon(Icons.arrow_forward),
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange,
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           ],
@@ -299,7 +335,7 @@ Widget buildCurrentOrders() {
     );
   }
 
-  // Build the Order History Section
+  // Building the Order History section with delete icon
 Widget buildOrderHistory() {
   return orderHistory.isEmpty
       ? buildEmptyOrderHistory()
@@ -311,50 +347,75 @@ Widget buildOrderHistory() {
                 itemBuilder: (context, index) {
                   return Card(
                     margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
                       children: [
-                        ListTile(
-                          title: Text(
-                              "Code ${orderHistory[index]["code"]} - ${orderHistory[index]["status"]}"),
-                          subtitle: Text(orderHistory[index]["date"]),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ListTile(
+                                title: Text("Code ${orderHistory[index]["code"]}"),
+                                subtitle: Text(orderHistory[index]["status"]),
+                              ),
+                              ...orderHistory[index]["products"].map<Widget>((product) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("${product["name"]}"),
+                                      Text("${product["quantity"]} kg"),
+                                      Text("\$${product["price"]}"),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(Icons.location_on),
+                                        SizedBox(width: 8),
+                                        Text(orderHistory[index]["address"]),
+                                      ],
+                                    ),
+                                    // Delete Icon next to address
+                                    IconButton(
+                                      icon: Icon(Icons.delete, color: Colors.red),
+                                      onPressed: () {
+                                        // Remove specific order and show snackbar
+                                        setState(() {
+                                          orderHistory.removeAt(index);
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBar(
+                                              content: Text('Order removed from history'),
+                                              duration: Duration(seconds: 2),
+                                            ),
+                                          );
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        ...orderHistory[index]["products"].map<Widget>((product) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("${product["name"]}"),
-                                Text("${product["quantity"]} kg"),
-                                Text("\$${product["price"]}"),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Text("Address: ${orderHistory[index]["address"]}"),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Text("Total: \$${orderHistory[index]["total"]}"),
-                        ),
+                        // Delete Icon for Order History
+                        
                       ],
                     ),
                   );
                 },
               ),
             ),
-            IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () {
-                deleteOrderHistory(); // Correct function to delete order history
-              },
-            ),
           ],
         );
 }
+
 Widget buildEmptyOrderHistory() {
     return Center(
       child: Column(
