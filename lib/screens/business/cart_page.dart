@@ -1,3 +1,4 @@
+import 'package:farm_connect/screens/business/home_page.dart';
 import 'package:flutter/material.dart';
 
 class CartPage extends StatefulWidget {
@@ -156,15 +157,47 @@ class _CartPageState extends State<CartPage> {
         ),
       ),
 
+      // Adding Bottom Navigation Bar
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.category), label: 'Categories'),
+          BottomNavigationBarItem(icon: Icon(Icons.category), label: 'Categories'),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
+        selectedItemColor: Colors.orange,
+        unselectedItemColor: Colors.black,
+        currentIndex: 2, // This keeps the Cart page active
+        onTap: (int index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => BusinessOwnerHomePage()),
+                );
+              break;
+            case 1:
+              // Navigator.pushReplacement(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => CategoryPage()),
+              //   );
+              break;
+            case 2:
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => CartPage()),
+                );
+              break;
+            case 3:
+              // Navigator.pushReplacement(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => ProfilePage()),
+              //   );
+              break;
+          }
+        },
       ),
+
     );
   }
 
@@ -219,7 +252,10 @@ class _CartPageState extends State<CartPage> {
           ElevatedButton(
             onPressed: () {
               // Navigate back to home to add items to cart
-              Navigator.pushReplacementNamed(context, '/home');
+             Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => BusinessOwnerHomePage()),
+                );
             },
             child: Text('Add to Cart'),
           ),
@@ -289,7 +325,7 @@ Widget buildEmptyOrderHistory() {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.remove_red_eye, size: 100, color: Colors.grey),
+          Icon(Icons.remove_red_eye_outlined, size: 100, color: Colors.grey),
           Text(
             'Order History Deleted!!',
             style: TextStyle(fontSize: 24),
@@ -299,7 +335,10 @@ Widget buildEmptyOrderHistory() {
           ElevatedButton(
             onPressed: () {
               // Navigate back to home to add items to cart
-              Navigator.pushReplacementNamed(context, '/home');
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => BusinessOwnerHomePage()),
+                );
             },
             child: Text('Add to Cart'),
           ),
