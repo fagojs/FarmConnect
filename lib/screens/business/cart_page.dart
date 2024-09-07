@@ -1,5 +1,7 @@
-import 'package:farm_connect/screens/business/home_page.dart';
 import 'package:flutter/material.dart';
+
+import './category_page.dart';
+import 'home_page.dart';
 
 class CartPage extends StatefulWidget {
   @override
@@ -177,10 +179,10 @@ class _CartPageState extends State<CartPage> {
                 );
               break;
             case 1:
-              // Navigator.pushReplacement(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => CategoryPage()),
-              //   );
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => CategoryPage()),
+                );
               break;
             case 2:
               Navigator.pushReplacement(

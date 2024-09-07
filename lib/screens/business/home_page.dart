@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './product_details.dart';
 import './cart_page.dart';
+import './category_page.dart';
 
 class BusinessOwnerHomePage extends StatefulWidget {
   @override
@@ -279,10 +280,10 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                 );
               break;
             case 1:
-              // Navigator.pushReplacement(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => CategoryPage()),
-              //   );
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => CategoryPage()),
+                );
               break;
             case 2:
               Navigator.pushReplacement(
