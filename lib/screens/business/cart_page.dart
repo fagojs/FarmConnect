@@ -278,13 +278,6 @@ Widget buildCurrentOrders() {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Display the snackbar when clicking the delete button
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Product removed from cart'),
-                              duration: Duration(seconds: 2),
-                            ),
-                          );
                           // Navigate to Checkout Page
                           Navigator.pushNamed(context, '/checkout');
                         },
