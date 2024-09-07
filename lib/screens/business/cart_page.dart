@@ -147,7 +147,7 @@ class _CartPageState extends State<CartPage> {
             Expanded(
               child: TabBarView(
                 children: [
-                  //buildCurrentOrders(),
+                  buildCurrentOrders(),
                   //buildOrderHistory(),
                 ],
               ),
@@ -155,6 +155,7 @@ class _CartPageState extends State<CartPage> {
           ],
         ),
       ),
+
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
@@ -162,6 +163,66 @@ class _CartPageState extends State<CartPage> {
               icon: Icon(Icons.category), label: 'Categories'),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+      ),
+    );
+  }
+
+  Widget buildCurrentOrders() {
+    return cartItems.isEmpty
+        ? buildEmptyCart()
+        : ListView.builder(
+            itemCount: cartItems.length,
+            itemBuilder: (context, index) {
+              return Card(
+                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                child: ListTile(
+                  leading: Container(
+                    width: 50,
+                    height: 50,
+                    color: Colors.grey[300],
+                  ),
+                  title: Text(cartItems[index]["name"]),
+                  subtitle: Text("\$${cartItems[index]["price"]}/kg"),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.remove),
+                        onPressed: () => decrementQuantity(index),
+                      ),
+                      Text(cartItems[index]["quantity"].toString()),
+                      IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () => incrementQuantity(index),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+  }
+
+  Widget buildEmptyCart() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.remove_shopping_cart, size: 100, color: Colors.grey),
+          Text(
+            'Your Cart is Deleted!!',
+            style: TextStyle(fontSize: 24),
+          ),
+          Text('Browse for local farm products and fill your cart'),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              // Navigate back to home to add items to cart
+              Navigator.pushReplacementNamed(context, '/home');
+            },
+            child: Text('Add to Cart'),
+          ),
         ],
       ),
     );
