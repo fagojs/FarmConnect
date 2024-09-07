@@ -6,6 +6,7 @@ import 'screens/farmer/list_product_page/list_product.dart';
 import 'screens/farmer/manage_order/manage_orders.dart';
 import './screens/farmer/profile/profile_page.dart';
 import './screens/business/home_page.dart';
+import './screens/business/cart_page.dart';
 
 void main() {
   runApp(FarmConnectApp());
@@ -21,7 +22,7 @@ class FarmConnectApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => BusinessOwnerHomePage(),
+        '/': (context) => CartPage(),
         '/signin': (context) => SignInPage(userType: 'Farmer'), // Adjust as needed
         '/landing': (context) => LandingPage(userType: 'Farmer'), // Adjust as needed
         // Add routes for other screens if needed

@@ -243,7 +243,10 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                             icon: Icon(Icons.add, size: 30), // Increased size of "+"
                             onPressed: () {
                               // Add to cart logic
-                            },
+                              ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Product added to cart!')),
+                            );
+                            }
                           ),
                         ),
                       ],
