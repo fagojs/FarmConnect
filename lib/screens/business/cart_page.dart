@@ -201,41 +201,76 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Widget buildCurrentOrders() {
-    return cartItems.isEmpty
-        ? buildEmptyCart()
-        : ListView.builder(
-            itemCount: cartItems.length,
-            itemBuilder: (context, index) {
-              return Card(
-                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                child: ListTile(
-                  leading: Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.grey[300],
-                  ),
-                  title: Text(cartItems[index]["name"]),
-                  subtitle: Text("\$${cartItems[index]["price"]}/kg"),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.remove),
-                        onPressed: () => decrementQuantity(index),
+  // Bottom part of "Current Orders" Section
+Widget buildCurrentOrders() {
+  return cartItems.isEmpty
+      ? buildEmptyCart()
+      : Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: cartItems.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    child: ListTile(
+                      leading: Container(
+                        width: 50,
+                        height: 50,
+                        color: Colors.grey[300],
                       ),
-                      Text(cartItems[index]["quantity"].toString()),
-                      IconButton(
-                        icon: Icon(Icons.add),
-                        onPressed: () => incrementQuantity(index),
+                      title: Text(cartItems[index]["name"]),
+                      subtitle: Text("\$${cartItems[index]["price"]}/kg"),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.remove),
+                            onPressed: () => decrementQuantity(index),
+                          ),
+                          Text(cartItems[index]["quantity"].toString()),
+                          IconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: () => incrementQuantity(index),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
+                  );
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Total: \$${getTotal().toStringAsFixed(2)}',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                ),
-              );
-            },
-          );
-  }
+                  ElevatedButton(
+                    onPressed: () {
+                      // Navigate to Checkout Page
+                      Navigator.pushNamed(context, '/checkout');
+                    },
+                    child: Row(
+                      children: [
+                        Text('Checkout'),
+                        Icon(Icons.arrow_forward),
+                      ],
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+}
+
 
   Widget buildEmptyCart() {
     return Center(
@@ -338,7 +373,7 @@ Widget buildEmptyOrderHistory() {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => BusinessOwnerHomePage()),
-                );
+              );
             },
             child: Text('Add to Cart'),
           ),
