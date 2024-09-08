@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import './home_page.dart';
 import './cart_page.dart';
+import './profile_page/profile_page.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -210,10 +211,10 @@ class _CategoryPageState extends State<CategoryPage> {
                 );
               break;
             case 3:
-              // Navigator.pushReplacement(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => ProfilePage()),
-              //   );
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => BusinessProfilePage()),
+                );
               break;
           }
         },

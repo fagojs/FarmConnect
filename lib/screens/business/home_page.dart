@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+
 import './product_details.dart';
 import './cart_page.dart';
 import './category_page.dart';
+import './profile_page/profile_page.dart';
 
 class BusinessOwnerHomePage extends StatefulWidget {
   @override
@@ -292,10 +294,10 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                 );
               break;
             case 3:
-              // Navigator.pushReplacement(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => ProfilePage()),
-              //   );
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => BusinessProfilePage()),
+                );
               break;
           }
         },
