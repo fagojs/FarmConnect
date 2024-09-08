@@ -21,7 +21,31 @@ List<Product> dummyProducts = [
     quantity: 100,
     category: "Vegetable",
     description: 'Locally grown with local farm techniques.',
-    image: 'assets/tomatoes.png', // placeholder
+    image: 'images/placeholder_img.png', // placeholder
+  ),
+  Product(
+    name: 'Strawberry',
+    pricePerKg: 3.5,
+    quantity: 100,
+    category: "Fruit",
+    description: 'Fresh and sweet.',
+    image: 'images/placeholder_img.png', // placeholder
+  ),
+  Product(
+    name: 'Cheese',
+    pricePerKg: 18.5,
+    quantity: 100,
+    category: "Dairy",
+    description: 'Delicious.',
+    image: 'images/placeholder_img.png', // placeholder
+  ),
+  Product(
+    name: 'Beans',
+    pricePerKg: 3.5,
+    quantity: 100,
+    category: "Grain",
+    description: 'Locally grown with local farm techniques.',
+    image: 'images/placeholder_img.png', // placeholder
   ),
   // Add more dummy products here
 ];
