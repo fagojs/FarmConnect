@@ -6,19 +6,20 @@ import './edit_farm_info.dart';
 import '../home_page.dart';
 import '../list_product_page/list_product.dart';
 import '../manage_order/manage_orders.dart';
+import '../../../data/currentuser.dart';
 
 class ProfilePage extends StatelessWidget {
   final Map<String, dynamic> contactInfo = {
-    'name': 'John Smith',
-    'location': 'Sydney, Australia',
-    'phone': '042867456',
-    'email': 'johnwick@gmail.com',
+    'name': currentUser.fullName,
+    'location': currentUser.address,
+    'phone': currentUser.contactNumber,
+    'email': currentUser.email,
   };
 
   final Map<String, dynamic> farmInfo = {
-    'farmName': 'John’s Farm',
-    'location': 'Sydney, Australia',
-    'description': 'Cultivating flavor and community, one seed at a time',
+    'farmName': currentUser.farmName,
+    'location': currentUser.farmAddress,
+    'description': currentUser.farmDescription,
   };
 
   @override
@@ -89,7 +90,8 @@ class ProfilePage extends StatelessWidget {
                 backgroundImage: AssetImage('images/placeholder_img.png'), // Placeholder image
               ),
               SizedBox(height: 10),
-              Text('John Smith', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              Text(currentUser.fullName ?? 'Name not provided', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              //Text('John Smith', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
               Text('Farmer', style: TextStyle(color: Colors.grey, fontSize: 16)),
               SizedBox(height: 20),
 
@@ -105,7 +107,8 @@ class ProfilePage extends StatelessWidget {
                         children: [
                           Icon(Icons.location_on, color: Colors.grey),
                           SizedBox(width: 10),
-                          Text(contactInfo['location']),
+                          //Text(contactInfo['location']),
+                           Text(currentUser.address ?? 'Location not provided'),
                         ],
                       ),
                       SizedBox(height: 10),
@@ -113,7 +116,8 @@ class ProfilePage extends StatelessWidget {
                         children: [
                           Icon(Icons.phone, color: Colors.grey),
                           SizedBox(width: 10),
-                          Text(contactInfo['phone']),
+                          //Text(contactInfo['phone']),
+                          Text(currentUser.contactNumber ?? 'Contact not provided'),
                         ],
                       ),
                       SizedBox(height: 10),
@@ -121,7 +125,8 @@ class ProfilePage extends StatelessWidget {
                         children: [
                           Icon(Icons.email, color: Colors.grey),
                           SizedBox(width: 10),
-                          Text(contactInfo['email']),
+                          //Text(contactInfo['email']),
+                          Text(currentUser.email ?? 'Email not provided'),
                         ],
                       ),
                       SizedBox(height: 10),
@@ -151,7 +156,8 @@ class ProfilePage extends StatelessWidget {
                         children: [
                           Icon(Icons.home, color: Colors.grey),
                           SizedBox(width: 10),
-                          Text(farmInfo['farmName']),
+                          //Text(farmInfo['farmName']),
+                          Text(currentUser.farmName ?? 'Farm name not provided'),
                         ],
                       ),
                       SizedBox(height: 10),
@@ -159,7 +165,7 @@ class ProfilePage extends StatelessWidget {
                         children: [
                           Icon(Icons.location_on, color: Colors.grey),
                           SizedBox(width: 10),
-                          Text(farmInfo['location']),
+                          Text(currentUser.farmAddress ?? 'Farm address not provided'),
                         ],
                       ),
                       SizedBox(height: 10),
@@ -167,7 +173,8 @@ class ProfilePage extends StatelessWidget {
                         children: [
                           Icon(Icons.info, color: Colors.grey),
                           SizedBox(width: 10),
-                          Expanded(child: Text(farmInfo['description'])),
+                         // Expanded(child: Text(farmInfo['description'])),
+                          Expanded(child: Text(currentUser.farmDescription ?? 'No farm description provided')),
                         ],
                       ),
                       SizedBox(height: 10),
