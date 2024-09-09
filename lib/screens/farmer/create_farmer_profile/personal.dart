@@ -32,6 +32,13 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
 
     // Function to navigate to farm info form
   void _goToFarmInfo() {
+     // Check if any field is empty
+    if (email.isEmpty || fullName.isEmpty || contactNumber.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('All fields are required!')),
+      );
+      return;
+    }
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -174,15 +181,17 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
                         decoration: BoxDecoration(
                           color: Colors.grey[200],
                           borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(image: AssetImage('images/placeholder_img.png'), 
-                          fit:BoxFit.cover),
+                          //image: DecorationImage(image: AssetImage('images/placeholder_img.png'), 
+                          //fit:BoxFit.cover),
                         ),
                         child: Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              // Icon(Icons.add_a_photo, size: 40),
-                              Text('Select your photo'),
+                              Icon(Icons.add_a_photo, size: 40),
+                              Text(
+                                'Select your photo (optional)'
+                              ),
                             ],
                           ),
                         ),
@@ -226,7 +235,9 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: (){_goToFarmInfo;},
+                onPressed: (){
+                  _goToFarmInfo();
+                  },
                 child: Text('CONTINUE'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange, // background

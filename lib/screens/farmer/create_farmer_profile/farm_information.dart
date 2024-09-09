@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+
 import 'personal.dart';
 import 'list_first_product.dart';
 import '../../../data/dummy_data.dart';
@@ -46,6 +47,14 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
 
     // Function to save profile to in-memory list
   void _saveProfile() {
+     // Check if any field is empty
+    if (farmName.isEmpty || farmAddress.isEmpty || farmDescription.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('All fields are required!')),
+      );
+      return;
+    }
+
     farmerProfiles.add(FarmerProfile(
       fullName: widget.fullName,
       contactNumber: widget.contactNumber,
@@ -56,7 +65,12 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
       profileImage: widget.profileImage,
       farmImage: farmImage,
     ));
-    Navigator.pop(context);  // Go back to profile page or show success message
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ListFirstProductPage(),
+        )
+    ); // Go back to profile page or show success message
   }
 
   void _showImageSourceActionSheet(BuildContext context) {
@@ -193,18 +207,14 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
                         decoration: BoxDecoration(
                           color: Colors.grey[200],
                           borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                            image: AssetImage('images/plcaeholder_img.png'),
-                            fit: BoxFit.cover
-                          )
                         ),
                         
                         child: Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              //Icon(Icons.add_a_photo, size: 40),
-                              Text('Select your farm photo'),
+                              Icon(Icons.add_a_photo, size: 40),
+                              Text('Select your farm photo (optional)'),
                             ],
                           ),
                         ),
