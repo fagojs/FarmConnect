@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'personal.dart';
 import '../home_page.dart';
+import '../../../data/dummy_data.dart';
+import '../../../models/product_model.dart';
 
 class ListFirstProductPage extends StatefulWidget {
   @override
@@ -15,6 +17,10 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
   final ImagePicker _picker = ImagePicker();
   String? _selectedCategory;
   final List<String> _categories = ['Vegetable', 'Fruit', 'Dairy', 'Grain', 'Meat'];
+  String productName = '';
+  int quantity = 0;
+  double price = 0.0;
+  String productDescription = '';
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
@@ -26,6 +32,35 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
         print('No image selected.');
       }
     });
+  }
+
+  void _saveFirstProduct(){
+    if (productName.isNotEmpty && _selectedCategory != null && quantity != 0 && price != 0.0) {
+      // Add product to in-memory list
+      productList.add(Product(
+        productName: productName,
+        category: _selectedCategory!,
+        quantity: quantity,
+        pricePerKg: price,
+        productImage: _image,
+        description: productDescription,
+      ));
+
+      // Navigate to farmer home page
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => FarmerHomePage(),
+        ),
+      );
+    }else{
+       // Show an error message for empty fields
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please fill in all fields.'),
+        ),
+      );
+    }
   }
 
   void _showImageSourceActionSheet(BuildContext context) {
@@ -168,7 +203,7 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.add_a_photo, size: 40),
-                              Text('Add image of your product'),
+                              Text('Add image of your product (optional)'),
                             ],
                           ),
                         ),
@@ -192,6 +227,7 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                   labelText: 'Product Name',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) => productName = value,
               ),
               SizedBox(height: 10),
               Row(
@@ -202,6 +238,7 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                         labelText: 'Quantity (in kg)',
                         border: OutlineInputBorder(),
                       ),
+                      onChanged: (value) => quantity = int.parse(value),
                     ),
                   ),
                   SizedBox(width: 10),
@@ -211,6 +248,7 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                         labelText: 'Price (per kg)',
                         border: OutlineInputBorder(),
                       ),
+                      onChanged: (value) => price = double.parse(value),
                     ),
                   ),
                 ],
@@ -241,20 +279,15 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                   labelText: 'Product Description',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) => productDescription = value,
               ),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
-                      // Handle save logic and navigate to the next form
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FarmerHomePage(), // Replace with your next form screen
-                        ),
-                      );
+                    onPressed: (){
+                      _saveFirstProduct();
                     },
                     child: Text('SAVE'),
                     style: ElevatedButton.styleFrom(
