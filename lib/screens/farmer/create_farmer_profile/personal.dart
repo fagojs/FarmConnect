@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 import '../../../screens/farmer/create_farmer_profile/farm_information.dart';
+import '../../../data/currentuser.dart';
 
 class CreateFarmerPersonalProfile extends StatefulWidget {
   @override
@@ -16,6 +17,7 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
   String fullName = '';
   String contactNumber = '';
   String email = '';
+  String address = '';
   File? profileImage;
 
   Future<void> _pickImage(ImageSource source) async {
@@ -32,13 +34,21 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
 
     // Function to navigate to farm info form
   void _goToFarmInfo() {
+
      // Check if any field is empty
-    if (email.isEmpty || fullName.isEmpty || contactNumber.isEmpty) {
+    if (email.isEmpty || fullName.isEmpty || contactNumber.isEmpty || address.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('All fields are required!')),
       );
       return;
     }
+
+     // Save user data from form fields
+    currentUser.fullName = fullName;
+    currentUser.contactNumber = contactNumber;
+    currentUser.email = email;
+    currentUser.address = address;
+
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -46,6 +56,7 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
           fullName: fullName,
           contactNumber: contactNumber,
           email: email,
+          address: address,
           profileImage: profileImage,
         ),
       ),
@@ -234,6 +245,14 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
                 onChanged: (value) => email = value,
               ),
               SizedBox(height: 20),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Address',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (value) => address = value,
+              ),
+              SizedBox(height: 10),
               ElevatedButton(
                 onPressed: (){
                   _goToFarmInfo();

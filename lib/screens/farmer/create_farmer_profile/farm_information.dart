@@ -6,17 +6,20 @@ import 'personal.dart';
 import 'list_first_product.dart';
 import '../../../data/dummy_data.dart';
 import '../../../models/create_farmer_profile.dart';
+import '../../../data/currentuser.dart';
 
 class FarmInformationPage extends StatefulWidget {
   final String fullName;
   final String contactNumber;
   final String email;
+  final String address;
   final File? profileImage;
 
   FarmInformationPage({
     required this.fullName,
     required this.contactNumber,
     required this.email,
+    required this.address,
     this.profileImage,
   });
 
@@ -55,10 +58,16 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
       return;
     }
 
+     // Save farm data from form fields
+    currentUser.farmName = farmName;
+    currentUser.farmAddress = farmAddress;
+    currentUser.farmDescription = farmDescription;
+
     farmerProfiles.add(FarmerProfile(
       fullName: widget.fullName,
       contactNumber: widget.contactNumber,
       email: widget.email,
+      address: widget.address,
       farmName: farmName,
       farmAddress: farmAddress,
       farmDescription: farmDescription,
