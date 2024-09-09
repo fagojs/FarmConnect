@@ -1,11 +1,76 @@
 import 'package:flutter/material.dart';
 import './landing_page.dart';
 
-class SignInPage extends StatelessWidget {
+import '../data/dummy_data.dart';
+import '../models/business_owner_model.dart';
+import '../models/farmer_model.dart';
+
+
+class SignInPage extends StatefulWidget {
   final String userType;
 
   SignInPage({required this.userType});
+  @override
+  _SignInPageState createState() => _SignInPageState();
+}
 
+class _SignInPageState extends State<SignInPage>{
+
+  final _formKey = GlobalKey<FormState>(); // Create a GlobalKey for the form
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  void _signIn() {
+    String email = _emailController.text;
+    String password = _passwordController.text;
+    // Check if any field is empty
+    if (email.isEmpty || password.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('All fields are required')),
+        );
+        return;
+    }
+
+    if(widget.userType == 'Farmer') {
+      Farmer? farmer = dummyFarmers.firstWhere(
+          (farmer) => farmer.email == email && farmer.password == password,
+          orElse: () => Farmer(
+              email: '', password: '', confirmPassword: '')); // Empty object if not found
+
+
+      // Check credentials
+      if (farmer.email.isNotEmpty || farmer.password.isNotEmpty) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LandingPage(userType: widget.userType),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Invalid credentials')),
+        );
+      }
+    }else if (widget.userType == 'Business') {
+      BusinessOwner? businessOwner = dummyBusinessOwner.firstWhere(
+          (owner) => owner.email == email && owner.password == password,
+          orElse: () => BusinessOwner(
+              email: '', password: '', confirmPassword: '')); // Empty object if not found
+       // Check credentials
+      if(businessOwner.email.isNotEmpty || businessOwner.password.isNotEmpty) {
+        Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LandingPage(userType: widget.userType),
+        ),
+      );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Invalid credentials')),
+        );
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +98,7 @@ class SignInPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             TextField(
+              controller: _emailController,
               decoration: InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
@@ -40,6 +106,7 @@ class SignInPage extends StatelessWidget {
             ),
             SizedBox(height: 10),
             TextField(
+              controller: _passwordController,
               decoration: InputDecoration(
                 labelText: 'Password',
                 border: OutlineInputBorder(),
@@ -59,14 +126,8 @@ class SignInPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                // Navigate to Landing Page with the user type
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LandingPage(userType: userType),
-                  ),
-                );
+              onPressed:(){
+                _signIn();
               },
               child: Text('Sign In'),
               style: ElevatedButton.styleFrom(
