@@ -1,3 +1,4 @@
+import 'package:farm_connect/screens/signup_page.dart';
 import 'package:flutter/material.dart';
 import './landing_page.dart';
 
@@ -136,7 +137,12 @@ class _SignInPageState extends State<SignInPage>{
             SizedBox(height: 10),
             TextButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/');
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SignUpPage(),
+                  ),
+                );
               },
               child: Text('Don’t have an account? Sign Up'),
             ),
