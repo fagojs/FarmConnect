@@ -224,7 +224,7 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
               SizedBox(height: 20),
               TextField(
                 decoration: InputDecoration(
-                  labelText: 'Product Name',
+                  labelText: 'Product Name (optional)',
                   border: OutlineInputBorder(),
                 ),
                 onChanged: (value) => productName = value,
@@ -235,7 +235,7 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                   Expanded(
                     child: TextField(
                       decoration: InputDecoration(
-                        labelText: 'Quantity (in kg)',
+                        labelText: 'Quantity in kg (optional)',
                         border: OutlineInputBorder(),
                       ),
                       onChanged: (value) => quantity = int.parse(value),
@@ -245,7 +245,7 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                   Expanded(
                     child: TextField(
                       decoration: InputDecoration(
-                        labelText: 'Price (per kg)',
+                        labelText: 'Price per kg (optional)',
                         border: OutlineInputBorder(),
                       ),
                       onChanged: (value) => price = double.parse(value),
@@ -256,7 +256,7 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
               SizedBox(height: 10),
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
-                  labelText: 'Select a category',
+                  labelText: 'Select a category (optional)',
                   border: OutlineInputBorder(),
                 ),
                 value: _selectedCategory,
@@ -276,7 +276,7 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
               TextField(
                 maxLines: 4,
                 decoration: InputDecoration(
-                  labelText: 'Product Description',
+                  labelText: 'Product Description (optional)',
                   border: OutlineInputBorder(),
                 ),
                 onChanged: (value) => productDescription = value,
