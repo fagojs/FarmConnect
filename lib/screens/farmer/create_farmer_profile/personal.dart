@@ -1,7 +1,8 @@
-import 'package:farm_connect/screens/farmer/create_farmer_profile/farm_information.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+
+import '../../../screens/farmer/create_farmer_profile/farm_information.dart';
 
 class CreateFarmerPersonalProfile extends StatefulWidget {
   @override
@@ -9,19 +10,39 @@ class CreateFarmerPersonalProfile extends StatefulWidget {
 }
 
 class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfile> {
-  File? _image;
   final ImagePicker _picker = ImagePicker();
+
+  // Store form input data
+  String fullName = '';
+  String contactNumber = '';
+  String email = '';
+  File? profileImage;
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
 
     setState(() {
       if (pickedFile != null) {
-        _image = File(pickedFile.path);
+        profileImage = File(pickedFile.path);
       } else {
         print('No image selected.');
       }
     });
+  }
+
+    // Function to navigate to farm info form
+  void _goToFarmInfo() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FarmInformationPage(
+          fullName: fullName,
+          contactNumber: contactNumber,
+          email: email,
+          profileImage: profileImage,
+        ),
+      ),
+    );
   }
 
   void _showImageSourceActionSheet(BuildContext context) {
@@ -146,19 +167,21 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
               SizedBox(height: 20),
               GestureDetector(
                 onTap: () => _showImageSourceActionSheet(context),
-                child: _image == null
+                child: profileImage == null
                     ? Container(
                         width: 150,
                         height: 150,
                         decoration: BoxDecoration(
                           color: Colors.grey[200],
                           borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(image: AssetImage('images/placeholder_img.png'), 
+                          fit:BoxFit.cover),
                         ),
                         child: Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.add_a_photo, size: 40),
+                              // Icon(Icons.add_a_photo, size: 40),
                               Text('Select your photo'),
                             ],
                           ),
@@ -171,7 +194,7 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
                           color: Colors.grey[200],
                           borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
-                            image: FileImage(_image!),
+                            image: FileImage(profileImage!),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -183,6 +206,7 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
                   labelText: 'Full Name',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) => fullName = value,
               ),
               SizedBox(height: 10),
               TextField(
@@ -190,6 +214,7 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
                   labelText: 'Contact Number',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) => contactNumber = value,
               ),
               SizedBox(height: 10),
               TextField(
@@ -197,18 +222,11 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
                   labelText: 'Email',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) => email = value,
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  // Navigate to the next form (Farm Information)
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FarmInformationPage(), // Replace with your next form screen
-                    ),
-                  );
-                },
+                onPressed: (){_goToFarmInfo;},
                 child: Text('CONTINUE'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange, // background

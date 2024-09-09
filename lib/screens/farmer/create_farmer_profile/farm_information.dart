@@ -3,14 +3,33 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'personal.dart';
 import 'list_first_product.dart';
+import '../../../data/dummy_data.dart';
+import '../../../models/create_farmer_profile.dart';
 
 class FarmInformationPage extends StatefulWidget {
+  final String fullName;
+  final String contactNumber;
+  final String email;
+  final File? profileImage;
+
+  FarmInformationPage({
+    required this.fullName,
+    required this.contactNumber,
+    required this.email,
+    this.profileImage,
+  });
+
   @override
   _FarmInformationPageState createState() => _FarmInformationPageState();
 }
 
 class _FarmInformationPageState extends State<FarmInformationPage> {
-  File? _image;
+    // Store farm info input data
+  String farmName = '';
+  String farmAddress = '';
+  String farmDescription = '';
+  File? farmImage;
+
   final ImagePicker _picker = ImagePicker();
 
   Future<void> _pickImage(ImageSource source) async {
@@ -18,11 +37,26 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
 
     setState(() {
       if (pickedFile != null) {
-        _image = File(pickedFile.path);
+        farmImage = File(pickedFile.path);
       } else {
         print('No image selected.');
       }
     });
+  }
+
+    // Function to save profile to in-memory list
+  void _saveProfile() {
+    farmerProfiles.add(FarmerProfile(
+      fullName: widget.fullName,
+      contactNumber: widget.contactNumber,
+      email: widget.email,
+      farmName: farmName,
+      farmAddress: farmAddress,
+      farmDescription: farmDescription,
+      profileImage: widget.profileImage,
+      farmImage: farmImage,
+    ));
+    Navigator.pop(context);  // Go back to profile page or show success message
   }
 
   void _showImageSourceActionSheet(BuildContext context) {
@@ -152,20 +186,25 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
               SizedBox(height: 20),
               GestureDetector(
                 onTap: () => _showImageSourceActionSheet(context),
-                child: _image == null
+                child: farmImage == null
                     ? Container(
                         width: 150,
                         height: 150,
                         decoration: BoxDecoration(
                           color: Colors.grey[200],
                           borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: AssetImage('images/plcaeholder_img.png'),
+                            fit: BoxFit.cover
+                          )
                         ),
+                        
                         child: Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.add_a_photo, size: 40),
-                              Text('Select your photo'),
+                              //Icon(Icons.add_a_photo, size: 40),
+                              Text('Select your farm photo'),
                             ],
                           ),
                         ),
@@ -177,7 +216,7 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
                           color: Colors.grey[200],
                           borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
-                            image: FileImage(_image!),
+                            image: FileImage(farmImage!),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -189,6 +228,7 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
                   labelText: 'Farm Name',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) => farmName = value,
               ),
               SizedBox(height: 10),
               TextField(
@@ -196,6 +236,7 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
                   labelText: 'Farm Address',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) => farmAddress = value,
               ),
               SizedBox(height: 10),
               TextField(
@@ -204,18 +245,11 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
                   labelText: 'Tell us about a bit about your farm. One or maybe two unique things about it.',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) => farmDescription = value,
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  // Navigate to the next form (to be implemented)
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ListFirstProductPage(), // Replace with your next form screen
-                    ),
-                  );
-                },
+                onPressed:() {_saveProfile();},
                 child: Text('CONTINUE'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange, // background
