@@ -16,7 +16,6 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage>{
 
-  final _formKey = GlobalKey<FormState>(); // Create a GlobalKey for the form
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
