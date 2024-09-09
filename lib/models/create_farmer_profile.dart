@@ -4,6 +4,7 @@ class FarmerProfile {
   String fullName;
   String contactNumber;
   String email;
+  String address;
   String farmName;
   String farmAddress;
   String farmDescription;
@@ -14,6 +15,7 @@ class FarmerProfile {
     required this.fullName,
     required this.contactNumber,
     required this.email,
+    required this.address,
     required this.farmName,
     required this.farmAddress,
     required this.farmDescription,
