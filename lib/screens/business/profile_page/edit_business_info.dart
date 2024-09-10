@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/currentuser.dart';
+
 class EditBusinessInformation extends StatefulWidget {
-  final String businessName;
-  final String location;
-  final String description;
-
-  EditBusinessInformation({required this.businessName, required this.location, required this.description});
-
   @override
   _EditBusinessInformationState createState() => _EditBusinessInformationState();
 }
 
 class _EditBusinessInformationState extends State<EditBusinessInformation> {
-  late TextEditingController _businessNameController;
-  late TextEditingController _locationController;
-  late TextEditingController _descriptionController;
+  final TextEditingController businessNameController = TextEditingController();
+  final TextEditingController businessAddressController = TextEditingController();
+  final TextEditingController businessDescriptionController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _businessNameController = TextEditingController(text: widget.businessName);
-    _locationController = TextEditingController(text: widget.location);
-    _descriptionController = TextEditingController(text: widget.description);
+    businessNameController.text = currentUser.fullName ?? '';
+    businessAddressController.text = currentUser.address ?? '';
+    businessDescriptionController.text = currentUser.contactNumber ?? '';
+  }
+
+   void _updateBusinessInfo(){
+    setState(() {
+        currentUser.farmName = businessNameController.text;
+        currentUser.farmAddress = businessAddressController.text;
+        currentUser.farmDescription = businessDescriptionController.text;
+      });
+      Navigator.pop(context);
   }
 
   @override
@@ -69,12 +74,12 @@ class _EditBusinessInformationState extends State<EditBusinessInformation> {
             ),
             SizedBox(height: 20),
             TextField(
-              controller: _businessNameController,
+              controller: businessNameController,
               decoration: InputDecoration(labelText: 'Business Name', border: OutlineInputBorder()),
             ),
             SizedBox(height: 10),
             TextField(
-              controller: _descriptionController,
+              controller: businessDescriptionController,
               decoration: InputDecoration(
                 labelText: 'Business Description',
                 border: OutlineInputBorder(),
@@ -82,18 +87,13 @@ class _EditBusinessInformationState extends State<EditBusinessInformation> {
             ),
             SizedBox(height: 20),
             TextField(
-              controller: _locationController,
+              controller: businessAddressController,
               decoration: InputDecoration(labelText: 'Location', border: OutlineInputBorder()),
             ),
             SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                // Pass back the updated data
-                Navigator.pop(context, {
-                  'businessName': _businessNameController.text,
-                  'description': _descriptionController.text,
-                  'location': _locationController.text,
-                });
+               _updateBusinessInfo();
               },
               child: Text('UPDATE'),
               style: ElevatedButton.styleFrom(
