@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
+
 import 'package:image_picker/image_picker.dart';
+import '../../../models/product_model.dart';
+import '../../../data/currentuser.dart';
 
 class EditProductPage extends StatefulWidget {
-  final Map<String, dynamic> product;
+  final Product product;
 
   EditProductPage({required this.product});
 
@@ -25,12 +28,26 @@ class _EditProductPageState extends State<EditProductPage> {
   void initState() {
     super.initState();
     // Pre-fill the fields with existing product information
-    _nameController.text = widget.product['name'];
-    _quantityController.text = widget.product['quantity'];
-    _priceController.text = widget.product['price'];
-    _descriptionController.text = widget.product['description'];
-    _selectedCategory = widget.product['category'];
-    _productImage = widget.product['image'];
+    _nameController.text = widget.product.productName;
+    _quantityController.text = widget.product.quantity.toString();
+    _priceController.text = widget.product.pricePerKg.toString();
+    _descriptionController.text = widget.product.description;
+    _selectedCategory = widget.product.category;
+    _productImage = widget.product.productImage;
+  }
+
+  void _updateProduct(){
+    // Update the product details in the CurrentUser's product list
+    setState(() {
+      widget.product.productName = _nameController.text;
+      widget.product.quantity = int.parse(_quantityController.text);
+      widget.product.pricePerKg = double.parse(_priceController.text);
+      widget.product.description = _descriptionController.text;
+      widget.product.category = _selectedCategory.toString();
+      widget.product.productImage = _productImage;
+    });
+    // Return to the previous page with updated product list
+    Navigator.pop(context, widget.product);
   }
 
   @override
@@ -153,15 +170,7 @@ class _EditProductPageState extends State<EditProductPage> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Pass the updated product data back to List Product Page
-                  Navigator.pop(context, {
-                    'name': _nameController.text,
-                    'quantity': _quantityController.text,
-                    'price': _priceController.text,
-                    'description': _descriptionController.text,
-                    'category': _selectedCategory,
-                    'image': _productImage,
-                  });
+                  _updateProduct();                 
                 },
                 child: Text('Update'),
                 style: ElevatedButton.styleFrom(
