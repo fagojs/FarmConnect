@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import './add_product.dart';
 import '../home_page.dart';
 import './edit_product.dart';
+import '../../../models/product_model.dart';
+import '../../../data/currentuser.dart';
 
 class ListProductPage extends StatefulWidget {
   @override
@@ -12,30 +14,22 @@ class ListProductPage extends StatefulWidget {
 }
 
 class _ListProductPageState extends State<ListProductPage> {
-  List<Map<String, dynamic>> _products = [
-    {
-      'name': 'Tomatoes',
-      'quantity': '100',
-      'price': '3\$',
-      'description': 'Locally grown with local farm techniques.',
-      'image': null,
-    },
-  ];
+ 
 
   final TextEditingController _searchController = TextEditingController();
-  List<Map<String, dynamic>> _filteredProducts = [];
+  List<Product>  _filteredProducts = [];
 
   int _currentIndex = 1; // To keep track of the selected bottom nav index
 
   @override
   void initState() {
     super.initState();
-    _filteredProducts = _products; // Initially show all products
+    _filteredProducts = currentUser.products; // Initially show all products
   }
 
   void _filterProducts(String query) {
-    final filtered = _products.where((product) {
-      final productName = product['name']!.toLowerCase();
+    final filtered = currentUser.products.where((product) {
+      final productName = product.productName.toLowerCase();
       return productName.contains(query.toLowerCase());
     }).toList();
     setState(() {
@@ -139,32 +133,48 @@ class _ListProductPageState extends State<ListProductPage> {
               ),
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _filteredProducts.length,
-              itemBuilder: (context, index) {
-                final product = _filteredProducts[index];
-                return _buildProductCard(product);
-              },
+          if(_filteredProducts.isEmpty)
+            Expanded(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'No products listed yet!\n' 
+                    'List your first product using "+" icon below.',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 20),
+                ],
+              ),
             ),
-          ),
+          )
+          else
+            Expanded(
+              child: ListView.builder(
+                itemCount: _filteredProducts.length,
+                itemBuilder: (context, index) {
+                  final product = _filteredProducts[index];
+                  return _buildProductCard(product);
+                },
+              ),
+            ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           // Navigate to Add Product Form and await the result
-          final newProduct = await Navigator.push(
+          await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => AddProductPage()),
           );
 
-          // If the user added a product, add it to the list and refresh the UI
-          if (newProduct != null) {
-            setState(() {
-              _products.add(newProduct);
-              _filteredProducts = _products;
-            });
-          }
+          // If the user added a product, add it to the list and refresh the UI 
+          setState(() {
+            _filteredProducts = currentUser.products;
+          });
+          
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.blue,
@@ -227,7 +237,7 @@ class _ListProductPageState extends State<ListProductPage> {
     );
   }
 
- Widget _buildProductCard(Map<String, dynamic> product) {
+ Widget _buildProductCard(Product product) {
   return Card(
     margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
     child: Padding(
@@ -236,9 +246,9 @@ class _ListProductPageState extends State<ListProductPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           // Product Image
-          if (product['image'] != null)
+          if (product.productImage != null)
             Image.file(
-              product['image'],
+              product.productImage!,
               width: double.infinity,
               height: 150,
               fit: BoxFit.cover,
@@ -254,14 +264,17 @@ class _ListProductPageState extends State<ListProductPage> {
           
           // Product Name and Description
           Text(
-            product['name']!,
+            product.productName,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 10),
-          Text('Quantity (in kg): ${product['quantity']}'),
-          Text('Price (per kg): \$${product['price']}'),
+          Text('Quantity (in kg): ${product.quantity}'),
           SizedBox(height: 10),
-          Text('Description: ${product['description']}'),
+          Text('Price (per kg): \$${product.pricePerKg}'),
+          SizedBox(height: 10),
+          Text('Category: ${product.category}'),
+          SizedBox(height: 10),
+          Text('Description: ${product.description}'),
           SizedBox(height: 10),
 
           // Edit and Remove buttons
@@ -277,13 +290,12 @@ class _ListProductPageState extends State<ListProductPage> {
                       builder: (context) => EditProductPage(product: product),
                     ),
                   );
-
                   // If the product is updated, update the list
                   if (updatedProduct != null) {
                     setState(() {
-                      final index = _products.indexOf(product);
-                      _products[index] = updatedProduct;
-                      _filteredProducts = _products;
+                      final index = currentUser.products.indexOf(product);
+                      currentUser.products[index] = updatedProduct;
+                      _filteredProducts = currentUser.products;
                     });
                   }
                 },
@@ -294,8 +306,8 @@ class _ListProductPageState extends State<ListProductPage> {
                 onPressed: () {
                   // Remove product logic
                   setState(() {
-                    _products.remove(product);
-                    _filteredProducts = _products;
+                    currentUser.products.remove(product);
+                    _filteredProducts = currentUser.products;
                   });
                 },
                 child: Text('Remove'),
