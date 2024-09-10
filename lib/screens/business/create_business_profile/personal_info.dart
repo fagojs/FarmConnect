@@ -1,8 +1,9 @@
-import 'package:farm_connect/screens/business/create_business_profile/business_info.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import './business_info.dart';
+import '../../../data/currentuser.dart';
 class BusinessPersonalInfoPage extends StatefulWidget {
   @override
   _BusinessPersonalInfoPageState createState() => _BusinessPersonalInfoPageState();
@@ -11,6 +12,13 @@ class BusinessPersonalInfoPage extends StatefulWidget {
 class _BusinessPersonalInfoPageState extends State<BusinessPersonalInfoPage> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
+
+  // Store form input data
+  String fullName = '';
+  String contactNumber = '';
+  String email = '';
+  String address = '';
+  File? profileImage;
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
@@ -51,6 +59,36 @@ class _BusinessPersonalInfoPageState extends State<BusinessPersonalInfoPage> {
           ),
         );
       },
+    );
+  }
+
+    // Function to navigate to business info form
+  void _goToBusinessInfo() {
+    // Check if any field is empty
+    if (email.isEmpty || fullName.isEmpty || contactNumber.isEmpty || address.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('All fields are required!')),
+      );
+      return;
+    }
+    // Save user data from form fields
+    currentUser.fullName = fullName;
+    currentUser.contactNumber = contactNumber;
+    currentUser.email = email;
+    currentUser.address = address;
+
+    // Navigate to the next form
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BusinessInfoPage(
+          fullName: fullName,
+          contactNumber: contactNumber,
+          email: email,
+          address: address,
+          profileImage: profileImage,
+        ),
+      ),
     );
   }
 
@@ -173,6 +211,7 @@ class _BusinessPersonalInfoPageState extends State<BusinessPersonalInfoPage> {
                   labelText: 'Full Name',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) => fullName = value,
               ),
               SizedBox(height: 10),
               TextField(
@@ -180,6 +219,7 @@ class _BusinessPersonalInfoPageState extends State<BusinessPersonalInfoPage> {
                   labelText: 'Contact Number',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) => contactNumber = value,
               ),
               SizedBox(height: 10),
               TextField(
@@ -187,17 +227,21 @@ class _BusinessPersonalInfoPageState extends State<BusinessPersonalInfoPage> {
                   labelText: 'Email',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) => email = value,
+              ),
+              SizedBox(height: 20),
+               TextField(
+                decoration: InputDecoration(
+                  labelText: 'Address',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (value) => address = value,
               ),
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   // Navigate to the next form (Business Information)
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BusinessInfoPage(),
-                    ),
-                  );
+                  _goToBusinessInfo();
                 },
                 child: Text('CONTINUE'),
                 style: ElevatedButton.styleFrom(
