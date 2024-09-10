@@ -1,27 +1,37 @@
 import 'package:flutter/material.dart';
 
+import "../../../data/currentuser.dart";
+
 class EditBusinessPersonalProfile extends StatefulWidget {
-  final String location;
-  final String phone;
-  final String email;
-
-  EditBusinessPersonalProfile({required this.location, required this.phone, required this.email});
-
   @override
   _EditBusinessPersonalProfileState createState() => _EditBusinessPersonalProfileState();
 }
 
 class _EditBusinessPersonalProfileState extends State<EditBusinessPersonalProfile> {
-  late TextEditingController _emailController;
-  late TextEditingController _phoneController;
-  late TextEditingController _locationController;
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _emailController = TextEditingController(text: widget.email);
-    _phoneController = TextEditingController(text: widget.phone);
-    _locationController = TextEditingController(text: widget.location);
+    // Initialize the controllers with current user data
+    nameController.text = currentUser.fullName ?? '';
+    addressController.text = currentUser.address ?? '';
+    phoneController.text = currentUser.contactNumber ?? '';
+    emailController.text = currentUser.email ?? '';
+  }
+
+  
+  void _updatePersonalInfo(){
+    setState(() {
+      currentUser.fullName = nameController.text;
+      currentUser.contactNumber = phoneController.text;
+      currentUser.email = emailController.text;
+      currentUser.address = addressController.text;
+    });
+    Navigator.pop(context);
   }
 
   @override
@@ -69,28 +79,23 @@ class _EditBusinessPersonalProfileState extends State<EditBusinessPersonalProfil
             ),
             SizedBox(height: 20),
             TextField(
-              controller: _emailController,
+              controller: emailController,
               decoration: InputDecoration(labelText: 'Email', border: OutlineInputBorder()),
             ),
             SizedBox(height: 20),
             TextField(
-              controller: _phoneController,
+              controller: phoneController,
               decoration: InputDecoration(labelText: 'Contact Number', border: OutlineInputBorder()),
             ),
             SizedBox(height: 10),
             TextField(
-              controller: _locationController,
+              controller: addressController,
               decoration: InputDecoration(labelText: 'Location', border: OutlineInputBorder()),
             ),
             SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                // Pass back the updated data
-                Navigator.pop(context, {
-                  'email': _emailController.text,
-                  'phone': _phoneController.text,
-                  'location': _locationController.text,
-                });
+                _updatePersonalInfo();
               },
               child: Text('UPDATE'),
               style: ElevatedButton.styleFrom(
