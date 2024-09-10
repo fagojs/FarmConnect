@@ -1,9 +1,11 @@
-import 'package:farm_connect/screens/business/cart_page.dart';
-import 'package:farm_connect/screens/business/category_page.dart';
-import 'package:farm_connect/screens/business/home_page.dart';
 import 'package:flutter/material.dart';
+
 import './edit_personal_info.dart';
 import './edit_business_info.dart';
+import '../cart_page.dart';
+import '../category_page.dart';
+import '../home_page.dart';
+import '../../../data/currentuser.dart';
 
 class BusinessProfilePage extends StatefulWidget {
   @override
@@ -11,13 +13,6 @@ class BusinessProfilePage extends StatefulWidget {
 }
 
 class _BusinessProfilePageState extends State<BusinessProfilePage> {
-  String name = 'James Smith';
-  String phone = '042867456';
-  String email = 'jamessmith@gmail.com';
-  String businessName = 'Mexican Restaurant';
-  String location = 'Sydney, Australia';
-  String description = 'Authentic flavours with a modern twist.';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,10 +109,11 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                           'images/placeholder_img.png'), // Placeholder image, replace with actual
                     ),
                     SizedBox(height: 10),
-                    Text(
-                      'James Smith',
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                    ),
+                    // Text(
+                    //   'James Smith',
+                    //   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    // ),
+                    Text(currentUser.fullName ?? 'Name not provided', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                     Text(
                       'Business Owner',
                       style: TextStyle(color: Colors.grey[600]),
@@ -149,23 +145,13 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                         IconButton(
                           icon: Icon(Icons.edit),
                           onPressed: () async {
-                            final result = await Navigator.push(
+                            await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EditBusinessPersonalProfile(
-                                  phone: phone,
-                                  email: email,
-                                  location: location,
-                                ),
+                                builder: (context) => EditBusinessPersonalProfile(),
                               ),
                             );
-                            if (result != null) {
-                              setState(() {
-                                email = result['email'];
-                                phone = result['phone'];
-                                location = result['location'];
-                              });
-                            }
+                            setState(() {});
                           },
                         ),
                       ],
@@ -173,17 +159,10 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                     SizedBox(height: 10),
                     Row(
                       children: [
-                        Icon(Icons.location_on, color: Colors.blue),
-                        SizedBox(width: 10),
-                        Text(location, style: TextStyle(fontSize: 16)),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      children: [
                         Icon(Icons.phone, color: Colors.black),
                         SizedBox(width: 10),
-                        Text(phone, style: TextStyle(fontSize: 16)),
+                        //Text(phone, style: TextStyle(fontSize: 16)),
+                        Text(currentUser.contactNumber ?? 'Contact Number not provided', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                       ],
                     ),
                     SizedBox(height: 8),
@@ -191,7 +170,17 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                       children: [
                         Icon(Icons.email, color: Colors.green),
                         SizedBox(width: 10),
-                        Text(email, style: TextStyle(fontSize: 16)),
+                        // Text(email, style: TextStyle(fontSize: 16)),
+                        Text(currentUser.email ?? 'Email not provided', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Icon(Icons.location_on, color: Colors.blue),
+                        SizedBox(width: 10),
+                        Text(currentUser.address ?? 'Address not provided', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                        //Text(location, style: TextStyle(fontSize: 16)),
                       ],
                     ),
                   ],
@@ -220,23 +209,13 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                         IconButton(
                           icon: Icon(Icons.edit),
                           onPressed: () async {
-                            final result = await Navigator.push(
+                            await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EditBusinessInformation(
-                                  businessName: businessName,
-                                  location: location,
-                                  description: description,
-                                ),
+                                builder: (context) => EditBusinessInformation(),
                               ),
                             );
-                            if (result != null) {
-                              setState(() {
-                                businessName = result['businessName'];
-                                location = result['location'];
-                                description = result['description'];
-                              });
-                            }
+                            setState(() {});
                           },
                         ),
                       ],
@@ -246,7 +225,8 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                       children: [
                         Icon(Icons.store, color: Colors.black),
                         SizedBox(width: 10),
-                        Text(businessName, style: TextStyle(fontSize: 16)),
+                        //Text(businessName, style: TextStyle(fontSize: 16)),
+                        Text(currentUser.businessName ?? 'Business Name not provided', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                       ],
                     ),
                     SizedBox(height: 8),
@@ -254,7 +234,8 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                       children: [
                         Icon(Icons.location_city, color: Colors.blue),
                         SizedBox(width: 10),
-                        Text(location, style: TextStyle(fontSize: 16)),
+                        //Text(location, style: TextStyle(fontSize: 16)),
+                        Text(currentUser.businessAddress ?? 'Business Address not provided', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                       ],
                     ),
                     SizedBox(height: 8),
@@ -263,10 +244,11 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                         Icon(Icons.description, color: Colors.green),
                         SizedBox(width: 10),
                         Expanded(
-                          child: Text(
-                            description,
-                            style: TextStyle(fontSize: 16),
-                          ),
+                          // child: Text(
+                          //   description,
+                          //   style: TextStyle(fontSize: 16),
+                          // ),
+                          child: Text(currentUser.farmDescription ?? 'Business Description not provided', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                         ),
                       ],
                     ),
