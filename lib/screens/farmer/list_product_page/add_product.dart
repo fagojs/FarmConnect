@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import '../../../data/currentuser.dart';
+import '../../../models/product_model.dart';
+
 class AddProductPage extends StatefulWidget {
   @override
   _AddProductPageState createState() => _AddProductPageState();
@@ -16,6 +19,35 @@ class _AddProductPageState extends State<AddProductPage> {
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   File? _productImage;
+
+  void _addProduct(){
+    // Check if all fields are filled
+    if (_nameController.text.isEmpty ||
+        _quantityController.text.isEmpty ||
+        _priceController.text.isEmpty ||
+        _selectedCategory == null ||
+        _descriptionController.text.isEmpty) {
+      // Show a snackbar if any field is empty
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please fill in all fields before adding the product')),
+      );
+      return; // Do not proceed if validation fails
+    }
+
+    final newProduct = Product(
+        productName: _nameController.text.trim(),
+        quantity: int.parse(_quantityController.text.trim()),
+        pricePerKg: double.parse(_priceController.text.trim()),
+        description: _descriptionController.text.trim(),
+        category: _selectedCategory!,
+        productImage: _productImage,
+      );
+
+    // add the new product data back to List Product Page
+    currentUser.products.add(newProduct);
+    Navigator.pop(context);
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,15 +168,8 @@ class _AddProductPageState extends State<AddProductPage> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  // Pass the new product data back to List Product Page
-                  Navigator.pop(context, {
-                    'name': _nameController.text,
-                    'quantity': _quantityController.text,
-                    'price': _priceController.text,
-                    'description': _descriptionController.text,
-                    'image': _productImage,
-                  });
+                onPressed: (){
+                  _addProduct();
                 },
                 child: Text('Add Product'),
                 style: ElevatedButton.styleFrom(
