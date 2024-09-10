@@ -1,26 +1,84 @@
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import '../home_page.dart';
+import '../../../data/currentuser.dart';
+import '../../../models/create_business_profile.dart';
+import '../../../data/dummy_data.dart';
+
 class BusinessInfoPage extends StatefulWidget {
+  final String fullName;
+  final String contactNumber;
+  final String email;
+  final String address;
+  final File? profileImage;
+
+
+   BusinessInfoPage({
+    required this.fullName,
+    required this.contactNumber,
+    required this.email,
+    required this.address,
+    this.profileImage,
+  });
   @override
   _BusinessInfoPageState createState() => _BusinessInfoPageState();
 }
 
 class _BusinessInfoPageState extends State<BusinessInfoPage> {
-  File? _image;
-  final ImagePicker _picker = ImagePicker();
+  // Store business info input data
+  String businessName= '';
+  String  businessAddress = '';
+  String businessDescription = '';
+  File? businessLogo;
 
+  final ImagePicker _picker = ImagePicker();
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
 
     setState(() {
       if (pickedFile != null) {
-        _image = File(pickedFile.path);
+        businessLogo = File(pickedFile.path);
       } else {
         print('No image selected.');
       }
     });
+  }
+
+   // Function to save profile to in-memory list
+  void _saveProfile() {
+     // Check if any field is empty
+    if (businessName.isEmpty || businessAddress.isEmpty || businessDescription.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('All fields are required!')),
+      );
+      return;
+    }
+
+     // Save farm data from form fields
+    currentUser.businessName = businessName;
+    currentUser.businessAddress = businessAddress;
+    currentUser.businessDescription = businessDescription;
+
+    businessProfiles.add(BusinessProfile(
+      fullName: widget.fullName,
+      contactNumber: widget.contactNumber,
+      email: widget.email,
+      address: widget.address,
+      businessName: businessName,
+      businessAddress: businessAddress,
+      businessDescription: businessDescription,
+      profileImage: widget.profileImage,
+      businessLogo: businessLogo,
+    ));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BusinessOwnerHomePage(),
+        )
+    ); // Go back to profile page or show success message
   }
 
   void _showImageSourceActionSheet(BuildContext context) {
@@ -135,7 +193,7 @@ class _BusinessInfoPageState extends State<BusinessInfoPage> {
               SizedBox(height: 20),
               GestureDetector(
                 onTap: () => _showImageSourceActionSheet(context),
-                child: _image == null
+                child: businessLogo == null
                     ? Container(
                         width: 150,
                         height: 150,
@@ -160,7 +218,7 @@ class _BusinessInfoPageState extends State<BusinessInfoPage> {
                           color: Colors.grey[200],
                           borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
-                            image: FileImage(_image!),
+                            image: FileImage(businessLogo!),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -172,6 +230,7 @@ class _BusinessInfoPageState extends State<BusinessInfoPage> {
                   labelText: 'Business Name',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) => businessName = value,
               ),
               SizedBox(height: 10),
               TextField(
@@ -179,6 +238,7 @@ class _BusinessInfoPageState extends State<BusinessInfoPage> {
                   labelText: 'Business Address',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) => businessAddress = value,
               ),
               SizedBox(height: 10),
               TextField(
@@ -186,12 +246,13 @@ class _BusinessInfoPageState extends State<BusinessInfoPage> {
                   labelText: 'Tell us about your business',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) => businessDescription = value,
               ),
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   // Handle form submission and move to the next page
-                  Navigator.pop(context);
+                  _saveProfile();
                 },
                 child: Text('CONTINUE'),
                 style: ElevatedButton.styleFrom(
