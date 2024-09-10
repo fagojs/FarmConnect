@@ -2,30 +2,31 @@ import 'package:flutter/material.dart';
 import 'dart:io'; // For using File
 import 'package:image_picker/image_picker.dart'; // For picking images
 
+import '../../../data/currentuser.dart';
+
 class EditContactInfoPage extends StatefulWidget {
-  final Map<String, dynamic> contactInfo;
-
-  EditContactInfoPage({required this.contactInfo});
-
   @override
   _EditContactInfoPageState createState() => _EditContactInfoPageState();
 }
 
 class _EditContactInfoPageState extends State<EditContactInfoPage> {
-  late TextEditingController _nameController;
-  late TextEditingController _phoneController;
-  late TextEditingController _emailController;
-
-  File? _selectedImage;
-  final ImagePicker _picker = ImagePicker();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: widget.contactInfo['name']);
-    _phoneController = TextEditingController(text: widget.contactInfo['phone']);
-    _emailController = TextEditingController(text: widget.contactInfo['email']);
+   // Initialize the controllers with current user data
+    nameController.text = currentUser.fullName ?? '';
+    addressController.text = currentUser.address ?? '';
+    phoneController.text = currentUser.contactNumber ?? '';
+    emailController.text = currentUser.email ?? '';
   }
+
+  final ImagePicker _picker = ImagePicker();
+  File? _selectedImage;
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
@@ -34,6 +35,16 @@ class _EditContactInfoPageState extends State<EditContactInfoPage> {
         _selectedImage = File(pickedFile.path);
       });
     }
+  }
+
+  void _updateContactInfo(){
+    setState(() {
+      currentUser.fullName = nameController.text;
+      currentUser.contactNumber = phoneController.text;
+      currentUser.email = emailController.text;
+      currentUser.address = addressController.text;
+    });
+    Navigator.pop(context);
   }
 
   @override
@@ -66,28 +77,28 @@ class _EditContactInfoPageState extends State<EditContactInfoPage> {
               ),
               SizedBox(height: 20),
               TextField(
-                controller: _nameController,
+                controller: nameController,
                 decoration: InputDecoration(labelText: 'Name'),
               ),
               SizedBox(height: 10),
               TextField(
-                controller: _phoneController,
+                controller: phoneController,
                 decoration: InputDecoration(labelText: 'Phone'),
               ),
               SizedBox(height: 10),
               TextField(
-                controller: _emailController,
+                controller: emailController,
                 decoration: InputDecoration(labelText: 'Email'),
+              ),
+              SizedBox(height: 20),
+              TextField(
+                controller: addressController,
+                decoration: InputDecoration(labelText: 'Address'),
               ),
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    widget.contactInfo['name'] = _nameController.text;
-                    widget.contactInfo['phone'] = _phoneController.text;
-                    widget.contactInfo['email'] = _emailController.text;
-                  });
-                  Navigator.pop(context, widget.contactInfo);
+                  _updateContactInfo();
                 },
                 child: Text('Update'),
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),

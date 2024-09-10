@@ -2,36 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import '../../../data/currentuser.dart';
+
 class EditFarmInfoPage extends StatefulWidget {
-  final Map<String, dynamic> farmInfo;
-
-  EditFarmInfoPage({required this.farmInfo});
-
   @override
   _EditFarmInfoPageState createState() => _EditFarmInfoPageState();
 }
 
 class _EditFarmInfoPageState extends State<EditFarmInfoPage> {
-  late TextEditingController _farmNameController;
-  late TextEditingController _locationController;
-  late TextEditingController _descriptionController;
-  File? _image;
 
+  final TextEditingController farmNameController = TextEditingController();
+  final TextEditingController farmAddressController = TextEditingController();
+  final TextEditingController farmDescriptionController = TextEditingController();
+
+
+  File? _selectedImage;
   final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
     super.initState();
-    _farmNameController = TextEditingController(text: widget.farmInfo['farmName']);
-    _locationController = TextEditingController(text: widget.farmInfo['location']);
-    _descriptionController = TextEditingController(text: widget.farmInfo['description']);
+    farmNameController.text = currentUser.fullName ?? '';
+    farmAddressController.text = currentUser.address ?? '';
+    farmDescriptionController.text = currentUser.contactNumber ?? '';
+  }
+
+  void _updateFarmInfo(){
+    setState(() {
+        currentUser.farmName = farmNameController.text;
+        currentUser.farmAddress = farmAddressController.text;
+        currentUser.farmDescription = farmDescriptionController.text;
+      });
+      Navigator.pop(context);
   }
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
     if (pickedFile != null) {
       setState(() {
-        _image = File(pickedFile.path);
+        _selectedImage = File(pickedFile.path);
       });
     }
   }
@@ -59,36 +68,31 @@ class _EditFarmInfoPageState extends State<EditFarmInfoPage> {
                 },
                 child: CircleAvatar(
                   radius: 50,
-                  backgroundImage: _image != null
-                      ? FileImage(_image!)
+                  backgroundImage: _selectedImage != null
+                      ? FileImage(_selectedImage!)
                       : AssetImage('images/placeholder_img.png') as ImageProvider,
                   child: Icon(Icons.camera_alt, size: 30, color: Colors.white),
                 ),
               ),
               SizedBox(height: 10),
               TextField(
-                controller: _farmNameController,
+                controller: farmNameController,
                 decoration: InputDecoration(labelText: 'Farm Name'),
               ),
               SizedBox(height: 10),
               TextField(
-                controller: _locationController,
+                controller: farmAddressController,
                 decoration: InputDecoration(labelText: 'Location'),
               ),
               SizedBox(height: 10),
               TextField(
-                controller: _descriptionController,
+                controller: farmDescriptionController,
                 decoration: InputDecoration(labelText: 'Description'),
               ),
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    widget.farmInfo['farmName'] = _farmNameController.text;
-                    widget.farmInfo['location'] = _locationController.text;
-                    widget.farmInfo['description'] = _descriptionController.text;
-                  });
-                  Navigator.pop(context, widget.farmInfo);
+                  _updateFarmInfo();                   
                 },
                 child: Text('Update'),
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
