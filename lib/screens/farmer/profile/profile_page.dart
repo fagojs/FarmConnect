@@ -1,27 +1,21 @@
+
 import 'package:flutter/material.dart';
 
 import './edit_contact.dart';
 import './edit_farm_info.dart';
-
 import '../home_page.dart';
 import '../list_product_page/list_product.dart';
 import '../manage_order/manage_orders.dart';
 import '../../../data/currentuser.dart';
 
-class ProfilePage extends StatelessWidget {
-  final Map<String, dynamic> contactInfo = {
-    'name': currentUser.fullName,
-    'location': currentUser.address,
-    'phone': currentUser.contactNumber,
-    'email': currentUser.email,
-  };
+class ProfilePage extends StatefulWidget {
 
-  final Map<String, dynamic> farmInfo = {
-    'farmName': currentUser.farmName,
-    'location': currentUser.farmAddress,
-    'description': currentUser.farmDescription,
-  };
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
 
+}
+ 
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,11 +127,12 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                   trailing: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      await Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => EditContactInfoPage(contactInfo: contactInfo)),
+                        MaterialPageRoute(builder: (context) => EditContactInfoPage()),
                       );
+                      setState(() {});
                     },
                     child: Text('Edit'),
                   ),
@@ -181,11 +176,12 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                   trailing: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      await Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => EditFarmInfoPage(farmInfo: farmInfo)),
+                        MaterialPageRoute(builder: (context) => EditFarmInfoPage()),
                       );
+                      setState(() {});
                     },
                     child: Text('Edit'),
                   ),
