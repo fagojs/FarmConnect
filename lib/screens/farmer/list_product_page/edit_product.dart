@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
 import '../../../models/product_model.dart';
-import '../../../data/currentuser.dart';
 
 class EditProductPage extends StatefulWidget {
   final Product product;
