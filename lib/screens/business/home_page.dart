@@ -1,9 +1,11 @@
+import 'package:farm_connect/data/cart_state.dart';
 import 'package:flutter/material.dart';
 
 import './product_details.dart';
 import './cart_page.dart';
 import './category_page.dart';
 import './profile_page/profile_page.dart';
+import '../../data/all_products.dart';
 
 class BusinessOwnerHomePage extends StatefulWidget {
   @override
@@ -11,15 +13,37 @@ class BusinessOwnerHomePage extends StatefulWidget {
 }
 
 class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
-  final List<Map<String, String>> categories = [
-    {"name": "All", "image": "images/placeholder_img.png"},
-    {"name": "Vegetables", "image": "images/placeholder_img.png"},
-    {"name": "Dairy", "image": "images/placeholder_img.png"},
-    {"name": "Fruits", "image": "images/placeholder_img.png"},
-    {"name": "Grains", "image": "images/placeholder_img.png"},
-    {"name": "Meat", "image": "images/placeholder_img.png"},
-  ];
   String selectedCategory = "All";
+  List<Map<String, dynamic>> filteredProducts = [];
+
+  @override
+  void initState() {
+    super.initState();
+    filteredProducts = allListedProducts; // Initially show all products from the imported list
+  }
+
+    // Filter products by category
+  void filterProductsByCategory(String category) {
+    setState(() {
+      if (category == "All") {
+        filteredProducts = allListedProducts;
+      } else {
+        filteredProducts = allListedProducts
+            .where((product) => product['category'] == category)
+            .toList();
+      }
+      selectedCategory = category;
+    });
+  }
+
+    // Filter products by search query
+  void filterProductsBySearch(String query) {
+    setState(() {
+      filteredProducts = allListedProducts.where((product) {
+        return product['name'].toLowerCase().contains(query.toLowerCase());
+      }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +121,7 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
           children: <Widget>[
             // Search Bar
             TextField(
+              onChanged: filterProductsBySearch,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search),
                 hintText: 'Search local farm products',
@@ -127,10 +152,8 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      setState(() {
-                        selectedCategory = categories[index]['name']!;
-                      });
                       // Filter products by selected category
+                      filterProductsByCategory(categories[index]['name']!);
                     },
                     child: Container(
                       margin: EdgeInsets.only(right: 10),
@@ -189,18 +212,19 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
             // All Products Section with image on top and "+" button larger
             Expanded(
               child: ListView.builder(
-                itemCount: 5, // Simulate 5 products
+                itemCount: filteredProducts.length, // Simulate products
                 itemBuilder: (context, index) {
+                  final product = filteredProducts[index];
                   return  GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => ProductDetailsPage(
-                            productName: 'Tomatoes',  // Replace with product data dynamically
-                            quantity: 100,            // Replace with product data dynamically
-                            price: 3,                 // Replace with product data dynamically
-                            description: 'Locally grown with local farm techniques.',  // Replace with product data dynamically
+                            productName: product['name']!,
+                            quantity: product['quantity']!,
+                            price: product['price']!,
+                            description: product['description']!,
                           ),
                         ),
                       );
@@ -226,16 +250,18 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Tomatoes', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                  SizedBox(height: 5),
-                                  Text('Quantity: 100 kg'),
-                                  Text('Price: \$3 per kg'),
-                                  Text('Locally grown with local farm techniques'),
-                                ],
-                              ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(product['name']!, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                    Text('Quantity: ${product['quantity']}'),
+                                    if(product['quantity'].split(" ")[1] == "kg")
+                                      Text('Price (per kg): ${product['price']}')
+                                    else
+                                      Text('Price (per Litre): ${product['price']}'),
+                                    Text(product['description']!),
+                                  ],
+                                ),
                             ),
                           ],
                         ),
@@ -247,8 +273,23 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                             icon: Icon(Icons.add, size: 30), // Increased size of "+"
                             onPressed: () {
                               // Add to cart logic
+                              String unit = "";
+                              if(product['quantity'].split(" ")[1] == "kg"){
+                                unit = "kg";
+                              }else{
+                                unit ="litre";
+                              }
+                              cartState.addToCart({
+                                "name": product['name'],
+                                "price": double.parse(product['price']),
+                                "quantity": 1,
+                                "unit": unit,
+                              });
                               ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Product added to cart!')),
+                                SnackBar(
+                                  content: Text('${product['name']} added to cart!'),
+                                  duration: Duration(seconds: 1),
+                                  ),
                             );
                             }
                           ),
