@@ -65,11 +65,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               ),
               SizedBox(height: 10),
               Text('Product Name: ${widget.productName}', style: TextStyle(fontSize: 16)),
-              Text('Quantity (in kg): ${widget.quantity}', style: TextStyle(fontSize: 16)),
+              Text('Quantity Available: ${widget.quantity}', style: TextStyle(fontSize: 16)),
               if(widget.quantity.split(" ")[1] == "kg")
-                Text('Price (per kg): ${widget.price}', style: TextStyle(fontSize: 16))
+                Text('Price: \$${widget.price} per kg', style: TextStyle(fontSize: 16))
               else
-                Text('Price (per Litre): ${widget.price}', style: TextStyle(fontSize: 16)),
+                Text('Price:\$${widget.price} per litre', style: TextStyle(fontSize: 16)),
               Text('Description: ${widget.description}', style: TextStyle(fontSize: 16)),
               SizedBox(height: 20),
 
