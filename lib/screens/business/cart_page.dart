@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './category_page.dart';
 import 'home_page.dart';
 import './profile_page/profile_page.dart';
+import '../../data/cart_state.dart';
 
 class CartPage extends StatefulWidget {
   @override
@@ -10,12 +11,7 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  List<Map<String, dynamic>> cartItems = [
-    {"name": "Tomatoes", "price": 3.0, "quantity": 5},
-    {"name": "Tomatoes", "price": 3.0, "quantity": 5},
-    {"name": "Tomatoes", "price": 3.0, "quantity": 5},
-    {"name": "Tomatoes", "price": 3.0, "quantity": 5},
-  ];
+ 
 
   List<Map<String, dynamic>> orderHistory = [
     {
@@ -44,32 +40,33 @@ class _CartPageState extends State<CartPage> {
     }
   ];
 
+ // Use cartState for cartItems
   void incrementQuantity(int index) {
     setState(() {
-      cartItems[index]["quantity"]++;
+      cartState.cartItems[index]["quantity"]++;
     });
   }
 
   void decrementQuantity(int index) {
     setState(() {
-      if (cartItems[index]["quantity"] > 1) {
-        cartItems[index]["quantity"]--;
+      if (cartState.cartItems[index]["quantity"] > 1) {
+        cartState.cartItems[index]["quantity"]--;
       }
     });
   }
 
   double getTotal() {
     double total = 0.0;
-    for (var item in cartItems) {
+    for (var item in cartState.cartItems) {
       total += item["price"] * item["quantity"];
     }
     return total;
   }
 
   void deleteCart() {
-    setState(() {
-      cartItems.clear();
-    });
+      setState(() {
+        cartState.clearCart();
+      });
   }
 
   void deleteOrderHistory() {
@@ -206,13 +203,13 @@ class _CartPageState extends State<CartPage> {
 
  // Building the Current Orders section with delete icon for each product
 Widget buildCurrentOrders() {
-  return cartItems.isEmpty
+  return cartState.cartItems.isEmpty
       ? buildEmptyCart()
       : Column(
           children: [
             Expanded(
               child: ListView.builder(
-                itemCount: cartItems.length,
+                itemCount: cartState.cartItems.length,
                 itemBuilder: (context, index) {
                   return Card(
                     margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -226,8 +223,9 @@ Widget buildCurrentOrders() {
                               height: 50,
                               color: Colors.grey[300],
                             ),
-                            title: Text(cartItems[index]["name"]),
-                            subtitle: Text("\$${cartItems[index]["price"]}/kg"),
+                            title: Text(cartState.cartItems[index]["name"]),
+                            subtitle: Text("\$${cartState.cartItems[index]["price"]}/${cartState.cartItems[index]['unit']}"),
+                            
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -235,7 +233,7 @@ Widget buildCurrentOrders() {
                                   icon: Icon(Icons.remove),
                                   onPressed: () => decrementQuantity(index),
                                 ),
-                                Text(cartItems[index]["quantity"].toString()),
+                                Text('${cartState.cartItems[index]["quantity"].toString()} ${cartState.cartItems[index]['unit']}'),
                                 IconButton(
                                   icon: Icon(Icons.add),
                                   onPressed: () => incrementQuantity(index),
@@ -250,11 +248,11 @@ Widget buildCurrentOrders() {
                           onPressed: () {
                             // Remove specific product and show snackbar
                             setState(() {
-                              cartItems.removeAt(index);
+                              cartState.cartItems.removeAt(index);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Product removed from cart'),
-                                  duration: Duration(seconds: 2),
+                                  content: Text('${cartState.cartItems[index]['name']} removed from cart'),
+                                  duration: Duration(seconds: 1),
                                   behavior: SnackBarBehavior.floating,
                                 ),
                               );
@@ -311,7 +309,7 @@ Widget buildCurrentOrders() {
         children: [
           Icon(Icons.remove_shopping_cart, size: 100, color: Colors.grey),
           Text(
-            'Your Cart is Deleted!!',
+            'Your Cart is Empty!!',
             style: TextStyle(fontSize: 24),
           ),
           Text('Browse for local farm products and fill your cart'),
