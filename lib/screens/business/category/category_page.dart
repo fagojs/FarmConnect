@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import './home_page.dart';
-import './cart_page.dart';
-import './profile_page/profile_page.dart';
+import '../home_page.dart';
+import '../cart_page.dart';
+import '../profile_page/profile_page.dart';
+import './category_details.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
   final TextEditingController _searchController = TextEditingController();
-  List<String> categories = ['Vegetables', 'Fruits', 'Dairy', 'Grains', 'Meat'];
+  List<String> categories = ['Vegetable', 'Fruit', 'Dairy', 'Grain', 'Meat'];
   List<String> filteredCategories = [];
   
   @override
@@ -126,7 +127,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            CategoryDetailsPage(category: filteredCategories[index]),
+                            CategorySpecificPage(category: filteredCategories[index]),
                       ),
                     );
                   },
@@ -218,25 +219,6 @@ class _CategoryPageState extends State<CategoryPage> {
               break;
           }
         },
-      ),
-    );
-  }
-}
-
-class CategoryDetailsPage extends StatelessWidget {
-  final String category;
-
-  const CategoryDetailsPage({Key? key, required this.category})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('$category Details'),
-      ),
-      body: Center(
-        child: Text('Details for $category'),
       ),
     );
   }
