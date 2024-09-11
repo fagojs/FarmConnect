@@ -7,80 +7,161 @@ final List<Map<String, dynamic>> allListedProducts = [
     "price": "3.0",
     "description": "Locally grown with local farm techniques.",
     "category": "Vegetable",
-    "image": "images/tomatoes.png",
+    "image": "images/tomatoes.png"
   },
   {
-    "name": "Milk",
-    "quantity": "200 liters",
-    "price": "1.5",
-    "description": "Fresh dairy milk from local farms.",
-    "category": "Dairy",
-    "image": "images/milk.png",
-  },
-  {
-    "name": "Strawberries",
+    "name": "Carrots",
     "quantity": "50 kg",
-    "price": "5.0",
-    "description": "Fresh, organic strawberries picked today.",
-    "category": "Fruit",
-    "image": "images/strawberries.png",
-  },
-  {
-    "name": "Chicken Breast",
-    "quantity": "300 kg",
-    "price": "7.0",
-    "description": "Fresh, free-range chicken breast.",
-    "category": "Meat",
-    "image": "images/chicken.png",
-  },
-  {
-    "name": "Wheat",
-    "quantity": "500 kg",
-    "price": "2.0",
-    "description": "Whole wheat from local grain farmers.",
-    "category": "Grain",
-    "image": "images/wheat.png",
-  },
-  {
-    "name": "Cheese",
-    "quantity": "50 kg",
-    "price": "10.0",
-    "description": "Aged cheese from the finest dairy farms.",
-    "category": "Dairy",
-    "image": "images/cheese.png",
+    "price": "2.5",
+    "description": "Fresh organic carrots from local farms.",
+    "category": "Vegetable",
+    "image": "images/carrots.png"
   },
   {
     "name": "Apples",
-    "quantity": "150 kg",
+    "quantity": "200 kg",
     "price": "4.0",
-    "description": "Fresh, crisp apples.",
+    "description": "Crisp and sweet apples, perfect for snacks.",
     "category": "Fruit",
-    "image": "images/apples.png",
+    "image": "images/apples.png"
+  },
+  {
+    "name": "Bananas",
+    "quantity": "150 kg",
+    "price": "1.5",
+    "description": "Ripe bananas, great for smoothies and snacks.",
+    "category": "Fruit",
+    "image": "images/bananas.png"
+  },
+  {
+    "name": "Rice",
+    "quantity": "500 kg",
+    "price": "1.2",
+    "description": "Premium quality white rice, perfect for daily meals.",
+    "category": "Grain",
+    "image": "images/rice.png"
+  },
+  {
+    "name": "Wheat Flour",
+    "quantity": "300 kg",
+    "price": "1.8",
+    "description": "Whole wheat flour for baking and cooking.",
+    "category": "Grain",
+    "image": "images/wheat_flour.png"
+  },
+  {
+    "name": "Beef",
+    "quantity": "50 kg",
+    "price": "10.0",
+    "description": "Grass-fed beef, tender and flavorful.",
+    "category": "Meat",
+    "image": "images/beef.png"
+  },
+  {
+    "name": "Chicken Breast",
+    "quantity": "80 kg",
+    "price": "6.0",
+    "description": "Boneless, skinless chicken breasts, perfect for grilling.",
+    "category": "Meat",
+    "image": "images/chicken_breast.png"
+  },
+  {
+    "name": "Milk",
+    "quantity": "500 liters",
+    "price": "1.0",
+    "description": "Freshly sourced from local dairy farms.",
+    "category": "Dairy",
+    "image": "images/milk.png"
+  },
+  {
+    "name": "Cheese",
+    "quantity": "100 kg",
+    "price": "8.0",
+    "description": "Artisan cheese made from local milk.",
+    "category": "Dairy",
+    "image": "images/cheese.png"
   },
   {
     "name": "Potatoes",
-    "quantity": "400 kg",
-    "price": "1.5",
-    "description": "Farm-fresh potatoes.",
+    "quantity": "300 kg",
+    "price": "2.0",
+    "description": "Fresh and organic potatoes.",
     "category": "Vegetable",
-    "image": "images/potatoes.png",
+    "image": "images/potatoes.png"
+  },
+  {
+    "name": "Onions",
+    "quantity": "150 kg",
+    "price": "1.5",
+    "description": "Locally grown onions, ideal for cooking.",
+    "category": "Vegetable",
+    "image": "images/onions.png"
+  },
+  {
+    "name": "Oranges",
+    "quantity": "120 kg",
+    "price": "3.5",
+    "description": "Juicy and sweet oranges.",
+    "category": "Fruit",
+    "image": "images/oranges.png"
+  },
+  {
+    "name": "Strawberries",
+    "quantity": "80 kg",
+    "price": "5.0",
+    "description": "Fresh, hand-picked strawberries.",
+    "category": "Fruit",
+    "image": "images/strawberries.png"
+  },
+  {
+    "name": "Oats",
+    "quantity": "200 kg",
+    "price": "2.0",
+    "description": "Organic oats, great for breakfast.",
+    "category": "Grain",
+    "image": "images/oats.png"
+  },
+  {
+    "name": "Barley",
+    "quantity": "250 kg",
+    "price": "1.5",
+    "description": "Whole barley grains for soups and salads.",
+    "category": "Grain",
+    "image": "images/barley.png"
   },
   {
     "name": "Pork Chops",
-    "quantity": "200 kg",
-    "price": "6.0",
-    "description": "Locally sourced pork chops.",
+    "quantity": "60 kg",
+    "price": "9.0",
+    "description": "Tender pork chops, perfect for grilling.",
     "category": "Meat",
-    "image": "images/pork_chops.png",
+    "image": "images/pork_chops.png"
   },
   {
-    "name": "Corn",
-    "quantity": "350 kg",
-    "price": "1.0",
-    "description": "Sweet corn from local farms.",
-    "category": "Grains",
-    "image": "images/corn.png",
+    "name": "Lamb",
+    "quantity": "30 kg",
+    "price": "12.0",
+    "description": "Organic lamb, tender and flavorful.",
+    "category": "Meat",
+    "image": "images/lamb.png"
   },
+  {
+    "name": "Yogurt",
+    "quantity": "200 kg",
+    "price": "3.0",
+    "description": "Fresh, locally produced yogurt.",
+    "category": "Dairy",
+    "image": "images/yogurt.png"
+  },
+  {
+    "name": "Butter",
+    "quantity": "150 kg",
+    "price": "5.0",
+    "description": "Creamy butter made from farm-fresh milk.",
+    "category": "Dairy",
+    "image": "images/butter.png"
+  }
+
 ];
 
 // list of all categories
