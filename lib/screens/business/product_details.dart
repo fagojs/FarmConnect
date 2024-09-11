@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../data/cart_state.dart';
+
 class ProductDetailsPage extends StatefulWidget {
   final String productName;
-  final int quantity;
-  final double price;
+  final String quantity;
+  final String price;
   final String description;
 
   ProductDetailsPage({
@@ -64,7 +66,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               SizedBox(height: 10),
               Text('Product Name: ${widget.productName}', style: TextStyle(fontSize: 16)),
               Text('Quantity (in kg): ${widget.quantity}', style: TextStyle(fontSize: 16)),
-              Text('Price (per kg): ${widget.price}\$', style: TextStyle(fontSize: 16)),
+              if(widget.quantity.split(" ")[1] == "kg")
+                Text('Price (per kg): ${widget.price}', style: TextStyle(fontSize: 16))
+              else
+                Text('Price (per Litre): ${widget.price}', style: TextStyle(fontSize: 16)),
               Text('Description: ${widget.description}', style: TextStyle(fontSize: 16)),
               SizedBox(height: 20),
 
@@ -96,8 +101,24 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 child: ElevatedButton(
                   onPressed: () {
                     // Add to cart logic
+                    String unit = "";
+                      if(widget.quantity.split(" ")[1] == "kg"){
+                        unit = "kg";
+                      }else{
+                        unit ="litre";
+                      }
+                    cartState.addToCart({
+                      "name": widget.productName,
+                      "price": double.parse(widget.price),
+                      "quantity": 1,
+                      "unit": unit,
+                    });
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Product added to cart!')),
+                       SnackBar(
+                        content: Text('${widget.productName} added to cart!'),
+                        duration: Duration(seconds:1),
+                       
+                       ),
                     );
                   },
                   child: Text('ADD TO CART'),
