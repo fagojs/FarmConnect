@@ -1,4 +1,3 @@
-
 class OrderHistoryState {
   static final OrderHistoryState _instance = OrderHistoryState._internal();
 
