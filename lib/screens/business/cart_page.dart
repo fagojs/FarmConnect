@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './category_page.dart';
-import 'home_page.dart';
+import './category/category_page.dart';
+import './home_page.dart';
 import './profile_page/profile_page.dart';
 import '../../data/cart_state.dart';
 import '../../data/order_history.dart';

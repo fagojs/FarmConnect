@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import './edit_personal_info.dart';
 import './edit_business_info.dart';
 import '../cart_page.dart';
-import '../category_page.dart';
+import '../category/category_page.dart';
 import '../home_page.dart';
 import '../../../data/currentuser.dart';
 
