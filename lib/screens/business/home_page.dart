@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import './product_details.dart';
 import './cart_page.dart';
-import './category_page.dart';
+import './category/category_page.dart';
 import './profile_page/profile_page.dart';
 import '../../data/all_products.dart';
 
@@ -138,6 +138,10 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                 GestureDetector(
                   onTap: () {
                     // Navigate to full Categories page
+                    Navigator.pushReplacement(
+                      context, 
+                      MaterialPageRoute(builder: (context) => CategoryPage())
+                    );
                   },
                   child: Text('See All', style: TextStyle(color: Colors.blue)),
                 ),
@@ -241,9 +245,8 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                               height: 150,
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: Colors.grey[300], // Placeholder for image
                                 image: DecorationImage(
-                                  image: AssetImage('images/placeholder_img.png'), // Replace with product image
+                                  image: AssetImage('images/placeholder_img.png'), // Use product image
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -253,12 +256,27 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(product['name']!, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                    Text('Quantity: ${product['quantity']}'),
-                                    if(product['quantity'].split(" ")[1] == "kg")
-                                      Text('Price (per kg): ${product['price']}')
-                                    else
-                                      Text('Price (per Litre): ${product['price']}'),
+                                    SizedBox(height: 10),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                          product['name'],
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                          ),
+                                          if(product['quantity'].split(" ")[1] == "kg")
+                                            Text(
+                                              'Price: \$${product['price']} per kg', // Price
+                                              style: TextStyle(fontSize: 14),
+                                            )
+                                          else
+                                            Text(
+                                              'Price: \$${product['price']} per litre', // Price
+                                              style: TextStyle(fontSize: 14),
+                                            ),
+                                        ],
+                                      ),
+                                    SizedBox(height: 10),
                                     Text(product['description']!),
                                   ],
                                 ),
