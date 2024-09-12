@@ -20,6 +20,8 @@ class _SignInPageState extends State<SignInPage>{
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  bool _isPasswordVisible = false;
+
   void _signIn() {
     String email = _emailController.text;
     String password = _passwordController.text;
@@ -110,16 +112,28 @@ class _SignInPageState extends State<SignInPage>{
               decoration: InputDecoration(
                 labelText: 'Password',
                 border: OutlineInputBorder(),
-                suffixIcon: Icon(Icons.visibility_off),
+                suffixIcon: IconButton(
+                    icon: Icon(
+                      _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isPasswordVisible = !_isPasswordVisible;
+                      });
+                    },
+                  ),
+                ),
+                obscureText: !_isPasswordVisible,  // Toggle password visibility
               ),
-              obscureText: true,
-            ),
             SizedBox(height: 10),
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
                   // Implement forgot password functionality
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Password reset link is sent to your email')),
+                  );
                 },
                 child: Text('Forgot Password?'),
               ),
@@ -135,16 +149,22 @@ class _SignInPageState extends State<SignInPage>{
               ),
             ),
             SizedBox(height: 10),
-            TextButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SignUpPage(),
-                  ),
-                );
-              },
-              child: Text('Don’t have an account? Sign Up'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Don’t have an account?'),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignUpPage(),
+                      ),
+                    );
+                  },
+                  child: Text('Sign Up', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),),
+                ),
+              ],
             ),
           ],
         ),
