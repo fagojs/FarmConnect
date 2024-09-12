@@ -6,6 +6,7 @@ import 'personal.dart';
 import '../home_page.dart';
 import '../../../data/dummy_data.dart';
 import '../../../models/product_model.dart';
+import '../../landing_page.dart';
 
 class ListFirstProductPage extends StatefulWidget {
   @override
@@ -36,28 +37,42 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
 
   void _saveFirstProduct(){
     if (productName.isNotEmpty && _selectedCategory != null && quantity != 0 && price != 0.0) {
-      // Add product to in-memory list
-      productList.add(Product(
-        productName: productName,
-        category: _selectedCategory!,
-        quantity: quantity,
-        pricePerKg: price,
-        productImage: _image,
-        description: productDescription,
-      ));
+      if(quantity < 0 || price < 0){
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Quantity or Price cannot have negative value!'),
+          ),
+        );
+      }else{
+        // Add product to in-memory list
+        productList.add(Product(
+          productName: productName,
+          category: _selectedCategory!,
+          quantity: quantity,
+          pricePerKg: price,
+          productImage: _image,
+          description: productDescription,
+        ));
 
-      // Navigate to farmer home page
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => FarmerHomePage(),
+        // Navigate to farmer home page
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FarmerHomePage(),
+          ),
+        );
+      }
+    }else if(quantity == 0 || price == 0){
+       ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Quantity or Price must be greater than 0'),
         ),
       );
     }else{
        // Show an error message for empty fields
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please fill in all fields.'),
+          content: Text('Please fill in all fields to list the product or skip for now.'),
         ),
       );
     }
@@ -106,14 +121,6 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
             },
           ),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {
-              // User profile logic
-            },
-          ),
-        ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -137,6 +144,10 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
               onTap: () {
                 Navigator.of(context).pop(); // Close the drawer
                 // Navigate to Welcome Screen
+                Navigator.pushReplacement(
+                  context, 
+                  MaterialPageRoute(builder: (context) => LandingPage(userType: 'Farmer'))
+                );
               },
             ),
             ListTile(
@@ -203,7 +214,7 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.add_a_photo, size: 40),
-                              Text('Add image of your product (optional)'),
+                              Text('Add image of your product (optional)', textAlign: TextAlign.center,),
                             ],
                           ),
                         ),
