@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+
 import './list_product_page/list_product.dart';
 import './manage_order/manage_orders.dart';
 import './profile/profile_page.dart';
+import '../../data/dummy_orders.dart';
+import '../../models/order_model.dart';
 
 class FarmerHomePage extends StatefulWidget {
   @override
@@ -11,65 +14,43 @@ class FarmerHomePage extends StatefulWidget {
 class _FarmerHomePageState extends State<FarmerHomePage> {
   String _selectedFilter = 'All';
   int _currentIndex = 0;
-  final List<Map<String, String>> _orders = [
-    {
-      'status': 'New',
-      'owner': 'James Smith',
-      'product': 'Tomatoes',
-      'quantity': '100',
-      'price': '3'
-    },
-    {
-      'status': 'Processing',
-      'owner': 'David Malla',
-      'product': 'Garlic',
-      'quantity': '100',
-      'price': '3'
-    },
-    {
-      'status': 'Completed',
-      'owner': 'James Smith',
-      'product': 'Tomatoes',
-      'quantity': '100',
-      'price': '3'
-    },
-    {
-      'status': 'Processing',
-      'owner': 'David Malla',
-      'product': 'Garlic',
-      'quantity': '100',
-      'price': '3'
-    },
-    {
-      'status': 'Completed',
-      'owner': 'James Smith',
-      'product': 'Tomatoes',
-      'quantity': '100',
-      'price': '3'
-    },
-  ];
 
+  // This list keeps track of which card's business information is visible
+  List<bool> _showBusinessOwnerInfoList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the visibility state for each order as false (collapsed)
+    _showBusinessOwnerInfoList = List<bool>.filled(dummyOrders.length, false);
+  }
+
+  void _toggleBusinessInfo(int index) {
+    setState(() {
+      _showBusinessOwnerInfoList[index] = !_showBusinessOwnerInfoList[index];
+    });
+  }
+
+  // Helper function to reset business owner info state
+  void _resetBusinessInfoState() {
+    setState(() {
+      _showBusinessOwnerInfoList = List.filled(dummyOrders.length, false);
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('FarmConnect'),
+        title: const Text('FarmConnect'),
         leading: Builder(
           builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               Scaffold.of(context).openDrawer(); // Opens the drawer
             },
           ),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {
-              // User profile logic
-            },
-          ),
-        ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -93,6 +74,9 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
               onTap: () {
                 Navigator.of(context).pop(); // Close the drawer
                 // Navigate to Home Screen
+                Navigator.pushReplacement(
+                  context, 
+                  MaterialPageRoute(builder: (context) => FarmerHomePage()));
               },
             ),
             ListTile(
@@ -101,6 +85,10 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
               onTap: () {
                 Navigator.of(context).pop(); // Close the drawer
                 // Navigate to List Product Screen
+                Navigator.pushReplacement(
+                  context, 
+                  MaterialPageRoute(builder: (context) => ListProductPage())
+                );
               },
             ),
             ListTile(
@@ -109,6 +97,9 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
               onTap: () {
                 Navigator.of(context).pop(); // Close the drawer
                 // Navigate to Profile Screen
+                Navigator.pushReplacement(
+                  context, 
+                  MaterialPageRoute(builder: (context) => FarmerProfilePage()));
               },
             ),
             ListTile(
@@ -117,9 +108,9 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
               onTap: () {
                 Navigator.of(context).pop(); // Close the drawer
                 // Navigate to Settings Screen
-              },
+              }
             ),
-            Divider(),
+            const Divider(),
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Log Out'),
@@ -147,25 +138,26 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: _orders.length,
+              itemCount: dummyOrders.length,
               itemBuilder: (context, index) {
-                final order = _orders[index];
+                final order = dummyOrders[index];
                 if (_selectedFilter == 'All' ||
-                    _selectedFilter == order['status']) {
-                  return _buildOrderCard(order);
+                    _selectedFilter == order.status) {
+                  return _buildOrderCard(order, index);
                 } else {
-                  return SizedBox.shrink(); // Hide if not in selected filter
+                  return const SizedBox.shrink(); // Hide if not in selected filter
                 }
               },
             ),
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
+  bottomNavigationBar: BottomNavigationBar(
   currentIndex: _currentIndex, // Set the current index
   onTap: (index) {
     setState(() {
       _currentIndex = index; // Update the current index
+      _resetBusinessInfoState();
     });
 
     // Navigate to the respective page based on index
@@ -191,12 +183,12 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
       case 3:
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => ProfilePage()), // Replace with your Profile page
+          MaterialPageRoute(builder: (context) => FarmerProfilePage()), // Replace with your Profile page
         );
         break;
     }
   },
-  items: [
+  items: const [
     BottomNavigationBarItem(
       icon: Icon(Icons.home),
       label: 'Home',
@@ -229,6 +221,7 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
       ),
       onPressed: () {
         setState(() {
+          _resetBusinessInfoState();
           _selectedFilter = filter;
         });
       },
@@ -236,30 +229,53 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
     );
   }
 
-  Widget _buildOrderCard(Map<String, String> order) {
+  Widget _buildOrderCard(Order order, int index) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
               decoration: BoxDecoration(
-                color: _getStatusColor(order['status']!),
+                color: _getStatusColor(order.status),
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
-                order['status']!,
-                style: TextStyle(color: Colors.white),
+                order.status,
+                style: const TextStyle(color: Colors.white),
               ),
             ),
+            const SizedBox(height: 10),      
+            _buildOrderDetailRow('Products Ordered', order.orderedProduct.productName),
+            _buildOrderDetailRow('Quantity Ordered (in ${order.orderedProduct.category == 'Dairy' ? 'litre' : 'kg'})', order.orderedQuantity.toString()),
+            _buildOrderDetailRow('Price (per ${order.orderedProduct.category == 'Dairy' ? 'litre' : 'kg'})', '\$${order.orderedProduct.pricePerKg.toString()}'),
+            const SizedBox(height: 10),
+            GestureDetector(
+              onTap:(){
+                _toggleBusinessInfo(index);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Business Owner Information',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  Icon(_showBusinessOwnerInfoList[index] ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down, size: 35,),
+                ],
+              ),
+            ),
+            if (_showBusinessOwnerInfoList[index]) ...[
+              const SizedBox(height: 10),
+              const Text('Business Owner Name: John Wick', style: TextStyle(fontSize: 16)),
+              const Text('Business Owner Address: Sydney, Australia', style: TextStyle(fontSize: 16)),
+              const Text('Business Owner Contact Number: 042867456', style: TextStyle(fontSize: 16)),
+              const Text('Email: johnwick@gmail.com', style: TextStyle(fontSize: 16)),
+            ],
             SizedBox(height: 10),
-            _buildOrderDetailRow('Business Owner Name', order['owner']!),
-            _buildOrderDetailRow('Products Ordered', order['product']!),
-            _buildOrderDetailRow('Quantity (in kg)', order['quantity']!),
-            _buildOrderDetailRow('Price (per kg)', order['price']!),
           ],
         ),
       ),
@@ -274,11 +290,12 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
         children: <Widget>[
           Text(
             label,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           Text(value),
         ],
       ),
+      
     );
   }
 
