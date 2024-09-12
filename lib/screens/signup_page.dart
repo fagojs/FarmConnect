@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:email_validator/email_validator.dart';
 
 import './signin_page.dart';
 import '../models/business_owner_model.dart';
@@ -17,6 +18,13 @@ class _SignUpPageState extends State<SignUpPage> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
+  bool _isPasswordVisible = false;
+
+  // Email validation regex
+  bool isValidEmail(String email) {
+    return EmailValidator.validate(email); // Using package to validate email
+  }
+
   void _register() {
     String email = _emailController.text;
     String password = _passwordController.text;
@@ -26,6 +34,22 @@ class _SignUpPageState extends State<SignUpPage> {
     if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('All fields are required!')),
+      );
+      return;
+    }
+
+   // Validate email format
+    if (!isValidEmail(email)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter a valid email address')),
+      );
+      return;
+    }
+
+    // Check password length
+    if (password.length < 5) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Password must be at least 5 characters')),
       );
       return;
     }
@@ -63,17 +87,16 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+
+      body: SingleChildScrollView(      
+      child:Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(height: 20),
             Text(
-              'Welcome To',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'FarmConnect',
+              'Welcome To FarmConnect',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
@@ -82,11 +105,12 @@ class _SignUpPageState extends State<SignUpPage> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Text(
-              'Let’s create your account. Enter your email and password',
+              'Let’s create your account.\nEnter your email and password',
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 20),
             Text('Who are you?'),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -114,6 +138,7 @@ class _SignUpPageState extends State<SignUpPage> {
             SizedBox(height: 20),
             TextField(
               controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
@@ -125,20 +150,38 @@ class _SignUpPageState extends State<SignUpPage> {
               decoration: InputDecoration(
                 labelText: 'Password',
                 border: OutlineInputBorder(),
-                suffixIcon: Icon(Icons.visibility_off),
+                suffixIcon: IconButton(
+                    icon: Icon(
+                      _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isPasswordVisible = !_isPasswordVisible;
+                      });
+                    },
+                  ),
+                ),
+                obscureText: !_isPasswordVisible,  // Toggle password visibility
               ),
-              obscureText: true,
-            ),
             SizedBox(height: 10),
             TextField(
               controller: _confirmPasswordController,
               decoration: InputDecoration(
                 labelText: 'Confirm Password',
                 border: OutlineInputBorder(),
-                suffixIcon: Icon(Icons.visibility_off),
+                suffixIcon: IconButton(
+                    icon: Icon(
+                      _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isPasswordVisible = !_isPasswordVisible;
+                      });
+                    },
+                  ),
+                ),
+                obscureText: !_isPasswordVisible,  // Toggle password visibility
               ),
-              obscureText: true,
-            ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: (){
@@ -150,15 +193,23 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
             SizedBox(height: 10),
-            TextButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/signin');
-              },
-              child: Text('Already have an account? Sign In'),
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Already have an account?'),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/signin');
+                  },
+                  child: Text('Sign In', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),),
+                ),
+              
+            ],),
+            SizedBox(height: 20),
           ],
         ),
       ),
+      )
     );
   }
 }
