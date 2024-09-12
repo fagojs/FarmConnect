@@ -151,7 +151,7 @@ class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateM
             case 3:
               Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                  MaterialPageRoute(builder: (context) => FarmerProfilePage()),
                 );
               break;
           }

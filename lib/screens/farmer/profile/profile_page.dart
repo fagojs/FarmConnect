@@ -8,14 +8,14 @@ import '../list_product_page/list_product.dart';
 import '../manage_order/manage_orders.dart';
 import '../../../data/currentuser.dart';
 
-class ProfilePage extends StatefulWidget {
+class FarmerProfilePage extends StatefulWidget {
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _FarmerProfilePageState createState() => _FarmerProfilePageState();
 
 }
  
-class _ProfilePageState extends State<ProfilePage> {
+class _FarmerProfilePageState extends State<FarmerProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -216,7 +216,7 @@ class _ProfilePageState extends State<ProfilePage> {
             case 3:
               Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => ProfilePage()), // Replace with your Orders page
+              MaterialPageRoute(builder: (context) => FarmerProfilePage()), // Replace with your Orders page
             );
               break;
           }

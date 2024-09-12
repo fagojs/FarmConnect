@@ -1,10 +1,10 @@
-import 'package:farm_connect/screens/farmer/manage_order/manage_orders.dart';
-import 'package:farm_connect/screens/farmer/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 
 import './add_product.dart';
 import '../home_page.dart';
 import './edit_product.dart';
+import '../profile/profile_page.dart';
+import '../manage_order/manage_orders.dart';
 import '../../../models/product_model.dart';
 import '../../../data/currentuser.dart';
 
@@ -207,7 +207,7 @@ class _ListProductPageState extends State<ListProductPage> {
               case 3:
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                  MaterialPageRoute(builder: (context) => FarmerProfilePage()),
                 );
                 break;
             }
