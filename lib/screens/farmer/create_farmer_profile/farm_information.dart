@@ -1,3 +1,4 @@
+import 'package:farm_connect/screens/landing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -125,14 +126,6 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
             },
           ),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {
-              // User profile logic
-            },
-          ),
-        ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -156,6 +149,9 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
               onTap: () {
                 Navigator.of(context).pop(); // Close the drawer
                 // Navigate to Welcome Screen
+                Navigator.pushReplacement(
+                  context, 
+                  MaterialPageRoute(builder: (context) => LandingPage(userType: 'Farmer')));
               },
             ),
             ListTile(
@@ -223,7 +219,7 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.add_a_photo, size: 40),
-                              Text('Select your farm photo (optional)'),
+                              Text('Select your farm photo (optional)', textAlign: TextAlign.center,),
                             ],
                           ),
                         ),
@@ -261,7 +257,7 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
               TextField(
                 maxLines: 4,
                 decoration: InputDecoration(
-                  labelText: 'Tell us about a bit about your farm. One or maybe two unique things about it.',
+                  labelText: 'Tell us about a bit about your farm.',
                   border: OutlineInputBorder(),
                 ),
                 onChanged: (value) => farmDescription = value,
