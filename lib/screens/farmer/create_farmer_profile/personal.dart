@@ -1,6 +1,8 @@
+import 'package:farm_connect/screens/landing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:email_validator/email_validator.dart';
 
 import '../../../screens/farmer/create_farmer_profile/farm_information.dart';
 import '../../../data/currentuser.dart';
@@ -32,10 +34,21 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
     });
   }
 
+  // Email validation regex
+  bool isValidEmail(String email) {
+    return EmailValidator.validate(email); // Using package to validate email
+  }
+
+  // Contact number validation: Ensures it's exactly 10 digits
+  bool isValidContactNumber(String contactNumber) {
+    final RegExp contactNumberRegEx = RegExp(r'^\d{10}$');
+    return contactNumberRegEx.hasMatch(contactNumber);
+  }
+
     // Function to navigate to farm info form
   void _goToFarmInfo() {
 
-     // Check if any field is empty
+    // Check if any field is empty
     if (email.isEmpty || fullName.isEmpty || contactNumber.isEmpty || address.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('All fields are required!')),
@@ -43,7 +56,24 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
       return;
     }
 
-     // Save user data from form fields
+    // Validate contact number
+    if (!isValidContactNumber(contactNumber)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter a valid 10-digit contact number')),
+      );
+      return;
+    }
+    
+    // Validate email format
+    if (!isValidEmail(email)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter a valid email address')),
+      );
+      return;
+    }
+
+
+    // Save user data from form fields
     currentUser.fullName = fullName;
     currentUser.contactNumber = contactNumber;
     currentUser.email = email;
@@ -106,14 +136,6 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
             },
           ),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {
-              // User profile logic
-            },
-          ),
-        ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -137,6 +159,9 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
               onTap: () {
                 Navigator.of(context).pop(); // Close the drawer
                 // Navigate to Welcome Screen
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LandingPage(userType: 'Farmer')));
               },
             ),
             ListTile(
@@ -201,7 +226,7 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
                             children: [
                               Icon(Icons.add_a_photo, size: 40),
                               Text(
-                                'Select your photo (optional)'
+                                'Select your photo (optional)', textAlign: TextAlign.center,
                               ),
                             ],
                           ),
@@ -230,6 +255,7 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
               ),
               SizedBox(height: 10),
               TextField(
+                keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
                   labelText: 'Contact Number',
                   border: OutlineInputBorder(),
@@ -238,13 +264,14 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
               ),
               SizedBox(height: 10),
               TextField(
+                keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   labelText: 'Email',
                   border: OutlineInputBorder(),
                 ),
                 onChanged: (value) => email = value,
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               TextField(
                 decoration: InputDecoration(
                   labelText: 'Address',
@@ -252,7 +279,7 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
                 ),
                 onChanged: (value) => address = value,
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: (){
                   _goToFarmInfo();
