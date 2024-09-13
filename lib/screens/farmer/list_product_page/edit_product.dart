@@ -36,6 +36,30 @@ class _EditProductPageState extends State<EditProductPage> {
   }
 
   void _updateProduct(){
+     if (_nameController.text.isEmpty ||
+      _quantityController.text.isEmpty ||
+      _priceController.text.isEmpty ||
+      _selectedCategory == null ||
+      _descriptionController.text.isEmpty) {
+      // Show a snackbar if any field is empty
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('All fields are required!')),
+      );
+    }
+    // Validate that the quantity is a valid integer and greater than zero
+    if (int.tryParse(_quantityController.text) == null || int.parse(_quantityController.text) <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Quantity must have integer value greater than zero')),
+      );
+      return;
+    }
+    // Validate that the price is a valid double and greater than zero
+    if (double.tryParse(_priceController.text) == null || double.parse(_priceController.text) <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Price must have integer value greater than zero')),
+      );
+      return;
+    }
     // Update the product details in the CurrentUser's product list
     setState(() {
       widget.product.productName = _nameController.text;
@@ -53,9 +77,9 @@ class _EditProductPageState extends State<EditProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Product'),
+        title: const Text('Edit Product'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context); // Go back to the previous page
           },
@@ -67,11 +91,11 @@ class _EditProductPageState extends State<EditProductPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
+              const Text(
                 'Edit Your Product Details',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               GestureDetector(
                 onTap: () async {
                   final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -89,12 +113,12 @@ class _EditProductPageState extends State<EditProductPage> {
                           color: Colors.grey[200],
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Center(
+                        child: const Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.add_a_photo, size: 40),
-                              Text('Select your photo'),
+                              Text('Select your product photo (optional)', textAlign: TextAlign.center,),
                             ],
                           ),
                         ),
@@ -106,41 +130,41 @@ class _EditProductPageState extends State<EditProductPage> {
                         fit: BoxFit.cover,
                       ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextField(
                 controller: _nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Product Name',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
                     child: TextField(
                       controller: _quantityController,
                       decoration: InputDecoration(
-                        labelText: 'Quantity (in kg)',
-                        border: OutlineInputBorder(),
+                        labelText: 'Quantity Available (in ${widget.product.category == 'Dairy' ? 'litre' : 'kg'})',
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: TextField(
                       controller: _priceController,
                       decoration: InputDecoration(
-                        labelText: 'Price (per kg)',
-                        border: OutlineInputBorder(),
+                        labelText: 'Price (per ${widget.product.category == 'Dairy' ? 'litre' : 'kg'})',
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Select a category',
                   border: OutlineInputBorder(),
                 ),
@@ -157,21 +181,21 @@ class _EditProductPageState extends State<EditProductPage> {
                   );
                 }).toList(),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
                 controller: _descriptionController,
                 maxLines: 4,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Product Description',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   _updateProduct();                 
                 },
-                child: Text('Update'),
+                child: const Text('Update'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange, // background color
                 ),
