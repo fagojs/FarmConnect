@@ -131,7 +131,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     child: TextField(
                       controller: _quantityController,
                       decoration: const  InputDecoration(
-                        labelText: 'Quantity (in kg)',
+                        labelText: 'Quantity Available',
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -141,7 +141,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     child: TextField(
                       controller: _priceController,
                       decoration: const InputDecoration(
-                        labelText: 'Price (per kg)',
+                        labelText: 'Price per unit',
                         border: OutlineInputBorder(),
                       ),
                     ),
