@@ -250,7 +250,9 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
             ),
             const SizedBox(height: 10),      
             _buildOrderDetailRow('Products Ordered', order.orderedProduct.productName),
+            const SizedBox(height: 10),
             _buildOrderDetailRow('Quantity Ordered (in ${order.orderedProduct.category == 'Dairy' ? 'litre' : 'kg'})', order.orderedQuantity.toString()),
+            const SizedBox(height: 10),
             _buildOrderDetailRow('Price (per ${order.orderedProduct.category == 'Dairy' ? 'litre' : 'kg'})', '\$${order.orderedProduct.pricePerKg.toString()}'),
             const SizedBox(height: 10),
             GestureDetector(
@@ -258,10 +260,10 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
                 _toggleBusinessInfo(index);
               },
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    'Business Owner Information',
+                    'Ordered Received From',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Icon(_showBusinessOwnerInfoList[index] ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down, size: 35,),
