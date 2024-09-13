@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io'; // For using File
 import 'package:image_picker/image_picker.dart'; // For picking images
+import 'package:email_validator/email_validator.dart';
 
 import '../../../data/currentuser.dart';
 
@@ -37,7 +38,44 @@ class _EditContactInfoPageState extends State<EditContactInfoPage> {
     }
   }
 
+  // Email validation regex
+  bool isValidEmail(String email) {
+    return EmailValidator.validate(email); // Using package to validate email
+  }
+
+  // Contact number validation: Ensures it's exactly 10 digits
+  bool isValidContactNumber(String contactNumber) {
+    final RegExp contactNumberRegEx = RegExp(r'^\d{10}$');
+    return contactNumberRegEx.hasMatch(contactNumber);
+  }
+
   void _updateContactInfo(){
+
+    // Check if any field is empty
+    if (emailController.text.isEmpty || nameController.text.isEmpty || phoneController.text.isEmpty || addressController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('All fields are required!')),
+      );
+      return;
+    }
+
+     // Validate contact number
+    if (!isValidContactNumber(phoneController.text)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter a valid 10-digit contact number')),
+      );
+      return;
+    }
+
+    // Validate email format
+    if (!isValidEmail(emailController.text)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter a valid email address')),
+      );
+      return;
+    }
+
+   
     setState(() {
       currentUser.fullName = nameController.text;
       currentUser.contactNumber = phoneController.text;
@@ -51,9 +89,9 @@ class _EditContactInfoPageState extends State<EditContactInfoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Your Farmer Profile'),
+        title: const Text('Edit Your Farmer Profile'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -71,36 +109,38 @@ class _EditContactInfoPageState extends State<EditContactInfoPage> {
                   radius: 50,
                   backgroundImage: _selectedImage != null
                       ? FileImage(_selectedImage!)
-                      : AssetImage('images/placeholder_img.png') as ImageProvider,
-                      child: Icon(Icons.camera_alt, size: 30, color: Colors.white),
+                      : const AssetImage('images/placeholder_img.png') as ImageProvider,
+                      child: const Icon(Icons.camera_alt, size: 30, color: Colors.white),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextField(
                 controller: nameController,
-                decoration: InputDecoration(labelText: 'Name'),
+                decoration: const InputDecoration(labelText: 'Name'),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
+                keyboardType: TextInputType.phone,
                 controller: phoneController,
-                decoration: InputDecoration(labelText: 'Phone'),
+                decoration: const InputDecoration(labelText: 'Phone'),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
+                keyboardType: TextInputType.emailAddress,
                 controller: emailController,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: const InputDecoration(labelText: 'Email'),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextField(
                 controller: addressController,
-                decoration: InputDecoration(labelText: 'Address'),
+                decoration: const InputDecoration(labelText: 'Address'),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   _updateContactInfo();
                 },
-                child: Text('Update'),
+                child: const Text('Update'),
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
               ),
             ],
@@ -116,21 +156,21 @@ class _EditContactInfoPageState extends State<EditContactInfoPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Select Image Source'),
+          title: const Text('Select Image Source'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
                 _pickImage(ImageSource.camera);
               },
-              child: Text('Camera'),
+              child: const Text('Camera'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
                 _pickImage(ImageSource.gallery);
               },
-              child: Text('Gallery'),
+              child: const Text('Gallery'),
             ),
           ],
         );
