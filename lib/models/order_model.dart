@@ -1,10 +1,10 @@
 import './product_model.dart';
 
 class Order {
-  final String status;
-  final Product orderedProduct;
-  final int orderedQuantity;
-  final double totalPrice;
+  String status;
+  Product orderedProduct;
+  int orderedQuantity;
+  double totalPrice;
 
   Order({
     required this.status,
