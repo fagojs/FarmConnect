@@ -21,41 +21,51 @@ class _AddProductPageState extends State<AddProductPage> {
   File? _productImage;
 
   void _addProduct(){
-    // Check if all fields are filled
     if (_nameController.text.isEmpty ||
-        _quantityController.text.isEmpty ||
-        _priceController.text.isEmpty ||
-        _selectedCategory == null ||
-        _descriptionController.text.isEmpty) {
+      _quantityController.text.isEmpty ||
+      _priceController.text.isEmpty ||
+      _selectedCategory == null ||
+      _descriptionController.text.isEmpty) {
       // Show a snackbar if any field is empty
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please fill in all fields before adding the product')),
+        const SnackBar(content: Text('All fields are required!')),
       );
-      return; // Do not proceed if validation fails
     }
-
-    final newProduct = Product(
-        productName: _nameController.text.trim(),
-        quantity: int.parse(_quantityController.text.trim()),
-        pricePerKg: double.parse(_priceController.text.trim()),
-        description: _descriptionController.text.trim(),
-        category: _selectedCategory!,
-        productImage: _productImage,
+    // Validate that the quantity is a valid integer and greater than zero
+    if (int.tryParse(_quantityController.text) == null || int.parse(_quantityController.text) <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Quantity must have integer value greater than zero')),
       );
-
+      return;
+    }
+    // Validate that the price is a valid double and greater than zero
+    if (double.tryParse(_priceController.text) == null || double.parse(_priceController.text) <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Price must have integer value greater than zero')),
+      );
+      return;
+    }
+    // If everything is valid, add the product
+    final newProduct = Product(
+      productName: _nameController.text.trim(),
+      quantity: int.parse(_quantityController.text.trim()),
+      pricePerKg: double.parse(_priceController.text.trim()),
+      description: _descriptionController.text.trim(),
+      category: _selectedCategory!,
+      productImage: _productImage,
+    );
     // add the new product data back to List Product Page
     currentUser.products.add(newProduct);
     Navigator.pop(context);
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('List Product'),
+        title: const Text('List Product'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context); // Navigate back to List Product Page
           },
@@ -67,7 +77,7 @@ class _AddProductPageState extends State<AddProductPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
+              const Text(
                 'List Product',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
@@ -89,12 +99,12 @@ class _AddProductPageState extends State<AddProductPage> {
                           color: Colors.grey[200],
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Center(
+                        child: const Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.add_a_photo, size: 40),
-                              Text('Add image of your product'),
+                              Text('Add image of your product (optional)', textAlign: TextAlign.center,),
                             ],
                           ),
                         ),
@@ -106,31 +116,31 @@ class _AddProductPageState extends State<AddProductPage> {
                         fit: BoxFit.cover,
                       ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextField(
                 controller: _nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Product Name',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
                     child: TextField(
                       controller: _quantityController,
-                      decoration: InputDecoration(
+                      decoration: const  InputDecoration(
                         labelText: 'Quantity (in kg)',
                         border: OutlineInputBorder(),
                       ),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: TextField(
                       controller: _priceController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Price (per kg)',
                         border: OutlineInputBorder(),
                       ),
@@ -138,9 +148,9 @@ class _AddProductPageState extends State<AddProductPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Select a category',
                   border: OutlineInputBorder(),
                 ),
@@ -157,16 +167,16 @@ class _AddProductPageState extends State<AddProductPage> {
                   );
                 }).toList(),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
                 controller: _descriptionController,
                 maxLines: 4,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Product Description',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: (){
                   _addProduct();
