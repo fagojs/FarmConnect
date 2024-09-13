@@ -41,23 +41,15 @@ class _ListProductPageState extends State<ListProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('FarmConnect'),
+        title: const Text('FarmConnect'),
         leading: Builder(
           builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               Scaffold.of(context).openDrawer(); // Opens the drawer
             },
           ),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {
-              // User profile logic
-            },
-          ),
-        ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -81,6 +73,10 @@ class _ListProductPageState extends State<ListProductPage> {
               onTap: () {
                 Navigator.of(context).pop(); // Close the drawer
                 // Navigate to Home Screen
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => FarmerHomePage()), 
+                );
               },
             ),
             ListTile(
@@ -89,6 +85,10 @@ class _ListProductPageState extends State<ListProductPage> {
               onTap: () {
                 Navigator.of(context).pop(); // Close the drawer
                 // Stay on the current screen
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => ListProductPage()), 
+                );
               },
             ),
             ListTile(
@@ -97,6 +97,10 @@ class _ListProductPageState extends State<ListProductPage> {
               onTap: () {
                 Navigator.of(context).pop(); // Close the drawer
                 // Navigate to Profile Screen
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => FarmerProfilePage()), 
+                );
               },
             ),
             ListTile(
@@ -126,7 +130,7 @@ class _ListProductPageState extends State<ListProductPage> {
             child: TextField(
               controller: _searchController,
               onChanged: _filterProducts,
-              decoration: InputDecoration(
+              decoration:const InputDecoration(
                 prefixIcon: Icon(Icons.search),
                 hintText: 'Search listed products',
                 border: OutlineInputBorder(),
@@ -134,7 +138,7 @@ class _ListProductPageState extends State<ListProductPage> {
             ),
           ),
           if(_filteredProducts.isEmpty)
-            Expanded(
+            const Expanded(
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -176,7 +180,7 @@ class _ListProductPageState extends State<ListProductPage> {
           });
           
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         backgroundColor: Colors.blue,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -213,7 +217,7 @@ class _ListProductPageState extends State<ListProductPage> {
             }
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
@@ -239,7 +243,7 @@ class _ListProductPageState extends State<ListProductPage> {
 
  Widget _buildProductCard(Product product) {
   return Card(
-    margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+    margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
     child: Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -260,22 +264,22 @@ class _ListProductPageState extends State<ListProductPage> {
               height: 150,
               fit: BoxFit.cover,
             ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           
           // Product Name and Description
           Text(
             product.productName,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text('Quantity (in kg): ${product.quantity}'),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text('Price (per kg): \$${product.pricePerKg}'),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text('Category: ${product.category}'),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text('Description: ${product.description}'),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
 
           // Edit and Remove buttons
           Row(
@@ -299,7 +303,7 @@ class _ListProductPageState extends State<ListProductPage> {
                     });
                   }
                 },
-                child: Text('Edit'),
+                child: const Text('Edit'),
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
               ),
               ElevatedButton(
@@ -310,7 +314,7 @@ class _ListProductPageState extends State<ListProductPage> {
                     _filteredProducts = currentUser.products;
                   });
                 },
-                child: Text('Remove'),
+                child: const Text('Remove'),
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
               ),
             ],
