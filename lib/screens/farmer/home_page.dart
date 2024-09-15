@@ -37,12 +37,14 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
       _showBusinessOwnerInfoList = List.filled(dummyOrders.length, false);
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: const Text('FarmConnect'),
+        title: Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
             icon: const Icon(Icons.menu),
@@ -53,73 +55,71 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
         ),
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.lightGreenAccent,
-              ),
-              child: Text(
-                'FarmConnect',
-                style: TextStyle(
+        child: Container(
+          color: Colors.white,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
                   color: Colors.green,
-                  fontSize: 24,
+                ),
+                child: Center(
+                  child: Text(
+                    'FarmConnect',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Home'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                // Navigate to Home Screen
-                Navigator.pushReplacement(
-                  context, 
-                  MaterialPageRoute(builder: (context) => FarmerHomePage()));
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.add_circle),
-              title: const Text('List Product'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                // Navigate to List Product Screen
-                Navigator.pushReplacement(
-                  context, 
-                  MaterialPageRoute(builder: (context) => ListProductPage())
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Profile'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                // Navigate to Profile Screen
-                Navigator.pushReplacement(
-                  context, 
-                  MaterialPageRoute(builder: (context) => FarmerProfilePage()));
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                // Navigate to Settings Screen
-              }
-            ),
-            const Divider(),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Log Out'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                Navigator.pushReplacementNamed(context, '/signin');
-              },
-            ),
-          ],
+              ListTile(
+                leading: Icon(Icons.home, color: Colors.green),
+                title: Text('Home'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => FarmerHomePage()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.add_circle, color: Colors.green),
+                title: Text('List Product'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => ListProductPage()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.person, color: Colors.green),
+                title: Text('Profile'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => FarmerProfilePage()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.settings, color: Colors.green),
+                title: Text('Settings'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              Divider(color: Colors.grey[300]),
+              ListTile(
+                leading: Icon(Icons.logout, color: Colors.red),
+                title: Text('Log Out'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacementNamed(context, '/signin');
+                },
+              ),
+            ],
+          ),
         ),
       ),
       body: Column(
@@ -177,13 +177,13 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
       case 2:
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => OrdersPage()), // Replace with your Orders page
+          MaterialPageRoute(builder: (context) => OrdersPage()),
         );
         break;
       case 3:
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => FarmerProfilePage()), // Replace with your Profile page
+          MaterialPageRoute(builder: (context) => FarmerProfilePage()),
         );
         break;
     }
@@ -206,7 +206,7 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
       label: 'Profile',
     ),
   ],
-  selectedItemColor: Colors.orange,
+  selectedItemColor: Colors.green,
   unselectedItemColor: Colors.black,
 ),
 
@@ -216,7 +216,7 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
   Widget _buildFilterButton(String filter) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: _selectedFilter == filter ? Colors.black : Colors.grey[300],
+        backgroundColor: _selectedFilter == filter ? Colors.green[700] : Colors.grey[200],
         foregroundColor: _selectedFilter == filter ? Colors.white : Colors.black,
       ),
       onPressed: () {
@@ -231,9 +231,14 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
 
   Widget _buildOrderCard(Order order, int index) {
     return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0)
+      ),
+      color: Colors.white,
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -241,14 +246,14 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
               decoration: BoxDecoration(
                 color: _getStatusColor(order.status),
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(2.0),
               ),
               child: Text(
                 order.status,
                 style: const TextStyle(color: Colors.white),
               ),
             ),
-            const SizedBox(height: 10),      
+            const SizedBox(height: 10),
             _buildOrderDetailRow('Products Ordered', order.orderedProduct.productName),
             const SizedBox(height: 10),
             _buildOrderDetailRow('Quantity Ordered (in ${order.orderedProduct.category == 'Dairy' ? 'litre' : 'kg'})', order.orderedQuantity.toString()),
@@ -297,7 +302,7 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
           Text(value),
         ],
       ),
-      
+
     );
   }
 

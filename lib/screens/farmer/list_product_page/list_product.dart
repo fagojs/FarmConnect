@@ -14,10 +14,9 @@ class ListProductPage extends StatefulWidget {
 }
 
 class _ListProductPageState extends State<ListProductPage> {
- 
 
   final TextEditingController _searchController = TextEditingController();
-  List<Product>  _filteredProducts = [];
+  List<Product> _filteredProducts = [];
 
   int _currentIndex = 1; // To keep track of the selected bottom nav index
 
@@ -40,8 +39,10 @@ class _ListProductPageState extends State<ListProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: const Text('FarmConnect'),
+        title: const Text('FarmConnect', style: TextStyle(fontWeight: FontWeight.bold),),
+        centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
             icon: const Icon(Icons.menu),
@@ -52,108 +53,119 @@ class _ListProductPageState extends State<ListProductPage> {
         ),
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.lightGreenAccent,
-              ),
-              child: Text(
-                'FarmConnect',
-                style: TextStyle(
+        child: Container(
+          color: Colors.white,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
                   color: Colors.green,
-                  fontSize: 24,
+                ),
+                child: Center(
+                  child: Text(
+                    'FarmConnect',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Home'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                // Navigate to Home Screen
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => FarmerHomePage()), 
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.add_circle),
-              title: const Text('List Product'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                // Stay on the current screen
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => ListProductPage()), 
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Profile'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                // Navigate to Profile Screen
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => FarmerProfilePage()), 
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                // Navigate to Settings Screen
-              },
-            ),
-            Divider(),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Log Out'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                Navigator.pushReplacementNamed(context, '/signin');
-              },
-            ),
-          ],
+              ListTile(
+                leading: Icon(Icons.home, color: Colors.green),
+                title: Text('Home'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => FarmerHomePage()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.add_circle, color: Colors.green),
+                title: Text('List Product'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => ListProductPage()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.person, color: Colors.green),
+                title: Text('Profile'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => FarmerProfilePage()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.settings, color: Colors.green),
+                title: Text('Settings'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              Divider(color: Colors.grey[300]),
+              ListTile(
+                leading: Icon(Icons.logout, color: Colors.red),
+                title: Text('Log Out'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacementNamed(context, '/signin');
+                },
+              ),
+            ],
+          ),
         ),
       ),
       body: Column(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _searchController,
-              onChanged: _filterProducts,
-              decoration:const InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                hintText: 'Search listed products',
-                border: OutlineInputBorder(),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 2,
+                    blurRadius: 8,
+                    offset: Offset(0, 4), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: TextField(
+                controller: _searchController,
+                onChanged: _filterProducts,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search, color: Colors.green),
+                  hintText: 'Search listed products',
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
+                ),
               ),
             ),
           ),
-          if(_filteredProducts.isEmpty)
+          if (_filteredProducts.isEmpty)
             const Expanded(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'No products listed yet!\n' 
-                    'List your first product using "+" icon below.',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 20),
-                ],
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'No products listed yet!\n'
+                          'List your first product using "+" icon below.',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 20),
+                  ],
+                ),
               ),
-            ),
-          )
+            )
           else
             Expanded(
               child: ListView.builder(
@@ -174,14 +186,13 @@ class _ListProductPageState extends State<ListProductPage> {
             MaterialPageRoute(builder: (context) => AddProductPage()),
           );
 
-          // If the user added a product, add it to the list and refresh the UI 
+          // If the user added a product, add it to the list and refresh the UI
           setState(() {
             _filteredProducts = currentUser.products;
           });
-          
         },
-        child: const Icon(Icons.add),
-        backgroundColor: Colors.blue,
+        child: const Icon(Icons.add, color: Colors.white),
+        backgroundColor: Color(0xFF4CAF50),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -190,14 +201,14 @@ class _ListProductPageState extends State<ListProductPage> {
             _currentIndex = index;
             switch (index) {
               case 0:
-                // Navigate to Home page
+              // Navigate to Home page
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => FarmerHomePage()),
                 );
                 break;
               case 1:
-                 Navigator.pushReplacement(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => ListProductPage()),
                 );
@@ -235,94 +246,112 @@ class _ListProductPageState extends State<ListProductPage> {
             label: 'Profile',
           ),
         ],
-        selectedItemColor: Colors.orange,
+        selectedItemColor: Colors.green,
         unselectedItemColor: Colors.black,
       ),
     );
   }
 
- Widget _buildProductCard(Product product) {
-  return Card(
-    margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-    child: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          // Product Image
-          if (product.productImage != null)
-            Image.file(
-              product.productImage!,
-              width: double.infinity,
-              height: 150,
-              fit: BoxFit.cover,
-            )
-          else
-            Image.asset(
-              'images/placeholder_img.png', // Placeholder image
-              width: double.infinity,
-              height: 150,
-              fit: BoxFit.cover,
-            ),
-          const SizedBox(height: 10),
-          
-          // Product Name and Description
-          Text(
-            product.productName,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 10),
-          Text('Quantity Available (in ${product.category == 'Dairy' ? 'litre' : 'kg'}): ${product.quantity}'),
-          const SizedBox(height: 10),
-          Text('Price (per ${product.category == 'Dairy' ? 'litre' : 'kg'}): \$${product.pricePerKg}'),
-          const SizedBox(height: 10),
-          Text('Category: ${product.category}'),
-          const SizedBox(height: 10),
-          Text('Description: ${product.description}'),
-          const SizedBox(height: 10),
+  Widget _buildProductCard(Product product) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0)
+      ),
+      color: Colors.white,
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            // Product Image
+            if (product.productImage != null)
+              Image.file(
+                product.productImage!,
+                width: double.infinity,
+                height: 150,
+                fit: BoxFit.cover,
+              )
+            else
+              Image.asset(
+                'images/placeholder_img.png', // Placeholder image
+                width: double.infinity,
+                height: 150,
+                fit: BoxFit.cover,
+              ),
+            const SizedBox(height: 10),
 
-          // Edit and Remove buttons
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                onPressed: () async {
-                  // Navigate to the EditProductPage and wait for the result
-                  final updatedProduct = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditProductPage(product: product),
-                    ),
-                  );
-                  // If the product is updated, update the list
-                  if (updatedProduct != null) {
+            // Product Name and Description
+            Text(
+              product.productName,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            Text('Quantity Available (in ${product.category == 'Dairy' ? 'litre' : 'kg'}): ${product.quantity}'),
+            const SizedBox(height: 10),
+            Text('Price (per ${product.category == 'Dairy' ? 'litre' : 'kg'}): \$${product.pricePerKg}'),
+            const SizedBox(height: 10),
+            Text('Category: ${product.category}'),
+            const SizedBox(height: 10),
+            Text('Description: ${product.description}'),
+            const SizedBox(height: 10),
+
+            // Edit and Remove buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    // Navigate to the EditProductPage and wait for the result
+                    final updatedProduct = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditProductPage(product: product),
+                      ),
+                    );
+                    // If the product is updated, update the list
+                    if (updatedProduct != null) {
+                      setState(() {
+                        final index = currentUser.products.indexOf(product);
+                        currentUser.products[index] = updatedProduct;
+                        _filteredProducts = currentUser.products;
+                      });
+                    }
+                  },
+                  child: const Text('Edit', style: TextStyle(color: Colors.white)),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurpleAccent,
+                      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 4),
+                      textStyle: TextStyle(fontSize: 18),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.0)
+                      )
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Remove product logic
                     setState(() {
-                      final index = currentUser.products.indexOf(product);
-                      currentUser.products[index] = updatedProduct;
+                      currentUser.products.remove(product);
                       _filteredProducts = currentUser.products;
                     });
-                  }
-                },
-                child: const Text('Edit'),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  // Remove product logic
-                  setState(() {
-                    currentUser.products.remove(product);
-                    _filteredProducts = currentUser.products;
-                  });
-                },
-                child: const Text('Remove'),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-              ),
-            ],
-          ),
-        ],
+                  },
+                  child: const Icon(Icons.delete, color: Colors.white,),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 4),
+                    textStyle: TextStyle(fontSize: 18),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0)
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 }

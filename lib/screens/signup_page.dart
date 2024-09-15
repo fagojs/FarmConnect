@@ -20,9 +20,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
   bool _isPasswordVisible = false;
 
-  // Email validation regex
   bool isValidEmail(String email) {
-    return EmailValidator.validate(email); // Using package to validate email
+    return EmailValidator.validate(email);
   }
 
   void _register() {
@@ -30,7 +29,6 @@ class _SignUpPageState extends State<SignUpPage> {
     String password = _passwordController.text;
     String confirmPassword = _confirmPasswordController.text;
 
-    // Check if any field is empty
     if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('All fields are required!')),
@@ -38,7 +36,6 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-   // Validate email format
     if (!isValidEmail(email)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please enter a valid email address')),
@@ -46,7 +43,6 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-    // Check password length
     if (password.length < 5) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Password must be at least 5 characters')),
@@ -62,21 +58,19 @@ class _SignUpPageState extends State<SignUpPage> {
     }
 
     if (userType == 'Farmer') {
-      // Add a new Farmer
-      Farmer newFarmer = Farmer(email: email, password: password, confirmPassword: confirmPassword);
+      Farmer newFarmer = Farmer(
+          email: email, password: password, confirmPassword: confirmPassword);
       setState(() {
         dummyFarmers.add(newFarmer);
       });
     } else if (userType == 'Business') {
-      // Add a new Business Owner
-      BusinessOwner newBusinessOwner =
-          BusinessOwner(email: email, password: password, confirmPassword: confirmPassword);
+      BusinessOwner newBusinessOwner = BusinessOwner(
+          email: email, password: password, confirmPassword: confirmPassword);
       setState(() {
         dummyBusinessOwner.add(newBusinessOwner);
       });
     }
 
-    // Navigate to SignIn page with the correct user type
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -84,132 +78,199 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      body: SingleChildScrollView(      
-      child:Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: 20),
-            Text(
-              'Welcome To FarmConnect',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      backgroundColor: Color(0xFFE0F7FA),
+      body: ListView(
+        padding: EdgeInsets.all(24.0),
+        children: <Widget>[
+          Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
             ),
-            SizedBox(height: 20),
-            Text(
-              'Sign Up',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'Let’s create your account.\nEnter your email and password',
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 20),
-            Text('Who are you?'),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ChoiceChip(
-                  label: Text('Farmer'),
-                  selected: userType == 'Farmer',
-                  onSelected: (bool selected) {
-                    setState(() {
-                      userType = 'Farmer';
-                    });
-                  },
-                ),
-                SizedBox(width: 10),
-                ChoiceChip(
-                  label: Text('Business'),
-                  selected: userType == 'Business',
-                  onSelected: (bool selected) {
-                    setState(() {
-                      userType = 'Business';
-                    });
-                  },
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            TextField(
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 10),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                border: OutlineInputBorder(),
-                suffixIcon: IconButton(
-                    icon: Icon(
-                      _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+            color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.all(24.0),
+              child: Column(
+                children: [
+                  Text(
+                    'Welcome to FarmConnect',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF4CAF50),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
                   ),
-                ),
-                obscureText: !_isPasswordVisible,  // Toggle password visibility
-              ),
-            SizedBox(height: 10),
-            TextField(
-              controller: _confirmPasswordController,
-              decoration: InputDecoration(
-                labelText: 'Confirm Password',
-                border: OutlineInputBorder(),
-                suffixIcon: IconButton(
-                    icon: Icon(
-                      _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                  SizedBox(height: 16),
+                  Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF4CAF50),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
                   ),
-                ),
-                obscureText: !_isPasswordVisible,  // Toggle password visibility
-              ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: (){
-                _register();
-              },
-              child: Text('Sign Up'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange, // background
+                  SizedBox(height: 8),
+                  Text(
+                    'Let’s create your account.\nEnter your email and password',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.grey[600]),
+                  ),
+                ],
               ),
             ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Already have an account?'),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/signin');
-                  },
-                  child: Text('Sign In', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),),
-                ),
-              
-            ],),
-            SizedBox(height: 20),
-          ],
-        ),
+          ),
+          SizedBox(height: 24),
+          Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.all(24.0),
+              child: Column(
+                children: [
+                  Text(
+                    'Who are you?',
+                    style: TextStyle(color: Colors.grey[600]),
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ChoiceChip(
+                        label: Text('Farmer'),
+                        labelStyle: TextStyle(
+                            color: userType == 'Farmer'
+                                ? Colors.white
+                                : Colors.grey[600]),
+                        selected: userType == 'Farmer',
+                        selectedColor: Color(0xFF4CAF50),
+                        onSelected: (bool selected) {
+                          setState(() {
+                            userType = 'Farmer';
+                          });
+                        },
+                      ),
+                      SizedBox(width: 10),
+                      ChoiceChip(
+                        label: Text('Business'),
+                        labelStyle: TextStyle(
+                            color: userType == 'Business'
+                                ? Colors.white
+                                : Colors.grey[600]),
+                        selected: userType == 'Business',
+                        selectedColor: Color(0xFF4CAF50),
+                        onSelected: (bool selected) {
+                          setState(() {
+                            userType = 'Business';
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  TextField(
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.email, color: Colors.grey[600]),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  TextField(
+                    controller: _passwordController,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.lock, color: Colors.grey[600]),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Colors.grey[600],
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                      ),
+                    ),
+                    obscureText: !_isPasswordVisible,
+                  ),
+                  SizedBox(height: 10),
+                  TextField(
+                    controller: _confirmPasswordController,
+                    decoration: InputDecoration(
+                      labelText: 'Confirm Password',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.lock, color: Colors.grey[600]),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Colors.grey[600],
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                      ),
+                    ),
+                    obscureText: !_isPasswordVisible,
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      _register();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF4CAF50),
+                      padding:
+                      EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      textStyle: TextStyle(fontSize: 18),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                    ),
+                    child: Text('Sign Up',
+                        style: TextStyle(color: Colors.white)),
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Already have an account?',
+                          style: TextStyle(color: Colors.grey[600])),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/signin');
+                        },
+                        child: Text(
+                          'Sign In',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF4CAF50)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
-      )
     );
   }
 }

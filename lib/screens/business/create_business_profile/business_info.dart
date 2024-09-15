@@ -114,154 +114,206 @@ class _BusinessInfoPageState extends State<BusinessInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.green[50],
       appBar: AppBar(
-        title: Text('FarmConnect'),
+        title: Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
             icon: Icon(Icons.menu),
             onPressed: () {
-              Scaffold.of(context).openDrawer(); // Opens the drawer
+              Scaffold.of(context).openDrawer();
             },
           ),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {
-              // User profile logic
-            },
-          ),
-        ],
+
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.lightGreenAccent,
-              ),
-              child: Text(
-                'FarmConnect',
-                style: TextStyle(
-                  color: Colors.green,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.business),
-              title: const Text('Create Business Profile'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
-              onTap: () {
-                Navigator.of(context).pop(); // Navigate to Settings Screen
-              },
-            ),
-            Divider(),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Log Out'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                Navigator.pushReplacementNamed(context, '/signin');
-              },
-            ),
-          ],
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        child: Container(
+          color: Colors.white,
+          child: ListView(
+            padding: EdgeInsets.zero,
             children: <Widget>[
-              Text(
-                'Create a Business Profile',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Enter your business details below.',
-                style: TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: 20),
-              GestureDetector(
-                onTap: () => _showImageSourceActionSheet(context),
-                child: businessLogo == null
-                    ? Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.add_a_photo, size: 40),
-                              Text('Add logo of your business here (optional)'),
-                            ],
-                          ),
-                        ),
-                      )
-                    : Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                            image: FileImage(businessLogo!),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-              ),
-              SizedBox(height: 20),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Business Name',
-                  border: OutlineInputBorder(),
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.green,
                 ),
-                onChanged: (value) => businessName = value,
-              ),
-              SizedBox(height: 10),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Business Address',
-                  border: OutlineInputBorder(),
+                child: Center(
+                  child: Text(
+                    'FarmConnect',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-                onChanged: (value) => businessAddress = value,
               ),
-              SizedBox(height: 10),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Tell us about your business',
-                  border: OutlineInputBorder(),
-                ),
-                onChanged: (value) => businessDescription = value,
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  // Handle form submission and move to the next page
-                  _saveProfile();
+              ListTile(
+                leading: Icon(Icons.business, color: Colors.green),
+                title: Text('Create Business Profile'),
+                onTap: () {
+                  Navigator.of(context).pop();
                 },
-                child: Text('CONTINUE'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange, // background color
-                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.settings, color: Colors.green),
+                title: Text('Settings'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              Divider(color: Colors.grey[300]),
+              ListTile(
+                leading: Icon(Icons.logout, color: Colors.red),
+                title: Text('Log Out'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacementNamed(context, '/signin');
+                },
               ),
             ],
           ),
         ),
+      ),
+      body: ListView(
+        padding: EdgeInsets.all(24.0),
+        children: <Widget>[
+          Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.all(24.0),
+              child: Column(
+                children: [
+                  Text('Create a Business Profile',
+                    style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.blue[900]
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+
+                  SizedBox(height: 10,),
+                  GestureDetector(
+                    onTap: () => _showImageSourceActionSheet(context),
+                    child: businessLogo == null
+                        ? Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.blue[300],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.add_a_photo, size: 40),
+                            SizedBox(height: 10),
+                            Text(
+                              'Add logo of your business here (optional)',
+                              style: TextStyle(color: Colors.white70),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                        : Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: FileImage(businessLogo!),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 8,),
+          Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            color: Colors.white,
+            child: Padding(padding: EdgeInsets.all(24.0),
+                child: Column(
+                  children: [
+                    Text(
+                      'Enter your business details below.', style: TextStyle(
+                        fontSize: 16,fontWeight: FontWeight.w500
+                    ),
+                    ),
+                    SizedBox(height: 20),
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Business Name',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      ),
+                      onChanged: (value) => businessName = value,
+                    ),
+                    SizedBox(height: 10),
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Business Address',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      ),
+                      onChanged: (value) => businessAddress = value,
+                    ),
+                    SizedBox(height: 10),
+                    TextField(
+                      maxLines: 4,
+                      decoration: InputDecoration(
+                        labelText: 'Tell us about a bit about your business.',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+
+                        alignLabelWithHint: true,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      ),
+                      onChanged: (value) => businessDescription = value,
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: (){
+                        _saveProfile();
+                      },
+
+                      child: Text('CONTINUE', style: TextStyle(color: Colors.white),),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue[900],
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                        textStyle: TextStyle(fontSize: 18),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+            ),
+          )
+        ],
       ),
     );
   }

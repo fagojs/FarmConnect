@@ -32,77 +32,100 @@ class _EditBusinessInformationState extends State<EditBusinessInformation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: Text('Profile'),
+        title: Text('Edit Your Business Information',style: TextStyle(fontWeight: FontWeight.bold)),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context); // Navigate back
+            Navigator.pop(context);
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Edit Your Business Profile',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Text('Update your business details below.', style: TextStyle(fontSize: 16)),
-            SizedBox(height: 20),
-            GestureDetector(
-              child: Container(
-                width: 150,
-                height: 150,
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.add_a_photo, size: 40),
-                      Text('Add image of your product'),
-                    ],
-                  ),
+    body: SingleChildScrollView(
+      child: Padding(padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          GestureDetector(
+            child: Container(
+              width: 150,
+              height: 150,
+              decoration: BoxDecoration(
+                color: Colors.green[300],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.add_a_photo, size: 40),
+                    Center( // Wrap the Text widget with Center
+                      child: Text(
+                        'Add image of your product',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.white60),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            TextField(
-              controller: businessNameController,
-              decoration: InputDecoration(labelText: 'Business Name', border: OutlineInputBorder()),
-            ),
-            SizedBox(height: 10),
-            TextField(
-              controller: businessDescriptionController,
-              decoration: InputDecoration(
-                labelText: 'Business Description',
-                border: OutlineInputBorder(),
+          ),
+          SizedBox(height: 48),
+          TextField(
+            controller: businessNameController,
+            decoration: InputDecoration(labelText: 'Business Name', border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.0),
+              borderSide: const BorderSide(color: Colors.green),
+            )),
+          ),
+          SizedBox(height: 16),
+          TextField(
+            controller: businessDescriptionController,
+            decoration: InputDecoration(
+              labelText: 'Business Description',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: const BorderSide(color: Colors.green),
               ),
             ),
-            SizedBox(height: 20),
-            TextField(
-              controller: businessAddressController,
-              decoration: InputDecoration(labelText: 'Location', border: OutlineInputBorder()),
-            ),
-            SizedBox(height: 10),
-            ElevatedButton(
+          ),
+          SizedBox(height: 16),
+          TextField(
+            controller: businessAddressController,
+            decoration: InputDecoration(labelText: 'Location', border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.0),
+              borderSide: const BorderSide(color: Colors.green),
+            )),
+          ),
+          SizedBox(height: 24),
+          SizedBox(
+            width: 250,
+            child: ElevatedButton(
               onPressed: () {
-               _updateBusinessInfo();
+                _updateBusinessInfo();
               },
-              child: Text('UPDATE'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
+                backgroundColor: Colors.green,
+                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                textStyle: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
               ),
+              child: const Text('Update', style: TextStyle(color: Colors.white),),
             ),
-          ],
-        ),
+          ),
+
+
+        ],
       ),
+      ),
+    ),
     );
   }
 }

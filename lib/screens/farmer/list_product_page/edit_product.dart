@@ -76,8 +76,10 @@ class _EditProductPageState extends State<EditProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: const Text('Edit Product'),
+        title: const Text('Edit Product',style: TextStyle(fontWeight: FontWeight.bold),),
+        centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -85,125 +87,297 @@ class _EditProductPageState extends State<EditProductPage> {
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'Edit Your Product Details',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20),
-              GestureDetector(
-                onTap: () async {
-                  final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-                  if (pickedFile != null) {
-                    setState(() {
-                      _productImage = File(pickedFile.path);
-                    });
-                  }
-                },
-                child: _productImage == null
-                    ? Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.add_a_photo, size: 40),
-                              Text('Select your product photo (optional)', textAlign: TextAlign.center,),
-                            ],
-                          ),
-                        ),
-                      )
-                    : Image.file(
-                        _productImage!,
-                        width: 150,
-                        height: 150,
-                        fit: BoxFit.cover,
-                      ),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Product Name',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Row(
+      body: ListView(
+        padding: EdgeInsets.all(24.0),
+        children: <Widget>[
+          Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+
+            ),
+            color: Colors.white,
+            child: Padding(padding: EdgeInsets.all(24.0),
+              child: Column(
                 children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _quantityController,
-                      decoration: InputDecoration(
-                        labelText: 'Quantity Available (in ${widget.product.category == 'Dairy' ? 'litre' : 'kg'})',
-                        border: const OutlineInputBorder(),
+                  Text('Edit Your Product Details',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color:Color(0xFF4CAF50) ),
+                  ),
+                  SizedBox(height: 20,),
+                  GestureDetector(
+                    onTap: () async {
+                      final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+                      if (pickedFile != null) {
+                        setState(() {
+                          _productImage = File(pickedFile.path);
+                        });
+                      }
+                    },
+                    child: _productImage == null
+                        ? Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.green[300],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.add_a_photo, size: 40),
+                            Text('Select your product (optional)', textAlign: TextAlign.center,style: TextStyle(color: Colors.white70)),
+                          ],
+                        ),
+                      ),
+                    )
+                        : Image.file(
+                      _productImage!,
+                      width: 150,
+                      height: 150,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 8,),
+          Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+
+            ),
+            color: Colors.white,
+            child: Padding(padding: EdgeInsets.all(24.0),
+              child: Column(
+                children: [
+                  SizedBox(height: 4),
+                  TextField(
+                    controller: _nameController,
+                    decoration: const InputDecoration(
+                      labelText: 'Product Name',
+                      border: OutlineInputBorder(
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: TextField(
-                      controller: _priceController,
-                      decoration: InputDecoration(
-                        labelText: 'Price (per ${widget.product.category == 'Dairy' ? 'litre' : 'kg'})',
-                        border: const OutlineInputBorder(),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _quantityController,
+                          decoration: InputDecoration(
+                            labelText: 'Quantity Available (in ${widget.product.category == 'Dairy' ? 'litre' : 'kg'})',
+                            border: const OutlineInputBorder(),
+                          ),
+                        ),
                       ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: TextField(
+                          controller: _priceController,
+                          decoration: InputDecoration(
+                            labelText: 'Price (per ${widget.product.category == 'Dairy' ? 'litre' : 'kg'})',
+                            border: const OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(
+                      labelText: 'Select a category',
+                      border: OutlineInputBorder(),
+                    ),
+                    value: _selectedCategory,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _selectedCategory = newValue;
+                      });
+                    },
+                    items: _categories.map((category) {
+                      return DropdownMenuItem(
+                        child: Text(category),
+                        value: category,
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _descriptionController,
+                    maxLines: 4,
+                    decoration: const InputDecoration(
+                      labelText: 'Product Description',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: (){
+                      _updateProduct();
+                    },
+                    child: Text('Update',style: TextStyle(color: Colors.white),),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF4CAF50),
+                        padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                        textStyle: TextStyle(fontSize: 18),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                        )
+                      // background
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
-              DropdownButtonFormField<String>(
-                decoration: const InputDecoration(
-                  labelText: 'Select a category',
-                  border: OutlineInputBorder(),
-                ),
-                value: _selectedCategory,
-                onChanged: (newValue) {
-                  setState(() {
-                    _selectedCategory = newValue;
-                  });
-                },
-                items: _categories.map((category) {
-                  return DropdownMenuItem(
-                    child: Text(category),
-                    value: category,
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _descriptionController,
-                maxLines: 4,
-                decoration: const InputDecoration(
-                  labelText: 'Product Description',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  _updateProduct();                 
-                },
-                child: const Text('Update'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange, // background color
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
+          )
+        ],
+      )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      // Padding(
+      //   padding: const EdgeInsets.all(16.0),
+      //   child: SingleChildScrollView(
+      //     child: Column(
+      //       mainAxisAlignment: MainAxisAlignment.center,
+      //       children: <Widget>[
+      //         const Text(
+      //           'Edit Your Product Details',
+      //           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      //         ),
+      //         const SizedBox(height: 20),
+      //         GestureDetector(
+      //           onTap: () async {
+      //             final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+      //             if (pickedFile != null) {
+      //               setState(() {
+      //                 _productImage = File(pickedFile.path);
+      //               });
+      //             }
+      //           },
+      //           child: _productImage == null
+      //               ? Container(
+      //                   width: 150,
+      //                   height: 150,
+      //                   decoration: BoxDecoration(
+      //                     color: Colors.grey[200],
+      //                     borderRadius: BorderRadius.circular(10),
+      //                   ),
+      //                   child: const Center(
+      //                     child: Column(
+      //                       mainAxisAlignment: MainAxisAlignment.center,
+      //                       children: [
+      //                         Icon(Icons.add_a_photo, size: 40),
+      //                         Text('Select your product photo (optional)', textAlign: TextAlign.center,),
+      //                       ],
+      //                     ),
+      //                   ),
+      //                 )
+      //               : Image.file(
+      //                   _productImage!,
+      //                   width: 150,
+      //                   height: 150,
+      //                   fit: BoxFit.cover,
+      //                 ),
+      //         ),
+      //         const SizedBox(height: 20),
+      //         TextField(
+      //           controller: _nameController,
+      //           decoration: const InputDecoration(
+      //             labelText: 'Product Name',
+      //             border: OutlineInputBorder(),
+      //           ),
+      //         ),
+      //         const SizedBox(height: 10),
+      //         Row(
+      //           children: [
+      //             Expanded(
+      //               child: TextField(
+      //                 controller: _quantityController,
+      //                 decoration: InputDecoration(
+      //                   labelText: 'Quantity Available (in ${widget.product.category == 'Dairy' ? 'litre' : 'kg'})',
+      //                   border: const OutlineInputBorder(),
+      //                 ),
+      //               ),
+      //             ),
+      //             const SizedBox(width: 10),
+      //             Expanded(
+      //               child: TextField(
+      //                 controller: _priceController,
+      //                 decoration: InputDecoration(
+      //                   labelText: 'Price (per ${widget.product.category == 'Dairy' ? 'litre' : 'kg'})',
+      //                   border: const OutlineInputBorder(),
+      //                 ),
+      //               ),
+      //             ),
+      //           ],
+      //         ),
+      //         const SizedBox(height: 10),
+      //         DropdownButtonFormField<String>(
+      //           decoration: const InputDecoration(
+      //             labelText: 'Select a category',
+      //             border: OutlineInputBorder(),
+      //           ),
+      //           value: _selectedCategory,
+      //           onChanged: (newValue) {
+      //             setState(() {
+      //               _selectedCategory = newValue;
+      //             });
+      //           },
+      //           items: _categories.map((category) {
+      //             return DropdownMenuItem(
+      //               child: Text(category),
+      //               value: category,
+      //             );
+      //           }).toList(),
+      //         ),
+      //         const SizedBox(height: 10),
+      //         TextField(
+      //           controller: _descriptionController,
+      //           maxLines: 4,
+      //           decoration: const InputDecoration(
+      //             labelText: 'Product Description',
+      //             border: OutlineInputBorder(),
+      //           ),
+      //         ),
+      //         const SizedBox(height: 20),
+      //         ElevatedButton(
+      //           onPressed: () {
+      //             _updateProduct();
+      //           },
+      //           child: const Text('Update'),
+      //           style: ElevatedButton.styleFrom(
+      //             backgroundColor: Colors.orange, // background color
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

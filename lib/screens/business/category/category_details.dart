@@ -1,6 +1,5 @@
 import 'package:farm_connect/screens/business/category/category_page.dart';
 import 'package:flutter/material.dart';
-
 import '../home_page.dart';
 import '../profile_page/profile_page.dart';
 import '../cart_page.dart';
@@ -11,8 +10,7 @@ import "../../../data/cart_state.dart";
 class CategorySpecificPage extends StatefulWidget {
   final String category;
 
-  const CategorySpecificPage({Key? key, required this.category})
-      : super(key: key);
+  const CategorySpecificPage({Key? key, required this.category}) : super(key: key);
 
   @override
   _CategorySpecificPageState createState() => _CategorySpecificPageState();
@@ -21,13 +19,11 @@ class CategorySpecificPage extends StatefulWidget {
 class _CategorySpecificPageState extends State<CategorySpecificPage> {
   List<Map<String, dynamic>> filteredProducts = [];
   List<Map<String, dynamic>> displayedProducts = [];
-
   final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    // Filter products based on the selected category
     if (widget.category == 'All') {
       filteredProducts = allListedProducts; // Show all products if category is 'All'
     } else {
@@ -49,8 +45,14 @@ class _CategorySpecificPageState extends State<CategorySpecificPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[50],
       appBar: AppBar(
-        title: Text('${widget.category} Products'),
+        title: Text(
+          '${widget.category} Products',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -58,121 +60,164 @@ class _CategorySpecificPageState extends State<CategorySpecificPage> {
           },
         ),
       ),
-      body: Column(
-        children: [
-          // Search Bar for filtering products
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            // Search Bar
+            TextField(
               controller: _searchController,
               onChanged: _filterProducts,
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
+                prefixIcon: Icon(Icons.search, color: Colors.green),
                 hintText: 'Search ${widget.category} products',
+                filled: true,
+                fillColor: Colors.white,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
                 ),
+                contentPadding: EdgeInsets.all(16),
               ),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: displayedProducts.length,
-              itemBuilder: (context, index) {
-                final product = displayedProducts[index];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProductDetailsPage(
-                          productName: product['name'],
-                          quantity: product['quantity'],
-                          price: product['price'],
-                          description: product['description'],
+            SizedBox(height: 20),
+
+            // Product List
+            Expanded(
+              child: ListView.builder(
+                itemCount: displayedProducts.length,
+                itemBuilder: (context, index) {
+                  final product = displayedProducts[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductDetailsPage(
+                            productName: product['name'],
+                            quantity: product['quantity'],
+                            price: product['price'],
+                            description: product['description'],
+                          ),
                         ),
+                      );
+                    },
+                    child: Card(
+                      margin: EdgeInsets.symmetric(vertical: 8.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
                       ),
-                    );
-                  },
-                  child: Card(
-                    margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          // Product Image on Top
-                          Container(
-                            height: 150,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
+                      elevation: 4,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            // Product Image
+                            ClipRRect(
                               borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: AssetImage('images/placeholder_img.png'), // Use product image
+                              child: Image.asset(
+                                'images/placeholder_img.png',
+                                height: 100,
+                                width: 100,
                                 fit: BoxFit.cover,
                               ),
                             ),
-                          ),
-                          SizedBox(height: 10),
+                            SizedBox(width: 16),
 
-                          
+                            // Product Info
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
 
-                          // Price and Product Name
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                              product['name'],
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                      Text(
+                                        product['name'],
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.blue[900],
+                                        ),
+                                      ),
+
+                                      Text(
+                                        product['quantity'].contains('kg')
+                                            ? '\$${product['price']} per kg'
+                                            : '\$${product['price']} per litre',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.blue[700],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 8),
+
+                                  // Product Description
+                                  Text(
+                                    product['description'],
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey[700],
+                                    ),
+                                  ),
+                                  SizedBox(height: 10),
+
+                                  // Add to Cart Button
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        // Add to cart logic
+                                        String unit = product['quantity'].contains('kg') ? 'kg' : 'litre';
+                                        cartState.addToCart({
+                                          "name": product['name'],
+                                          "price": double.parse(product['price']),
+                                          "quantity": 1,
+                                          "unit": unit,
+                                        });
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Text('${product['name']} added to cart!'),
+                                            duration: Duration(seconds: 2),
+                                          ),
+                                        );
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        foregroundColor: Colors.white,
+                                        backgroundColor: Colors.green, // White text
+                                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(4),
+                                        ),
+                                        textStyle: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      child: Text('Add to Cart'),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              if(product['quantity'].split(" ")[1] == "kg")
-                                Text(
-                                  '\$${product['price']} per kg', // Price
-                                  style: TextStyle(fontSize: 14),
-                                )
-                              else
-                                Text(
-                                  '\$${product['price']} per litre', // Price
-                                  style: TextStyle(fontSize: 14),
-                                )
-                            ],
-                          ),
-                          SizedBox(height: 10),
-
-                          // Add to Cart Button
-                          ElevatedButton(
-                            onPressed: () {
-                              // Add to cart logic
-                              String unit = "";
-                              if(product['quantity'].split(" ")[1] == "kg"){
-                                unit = "kg";
-                              }else{
-                                unit ="litre";
-                              }
-                              cartState.addToCart({
-                                "name": product['name'],
-                                "price": double.parse(product['price']),
-                                "quantity": 1,
-                                "unit": unit,
-                              });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('${product['name']} added to cart!')),
-                              );
-                            },
-                            child: Text('Add to cart'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orange, // Change as per your color theme
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
+                    )
+
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
@@ -181,7 +226,7 @@ class _CategorySpecificPageState extends State<CategorySpecificPage> {
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
-        selectedItemColor: Colors.orange,
+        selectedItemColor: Colors.green,
         unselectedItemColor: Colors.black,
         currentIndex: 1,
         onTap: (int index) {

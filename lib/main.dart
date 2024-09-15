@@ -13,6 +13,8 @@ void main() {
 }
 
 class FarmConnectApp extends StatelessWidget {
+  const FarmConnectApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,8 +25,10 @@ class FarmConnectApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => CartPage(),
-        '/signin': (context) => SignInPage(userType: 'Farmer'), // Adjust as needed
-        '/landing': (context) => LandingPage(userType: 'Farmer'), // Adjust as needed
+        '/signin': (context) =>
+            SignInPage(userType: 'Farmer'), // Adjust as needed
+        '/landing': (context) =>
+            LandingPage(userType: 'Farmer'), // Adjust as needed
         // Add routes for other screens if needed
       },
     );

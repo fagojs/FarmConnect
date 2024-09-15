@@ -48,8 +48,10 @@ class _EditFarmInfoPageState extends State<EditFarmInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: Text('Edit Your Farm Profile'),
+        title: Text('Edit Your Farm Profile',style: TextStyle(fontWeight: FontWeight.bold),),
+        centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -57,50 +59,104 @@ class _EditFarmInfoPageState extends State<EditFarmInfoPage> {
           },
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  _showImagePickerOptions();
-                },
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: _selectedImage != null
-                      ? FileImage(_selectedImage!)
-                      : AssetImage('images/placeholder_img.png') as ImageProvider,
-                  child: Icon(Icons.camera_alt, size: 30, color: Colors.white),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    _showImagePickerOptions();
+                  },
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.green,
+                            width: 3.0,
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          radius: 70, // Larger avatar
+                          backgroundImage: _selectedImage != null
+                              ? FileImage(_selectedImage!)
+                              : const AssetImage('images/placeholder_img.png'),
+                        ),
+                      ),
+                      const Icon(Icons.camera_alt, size: 50, color: Colors.white),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                controller: farmNameController,
-                decoration: InputDecoration(labelText: 'Farm Name'),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                controller: farmAddressController,
-                decoration: InputDecoration(labelText: 'Location'),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                controller: farmDescriptionController,
-                decoration: InputDecoration(labelText: 'Description'),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  _updateFarmInfo();                   
-                },
-                child: Text('Update'),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-              ),
-            ],
+                const SizedBox(height: 30),
+                TextFormField(
+                  controller: farmNameController,
+                  decoration: InputDecoration(
+                    labelText: 'Farm Name',
+                    hintText: 'Enter your farm name',
+
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide: const BorderSide(color: Colors.green),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  controller: farmAddressController,
+                  decoration: InputDecoration(
+                    labelText: 'Location',
+                    hintText: 'Enter your farm location',
+
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide: const BorderSide(color: Colors.green),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  controller: farmDescriptionController,
+                  maxLines: 4,
+                  decoration: InputDecoration(
+                    labelText: 'Description',
+                    hintText: 'Tell us about your farm',
+                    alignLabelWithHint: true,
+
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide: const BorderSide(color: Colors.green),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 40),
+                SizedBox(
+                  width: 250, // Wider button
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _updateFarmInfo();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      textStyle: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                    ),
+                    child: const Text('Update', style: TextStyle(color: Colors.white),),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
     );
   }
 

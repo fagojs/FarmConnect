@@ -116,8 +116,10 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: Text('FarmConnect'),
+        title: Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
             icon: Icon(Icons.menu),
@@ -128,151 +130,213 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
         ),
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.lightGreenAccent,
-              ),
-              child: Text(
-                'FarmConnect',
-                style: TextStyle(
-                  color: Colors.green,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Welcome'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                // Navigate to Welcome Screen
-                Navigator.pushReplacement(
-                  context, 
-                  MaterialPageRoute(builder: (context) => LandingPage(userType: 'Farmer')));
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Create Farmer Profile'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CreateFarmerPersonalProfile(),
-                    )
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                // Navigate to Settings Screen
-              },
-            ),
-            Divider(),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Log Out'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                Navigator.pushReplacementNamed(context, '/signin');
-              },
-            ),
-          ],
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        child: Container(
+          color: Colors.white,
+          child: ListView(
+            padding: EdgeInsets.zero,
             children: <Widget>[
-              Text(
-                'Create a Farmer Profile',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                ),
+                child: Center(
+                  child: Text(
+                    'FarmConnect',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
-              SizedBox(height: 10),
-              Text(
-                'Enter your farm details below.',
-                style: TextStyle(fontSize: 16),
+
+              ListTile(
+                leading: const Icon(Icons.home, color: Colors.green),
+                title: const Text('Welcome'),
+                onTap: () {
+                  Navigator.of(context).pop(); // Close the drawer
+                  // Navigate to Welcome Screen
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LandingPage(userType: 'Farmer')));
+                },
               ),
-              SizedBox(height: 20),
-              GestureDetector(
-                onTap: () => _showImageSourceActionSheet(context),
-                child: farmImage == null
-                    ? Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.add_a_photo, size: 40),
-                              Text('Select your farm photo (optional)', textAlign: TextAlign.center,),
-                            ],
-                          ),
-                        ),
+
+
+              ListTile(
+                leading: const Icon(Icons.person, color: Colors.green),
+                title: const Text('Create Farmer Profile'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CreateFarmerPersonalProfile(),
                       )
-                    : Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                            image: FileImage(farmImage!),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
+                  );
+
+
+                },
               ),
-              SizedBox(height: 20),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Farm Name',
-                  border: OutlineInputBorder(),
-                ),
-                onChanged: (value) => farmName = value,
+              ListTile(
+                leading: const Icon(Icons.settings, color: Colors.green),
+                title: const Text('Settings'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
               ),
-              SizedBox(height: 10),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Farm Address',
-                  border: OutlineInputBorder(),
-                ),
-                onChanged: (value) => farmAddress = value,
-              ),
-              SizedBox(height: 10),
-              TextField(
-                maxLines: 4,
-                decoration: InputDecoration(
-                  labelText: 'Tell us about a bit about your farm.',
-                  border: OutlineInputBorder(),
-                ),
-                onChanged: (value) => farmDescription = value,
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed:() {_saveProfile();},
-                child: Text('CONTINUE'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange, // background
-                ),
+              Divider(color: Colors.grey[300]), // Use a lighter gray for the divider
+              ListTile(
+                leading: Icon(Icons.logout, color: Colors.red),
+                title: Text('Log Out'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacementNamed(context, '/signin');
+                },
               ),
             ],
           ),
         ),
+      ),
+      body:ListView(
+        padding: EdgeInsets.all(24.0),
+        children: <Widget>[
+          Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.all(24.0),
+              child: Column(
+                children: [
+                  Text('Create a Farmer Profile',
+                    style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Color(0xFF4CAF50)
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+
+                  SizedBox(height: 10,),
+                  GestureDetector(
+                    onTap: () => _showImageSourceActionSheet(context),
+                    child: farmImage == null
+                        ? Container(
+                      width: 200,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.green[300],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.add_a_photo, size: 40),
+                            Center( // Center the text
+                              child: Text(
+                                'Select your farm photo (optional)',
+                                textAlign: TextAlign.center,style: TextStyle(color: Colors.white70),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                        : Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: FileImage(farmImage!),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+
+
+              ],
+              ),
+            ),
+          ),
+          SizedBox(height: 8,),
+          Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            color: Colors.white,
+            child: Padding(padding: EdgeInsets.all(24.0),
+                child: Column(
+                  children: [
+                    Text(
+                      'Enter your Farms details below.', style: TextStyle(
+                        fontSize: 16,fontWeight: FontWeight.w500
+                    ),
+                    ),
+                    SizedBox(height: 20),
+                            TextField(
+                              decoration: InputDecoration(
+                                labelText: 'Farm Name',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              ),
+                              onChanged: (value) => farmName = value,
+                            ),
+                            SizedBox(height: 10),
+                            TextField(
+                              decoration: InputDecoration(
+                                labelText: 'Farm Address',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+
+                                contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              ),
+                              onChanged: (value) => farmAddress = value,
+                            ),
+                            SizedBox(height: 10),
+                            TextField(
+                              maxLines: 4,
+                              decoration: InputDecoration(
+                                labelText: 'Tell us about a bit about your farm.',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+
+                                alignLabelWithHint: true,
+                                contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              ),
+                              onChanged: (value) => farmDescription = value,
+                            ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: (){
+                        _saveProfile();
+                      },
+
+                      child: Text('CONTINUE', style: TextStyle(color: Colors.white),),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF4CAF50),
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                        textStyle: TextStyle(fontSize: 18),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+            ),
+          )
+        ],
       ),
     );
   }

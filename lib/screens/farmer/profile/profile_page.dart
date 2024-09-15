@@ -19,71 +19,77 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: Text('FarmConnect'),
+        title: Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        centerTitle: true,
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.lightGreenAccent),
-              child: Text(
-                'FarmConnect',
-                style: TextStyle(color: Colors.green, fontSize: 24),
+        child: Container(
+          color: Colors.white,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                ),
+                child: Center(
+                  child: Text(
+                    'FarmConnect',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Home'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => FarmerHomePage()),
-                );
-              }
-            ),
-            ListTile(
-              leading: const Icon(Icons.add_circle),
-              title: const Text('List product'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => ListProductPage()),
-                );
-              },
-
-            ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Profile'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => FarmerProfilePage()),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            const Divider(),
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: const Text('Log Out'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushReplacementNamed(context, '/signin');
-              },
-            ),
-          ],
+              ListTile(
+                leading: Icon(Icons.home, color: Colors.green),
+                title: Text('Home'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => FarmerHomePage()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.add_circle, color: Colors.green),
+                title: Text('List Product'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => ListProductPage()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.person, color: Colors.green),
+                title: Text('Profile'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => FarmerProfilePage()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.settings, color: Colors.green),
+                title: Text('Settings'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              Divider(color: Colors.grey[300]),
+              ListTile(
+                leading: Icon(Icons.logout, color: Colors.red),
+                title: Text('Log Out'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacementNamed(context, '/signin');
+                },
+              ),
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -92,20 +98,48 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('images/placeholder_img.png'), // Placeholder image
+              SizedBox(
+              height: 250,
+              width: 400,
+
+              child: Card(
+                elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0)
               ),
-              const SizedBox(height: 10),
-              Text(currentUser.fullName ?? 'Name not provided', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-              //Text('John Smith', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-              const Text('Farmer', style: TextStyle(color: Colors.grey, fontSize: 16)),
+            color: Colors.white,
+                margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 32.0),
+                  child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      const CircleAvatar(
+                        radius: 50,
+                        backgroundImage: AssetImage('images/placeholder_img.png'), // Placeholder image
+                      ),
+                      const SizedBox(height: 10),
+                      Text(currentUser.fullName ?? 'Name not provided', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                      //Text('John Smith', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                      const Text('Farmer', style: TextStyle(color: Colors.grey, fontSize: 16)),
+                    ],
+                ),
+                ),
+
+
+          ),
+              ),
               const SizedBox(height: 20),
 
               // Contact Information Card
               Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0)
+                ),
+                color: Colors.white,
                 child: ListTile(
-                  title: const Text('Contact Information'),
+                  title: const Text('Contact Information', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: Colors.green),),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -147,15 +181,29 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                       );
                       setState(() {});
                     },
-                    child:const Text('Edit'),
+                    child:const Text('Edit', style: TextStyle(color: Colors.white),),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurpleAccent,
+                      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 4),
+                      textStyle: TextStyle(fontSize: 18),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0)
+                      )
+                    )
+                    
                   ),
                 ),
               ),
 
               // Farm Information Card
               Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0)
+                ),
+                color: Colors.white,
                 child: ListTile(
-                  title: const Text('Farm Information'),
+                  title: const Text('Farm Information', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: Colors.green)),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -196,7 +244,15 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                       );
                       setState(() {});
                     },
-                    child: const Text('Edit'),
+                    child: const Text('Edit', style: TextStyle(color: Colors.white),),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.deepPurpleAccent,
+                          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 4),
+                          textStyle: TextStyle(fontSize: 18),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25.0)
+                          )
+                      )
                   ),
                 ),
               ),
@@ -240,7 +296,7 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
           BottomNavigationBarItem(icon: Icon(Icons.checklist_rtl_sharp), label: 'Orders'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
-        selectedItemColor: Colors.orange,
+        selectedItemColor: Colors.green,
         unselectedItemColor: Colors.black,
       ),
     );

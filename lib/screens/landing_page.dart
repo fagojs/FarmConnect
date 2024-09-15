@@ -20,8 +20,10 @@ class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: Text('FarmConnect'),
+        title: Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
             icon: Icon(Icons.menu),
@@ -32,119 +34,136 @@ class _LandingPageState extends State<LandingPage> {
         ),
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.lightGreenAccent,
-              ),
-              child: Text(
-                'FarmConnect',
-                style: TextStyle(
+        child: Container(
+          color: Colors.white,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
                   color: Colors.green,
-                  fontSize: 24,
+                ),
+                child: Center(
+                  child: Text(
+                    'FarmConnect',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
-            ),
-            widget.userType == 'Farmer'?
-              ListTile(
-                leading: const Icon(Icons.person),
-                title: const Text('Create Business Profile'),
+              widget.userType == 'Farmer'
+                  ? ListTile(
+                leading: Icon(Icons.person, color: Colors.green),
+                title: Text('Create Business Profile'),
                 onTap: () {
                   setState(() {
                     selectedPage = 'Create Business Profile';
                   });
-                  Navigator.of(context).pop(); // Close the drawer
-                  // Implement navigation to Create Business Profile Screen
+                  Navigator.of(context).pop();
                   Navigator.pushReplacement(
-                    context, 
-                    MaterialPageRoute(builder: (context) => SignUpPage()));
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SignUpPage()));
                 },
               )
-            :
-              ListTile(
-                leading: const Icon(Icons.person),
-                title: const Text('Create Farmer Profile'),
+                  : ListTile(
+                leading: Icon(Icons.person, color: Colors.green),
+                title: Text('Create Farmer Profile'),
                 onTap: () {
                   setState(() {
                     selectedPage = 'Create Farmer Profile';
                   });
-                  Navigator.of(context).pop(); // Close the drawer
-                  // Implement navigation to Create Business Profile Screen
+                  Navigator.of(context).pop();
                   Navigator.pushReplacement(
-                    context, 
-                    MaterialPageRoute(builder: (context) => SignUpPage()));
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SignUpPage()));
                 },
               ),
-              widget.userType == 'Farmer'?
-                ListTile(
-                  leading: const Icon(Icons.agriculture),
-                  title: const Text('Create Farmer Profile'),
-                  onTap: () {
-                    setState(() {
-                      selectedPage = 'Create Farmer Profile';
-                    });
-                    Navigator.of(context).pop(); // Close the drawer
-                    // Implement navigation to Create Farmer Profile Screen
-                    Navigator.pushReplacement(
-                      context, 
-                      MaterialPageRoute(builder: (context) => CreateFarmerPersonalProfile()));
-                  },
-                )
-              :
-                ListTile(
-                  leading: const Icon(Icons.agriculture),
-                  title: const Text('Create Business Profile'),
-                  onTap: () {
-                    setState(() {
-                      selectedPage = 'Create Business Profile';
-                    });
-                    Navigator.of(context).pop(); // Close the drawer
-                    // Implement navigation to Create Farmer Profile Screen
-                    Navigator.pushReplacement(
-                      context, 
-                      MaterialPageRoute(builder: (context) => BusinessPersonalInfoPage()));
-                  },
-                ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
-              onTap: () {
-                setState(() {
-                  selectedPage = 'Settings';
-                });
-                Navigator.of(context).pop(); // Close the drawer
-                // Implement navigation to Settings Screen
-              },
-            ),
-            Divider(),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Log Out'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                Navigator.pushReplacementNamed(context, '/signin');
-              },
-            ),
-          ],
+              widget.userType == 'Farmer'
+                  ? ListTile(
+                leading: Icon(Icons.agriculture, color: Colors.green),
+                title: Text('Create Farmer Profile'),
+                onTap: () {
+                  setState(() {
+                    selectedPage = 'Create Farmer Profile';
+                  });
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              CreateFarmerPersonalProfile()));
+                },
+              )
+                  : ListTile(
+                leading: Icon(Icons.agriculture, color: Colors.green),
+                title: Text('Create Business Profile'),
+                onTap: () {
+                  setState(() {
+                    selectedPage = 'Create Business Profile';
+                  });
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              BusinessPersonalInfoPage()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.settings, color: Colors.green),
+                title: Text('Settings'),
+                onTap: () {
+                  setState(() {
+                    selectedPage = 'Settings';
+                  });
+                  Navigator.of(context).pop();
+                },
+              ),
+              Divider(color: Colors.grey[300]),
+              ListTile(
+                leading: Icon(Icons.logout, color: Colors.red),
+                title: Text('Log Out'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacementNamed(context, '/signin');
+                },
+              ),
+            ],
+          ),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
+        padding: const EdgeInsets.all(24.0),
+        child:Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            SizedBox(height: 50),
-            Text(
-              'Welcome to FarmConnect',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,),
-              textAlign: TextAlign.center,
+        children: <Widget>[
+          Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
             ),
-            SizedBox(height: 20),
-             _buildUserOptions(context)
-          ],
-        ),
+            color: Colors.white,
+            child: Padding(padding: EdgeInsets.all(24.0),
+            child: Column(
+              children: [
+                Text('Welcome to FarmConnect',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                      color: widget.userType== 'Farmer' ? Colors.green : Colors.blue[900]),)
+              ],
+            ),
+            ),
+          ),
+          const SizedBox(height: 20,),
+          _buildUserOptions(context)
+        ]
+      ),
       ),
     );
   }
@@ -153,16 +172,21 @@ class _LandingPageState extends State<LandingPage> {
     return Column(
       children: [
         Card(
-          color: widget.userType == 'Farmer' ? Colors.green : Colors.blueGrey,
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          color: widget.userType == 'Farmer' ? Colors.green[100] : Colors.blue[100],
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(vertical: 32.0,horizontal: 32.0),
             child: Column(
               children: [
                 Text(
                   'Have not created ${(widget.userType).toLowerCase()} profile?',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: widget.userType== 'Farmer' ? Colors.green : Colors.blue[900],
+                      fontSize: 18,fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
                     // Navigate to Farmer Profile Creation
@@ -173,30 +197,40 @@ class _LandingPageState extends State<LandingPage> {
                       return widget.userType == 'Farmer' ? CreateFarmerPersonalProfile() : BusinessPersonalInfoPage();
                     }));
                   },
-                  child: Text('Create ${(widget.userType)} Profile'),
+                  child: Text('Create ${(widget.userType)} Profile',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18,color: Colors.white),),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange, // background
+                    backgroundColor: widget.userType== 'Farmer'?Colors.green: Colors.blue[900],
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25.0)
+                    )// background
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 16),
                 Text(
                   'OR',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Colors.green[800],fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
                     // Navigate to Farmer Home Page
                     Navigator.pushReplacement(
-                      context, 
+                      context,
                       MaterialPageRoute(builder: (context){
                         return widget.userType == 'Farmer'? FarmerHomePage() : BusinessOwnerHomePage();
                       }));
                   },
-                  child: Text('Go to Home Page'),
+                  child: Text('Go to Home Page',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18,color: Colors.white)),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange, // background
+                    backgroundColor: widget.userType== 'Farmer' ? Colors.green : Colors.blue[900] ,
+                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0),// background
                   ),
+                ),
                 ),
               ],
             ),
