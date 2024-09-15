@@ -117,7 +117,8 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                   ),
                   Text(
-                    'Welcome Back',
+                    'Welcome '
+                        'Back',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
