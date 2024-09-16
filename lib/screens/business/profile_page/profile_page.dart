@@ -17,13 +17,13 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Color(0xFFE0F7FA),
+      backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
@@ -37,7 +37,7 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              DrawerHeader(
+              const DrawerHeader(
                 decoration: BoxDecoration(
                   color: Colors.green,
                 ),
@@ -53,37 +53,49 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.home, color: Colors.green),
-                title: Text('Home'),
+                leading:const Icon(Icons.home, color: Colors.green),
+                title: const Text('Home'),
                 onTap: () {
                   Navigator.of(context).pop();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => BusinessOwnerHomePage()),
+                  );
                 },
               ),
               ListTile(
-                leading: Icon(Icons.shopping_cart, color: Colors.green),
-                title: Text('Cart'),
+                leading: const Icon(Icons.shopping_cart, color: Colors.green),
+                title: const Text('Cart'),
                 onTap: () {
                   Navigator.of(context).pop();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => CartPage()),
+                  );
                 },
               ),
               ListTile(
-                leading: Icon(Icons.category, color: Colors.green),
-                title: Text('Categories'),
+                leading: const Icon(Icons.category, color: Colors.green),
+                title: const Text('Categories'),
                 onTap: () {
                   Navigator.of(context).pop();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => CategoryPage()),
+                  );
                 },
               ),
               ListTile(
-                leading: Icon(Icons.settings, color: Colors.green),
-                title: Text('Settings'),
+                leading: const Icon(Icons.settings, color: Colors.green),
+                title: const Text('Settings'),
                 onTap: () {
                   Navigator.of(context).pop();
                 },
               ),
               Divider(color: Colors.grey[300]),
               ListTile(
-                leading: Icon(Icons.logout, color: Colors.red),
-                title: Text('Log Out'),
+                leading: const Icon(Icons.logout, color: Colors.red),
+                title: const Text('Log Out'),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.pushReplacementNamed(context, '/signin');
@@ -185,8 +197,8 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                       child:const Text('Edit', style: TextStyle(color: Colors.white),),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.deepPurpleAccent,
-                          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 4),
-                          textStyle: TextStyle(fontSize: 18),
+                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 4),
+                          textStyle: const TextStyle(fontSize: 18),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25.0)
                           )
@@ -208,7 +220,7 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         children: [
                           const Icon(Icons.home, color: Colors.grey),
@@ -248,8 +260,8 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                       child: const Text('Edit', style: TextStyle(color: Colors.white),),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.deepPurpleAccent,
-                          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 4),
-                          textStyle: TextStyle(fontSize: 18),
+                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 4),
+                          textStyle: const TextStyle(fontSize: 18),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25.0)
                           )
@@ -292,7 +304,7 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
               break;
           }
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.category), label: 'List Product'),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Orders'),
