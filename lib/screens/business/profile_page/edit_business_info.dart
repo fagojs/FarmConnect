@@ -15,16 +15,16 @@ class _EditBusinessInformationState extends State<EditBusinessInformation> {
   @override
   void initState() {
     super.initState();
-    businessNameController.text = currentUser.fullName ?? '';
-    businessAddressController.text = currentUser.address ?? '';
-    businessDescriptionController.text = currentUser.contactNumber ?? '';
+    businessNameController.text = currentUser.businessName ?? '';
+    businessAddressController.text = currentUser.businessAddress ?? '';
+    businessDescriptionController.text = currentUser.businessDescription ?? '';
   }
 
    void _updateBusinessInfo(){
     setState(() {
-        currentUser.farmName = businessNameController.text;
-        currentUser.farmAddress = businessAddressController.text;
-        currentUser.farmDescription = businessDescriptionController.text;
+        currentUser.businessName = businessNameController.text;
+        currentUser.businessAddress = businessAddressController.text;
+        currentUser.businessDescription = businessDescriptionController.text;
       });
       Navigator.pop(context);
   }
@@ -32,11 +32,11 @@ class _EditBusinessInformationState extends State<EditBusinessInformation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE0F7FA),
+      backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: Text('Edit Your Business Information',style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Edit Your Business Information',style: TextStyle(fontWeight: FontWeight.bold)),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -52,19 +52,19 @@ class _EditBusinessInformationState extends State<EditBusinessInformation> {
               width: 150,
               height: 150,
               decoration: BoxDecoration(
-                color: Colors.green[300],
+                color: Colors.blue[900],
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Center(
+              child: const Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.add_a_photo, size: 40),
+                    Icon(Icons.add_a_photo, size: 40, color: Colors.white),
                     Center( // Wrap the Text widget with Center
                       child: Text(
-                        'Add image of your product',
+                        'Add image of your product (optional)',
                         textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.white60),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ],
@@ -72,34 +72,46 @@ class _EditBusinessInformationState extends State<EditBusinessInformation> {
               ),
             ),
           ),
-          SizedBox(height: 48),
+          const SizedBox(height: 48),
           TextField(
             controller: businessNameController,
-            decoration: InputDecoration(labelText: 'Business Name', border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15.0),
-              borderSide: const BorderSide(color: Colors.green),
-            )),
-          ),
-          SizedBox(height: 16),
-          TextField(
-            controller: businessDescriptionController,
             decoration: InputDecoration(
-              labelText: 'Business Description',
+              labelText: 'Business Name',
+              hintText: 'Enter your business name',
+              prefixIcon: const Icon(Icons.home),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15.0),
-                borderSide: const BorderSide(color: Colors.green),
+                borderSide: const BorderSide(color: Colors.orange),
               ),
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
+          TextField(
+            controller: businessDescriptionController,
+            decoration: InputDecoration(
+                labelText: 'Business Description',
+                hintText: 'Add description for your business',
+                prefixIcon: const Icon(Icons.info),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                  borderSide: const BorderSide(color: Colors.orange),
+                ),
+            ),
+          ),
+          const SizedBox(height: 16),
           TextField(
             controller: businessAddressController,
-            decoration: InputDecoration(labelText: 'Location', border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15.0),
-              borderSide: const BorderSide(color: Colors.green),
-            )),
+            decoration: InputDecoration(
+              labelText: 'Address',
+              hintText: 'Enter address of your business',
+              prefixIcon: const Icon(Icons.location_on),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: const BorderSide(color: Colors.orange),
+              ),
+            ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           SizedBox(
             width: 250,
             child: ElevatedButton(
@@ -107,7 +119,7 @@ class _EditBusinessInformationState extends State<EditBusinessInformation> {
                 _updateBusinessInfo();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
+                backgroundColor: Colors.blue[900],
                 padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                 textStyle: const TextStyle(
                   fontSize: 20,

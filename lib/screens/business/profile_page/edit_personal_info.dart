@@ -37,12 +37,12 @@ class _EditBusinessPersonalProfileState extends State<EditBusinessPersonalProfil
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE0F7FA),
+      backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: Text('Edit Contact Information', style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text('Edit Contact Information', style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -59,15 +59,15 @@ class _EditBusinessPersonalProfileState extends State<EditBusinessPersonalProfil
                     width: 150,
                     height: 150,
                     decoration: BoxDecoration(
-                      color: Colors.green[300],
+                      color: Colors.blue[900],
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Center(
+                    child:const  Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.add_a_photo, size: 40),
-                          Text('Add image of you', style: TextStyle(color: Colors.white70),),
+                          Icon(Icons.add_a_photo, size: 40, color: Colors.white,),
+                          Text('Add your photo (optional)', style: TextStyle(color: Colors.white),textAlign: TextAlign.center,),
                         ],
                       ),
                     ),
@@ -107,7 +107,7 @@ class _EditBusinessPersonalProfileState extends State<EditBusinessPersonalProfil
                   decoration: InputDecoration(
                     labelText: 'Address',
                     hintText: 'Enter your address',
-                    prefixIcon: const Icon(Icons.location_city_outlined),
+                    prefixIcon: const Icon(Icons.location_on,),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0),
                       borderSide: const BorderSide(color: Colors.orange),
@@ -122,7 +122,7 @@ class _EditBusinessPersonalProfileState extends State<EditBusinessPersonalProfil
                       _updatePersonalInfo();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: Colors.blue[900],
                       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                       textStyle: const TextStyle(
                         fontSize: 20,
