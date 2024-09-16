@@ -54,7 +54,7 @@ class _EditContactInfoPageState extends State<EditContactInfoPage> {
     // Check if any field is empty
     if (emailController.text.isEmpty || nameController.text.isEmpty || phoneController.text.isEmpty || addressController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('All fields are required!')),
+        const SnackBar(content: Text('All fields are required!')),
       );
       return;
     }
@@ -62,7 +62,7 @@ class _EditContactInfoPageState extends State<EditContactInfoPage> {
      // Validate contact number
     if (!isValidContactNumber(phoneController.text)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please enter a valid 10-digit contact number')),
+        const SnackBar(content: Text('Please enter a valid 10-digit contact number')),
       );
       return;
     }
@@ -70,7 +70,7 @@ class _EditContactInfoPageState extends State<EditContactInfoPage> {
     // Validate email format
     if (!isValidEmail(emailController.text)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please enter a valid email address')),
+        const SnackBar(content: Text('Please enter a valid email address')),
       );
       return;
     }
@@ -88,7 +88,7 @@ class _EditContactInfoPageState extends State<EditContactInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE0F7FA),
+      backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
         title: const Text('Edit Your Farmer Profile',style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
@@ -176,7 +176,7 @@ class _EditContactInfoPageState extends State<EditContactInfoPage> {
                   decoration: InputDecoration(
                     labelText: 'Address',
                     hintText: 'Enter your address',
-                    prefixIcon: const Icon(Icons.location_city_outlined),
+                    prefixIcon: const Icon(Icons.location_on),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0),
                       borderSide: const BorderSide(color: Colors.orange),

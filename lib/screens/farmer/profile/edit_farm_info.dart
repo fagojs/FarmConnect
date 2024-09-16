@@ -22,9 +22,9 @@ class _EditFarmInfoPageState extends State<EditFarmInfoPage> {
   @override
   void initState() {
     super.initState();
-    farmNameController.text = currentUser.fullName ?? '';
-    farmAddressController.text = currentUser.address ?? '';
-    farmDescriptionController.text = currentUser.contactNumber ?? '';
+    farmNameController.text = currentUser.farmName ?? '';
+    farmAddressController.text = currentUser.farmAddress ?? '';
+    farmDescriptionController.text = currentUser.farmDescription ?? '';
   }
 
   void _updateFarmInfo(){
@@ -48,12 +48,12 @@ class _EditFarmInfoPageState extends State<EditFarmInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE0F7FA),
+      backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: Text('Edit Your Farm Profile',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text('Edit Your Farm Profile',style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -96,11 +96,11 @@ class _EditFarmInfoPageState extends State<EditFarmInfoPage> {
                   controller: farmNameController,
                   decoration: InputDecoration(
                     labelText: 'Farm Name',
-                    hintText: 'Enter your farm name',
-
+                    hintText: 'Enter the name of your farm',
+                    prefixIcon: const Icon(Icons.home),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0),
-                      borderSide: const BorderSide(color: Colors.green),
+                      borderSide: const BorderSide(color: Colors.orange),
                     ),
                   ),
                 ),
@@ -108,27 +108,26 @@ class _EditFarmInfoPageState extends State<EditFarmInfoPage> {
                 TextFormField(
                   controller: farmAddressController,
                   decoration: InputDecoration(
-                    labelText: 'Location',
+                    labelText: 'Address',
                     hintText: 'Enter your farm location',
-
+                    prefixIcon: const Icon(Icons.location_on),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0),
-                      borderSide: const BorderSide(color: Colors.green),
+                      borderSide: const BorderSide(color: Colors.orange),
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: farmDescriptionController,
-                  maxLines: 4,
+                  maxLines: 1,
                   decoration: InputDecoration(
-                    labelText: 'Description',
-                    hintText: 'Tell us about your farm',
-                    alignLabelWithHint: true,
-
+                    labelText: 'Farm Description',
+                    hintText: 'Add description of your farm',
+                    prefixIcon: const Icon(Icons.info),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0),
-                      borderSide: const BorderSide(color: Colors.green),
+                      borderSide: const BorderSide(color: Colors.orange),
                     ),
                   ),
                 ),
@@ -170,16 +169,16 @@ class _EditFarmInfoPageState extends State<EditFarmInfoPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: Icon(Icons.photo_library),
-                title: Text('Choose from Gallery'),
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Choose from Gallery'),
                 onTap: () {
                   _pickImage(ImageSource.gallery);
                   Navigator.of(context).pop();
                 },
               ),
               ListTile(
-                leading: Icon(Icons.camera_alt),
-                title: Text('Take a Photo'),
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Take a Photo'),
                 onTap: () {
                   _pickImage(ImageSource.camera);
                   Navigator.of(context).pop();
