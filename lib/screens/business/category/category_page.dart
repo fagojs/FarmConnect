@@ -33,7 +33,7 @@ class _CategoryPageState extends State<CategoryPage> {
     return Scaffold(
       backgroundColor: Colors.blue[50],
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'FarmConnect',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
@@ -41,7 +41,7 @@ class _CategoryPageState extends State<CategoryPage> {
 
         leading: Builder(
           builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
@@ -54,7 +54,7 @@ class _CategoryPageState extends State<CategoryPage> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              DrawerHeader(
+              const DrawerHeader(
                 decoration: BoxDecoration(
                   color: Colors.green,
                 ),
@@ -70,37 +70,49 @@ class _CategoryPageState extends State<CategoryPage> {
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.home, color: Colors.green),
-                title: Text('Home'),
+                leading: const Icon(Icons.home, color: Colors.green),
+                title: const Text('Home'),
                 onTap: () {
                   Navigator.of(context).pop();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => BusinessOwnerHomePage()),
+                  );
                 },
               ),
               ListTile(
-                leading: Icon(Icons.shopping_cart, color: Colors.green),
-                title: Text('Cart'),
+                leading: const Icon(Icons.shopping_cart, color: Colors.green),
+                title: const Text('Cart'),
                 onTap: () {
                   Navigator.of(context).pop();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => CartPage()),
+                  );
                 },
               ),
               ListTile(
-                leading: Icon(Icons.category, color: Colors.green),
-                title: Text('Categories'),
+                leading: const Icon(Icons.category, color: Colors.green),
+                title: const Text('Categories'),
                 onTap: () {
                   Navigator.of(context).pop();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => CategoryPage()),
+                  );
                 },
               ),
               ListTile(
-                leading: Icon(Icons.settings, color: Colors.green),
-                title: Text('Settings'),
+                leading: const Icon(Icons.settings, color: Colors.green),
+                title: const Text('Settings'),
                 onTap: () {
                   Navigator.of(context).pop();
                 },
               ),
               Divider(color: Colors.grey[300]),
               ListTile(
-                leading: Icon(Icons.logout, color: Colors.red),
-                title: Text('Log Out'),
+                leading: const Icon(Icons.logout, color: Colors.red),
+                title: const Text('Log Out'),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.pushReplacementNamed(context, '/signin');
@@ -119,17 +131,17 @@ class _CategoryPageState extends State<CategoryPage> {
               controller: _searchController,
               onChanged: _filterCategories,
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search, color: Colors.green),
+                prefixIcon: const Icon(Icons.search, color: Colors.green),
                 hintText: 'Search category type',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
                 filled: true,
                 fillColor: Colors.white,
-                contentPadding: EdgeInsets.all(16),
+                contentPadding: const EdgeInsets.all(16),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Category List
             Expanded(
@@ -148,7 +160,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       );
                     },
                     child: Card(
-                      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
@@ -165,20 +177,20 @@ class _CategoryPageState extends State<CategoryPage> {
                                 children: [
                                   Text(
                                     filteredCategories[index],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 8),
+                                  const SizedBox(height: 8),
                                   Text(
                                     'Discover fresh and locally produced ${filteredCategories[index].toLowerCase()}.',
-                                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                                    style: const TextStyle(fontSize: 14, color: Colors.grey),
                                   ),
                                 ],
                               ),
                             ),
-                            SizedBox(width: 16),
+                            const SizedBox(width: 16),
 
 
                             Container(
@@ -186,7 +198,7 @@ class _CategoryPageState extends State<CategoryPage> {
                               height: 80,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
+                                image: const DecorationImage(
                                   image: AssetImage('images/placeholder_img.png'),
                                   fit: BoxFit.cover,
                                 ),
@@ -204,7 +216,7 @@ class _CategoryPageState extends State<CategoryPage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.category), label: 'Categories'),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
