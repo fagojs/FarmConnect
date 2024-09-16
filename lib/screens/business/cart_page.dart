@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import './category/category_page.dart';
 import './home_page.dart';
@@ -278,9 +279,11 @@ class _CartPageState extends State<CartPage> {
                   ElevatedButton(
                     onPressed: () {
                       // Simulate checkout
+                      DateTime now = DateTime.now();
+                      String formattedDate = DateFormat('MMMM dd, yyyy').format(now);
                       Map<String, dynamic> newOrder = {
                         "code": "#${orderHistoryState.orderHistory.length + 1}",
-                        "date": DateTime.now().toString(),
+                        "date": formattedDate,
                         "status": "Shipped",
                         "products": List.from(cartState.cartItems),
                         "address": "Sydney, Australia",
@@ -381,8 +384,8 @@ class _CartPageState extends State<CartPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ListTile(
-                              title: Text("Order Code: ${order['code']}"),
-                              subtitle: Text("Date: ${order['date']}\nStatus: ${order['status']}")
+                              title: Text("Order Code: ${order['code']}\nDate: ${order['date']}"),
+                              subtitle: Text("Status: ${order['status']}", style: const TextStyle(color: Colors.green),)
                           ),
                           const Divider(),
                           // Loop through products and display each in a table row
@@ -429,8 +432,7 @@ class _CartPageState extends State<CartPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Expanded(flex: 2, child: SizedBox()), // Empty space for alignment under Product
-                                const Expanded(flex: 1, child: SizedBox()), // Empty space for alignment under Quantity
+                                const Expanded(flex: 2, child: SizedBox()), // Empty space for alignment under Quantity
                                 Expanded(
                                   flex: 1,
                                   child: Text(
