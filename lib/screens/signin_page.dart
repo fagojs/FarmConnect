@@ -33,7 +33,7 @@ class _SignInPageState extends State<SignInPage> {
 
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('All fields are required')),
+        const SnackBar(content: Text('All fields are required')),
       );
       setState(() {
         _isLoading = false;
@@ -47,7 +47,7 @@ class _SignInPageState extends State<SignInPage> {
           orElse: () => Farmer(
               email: '', password: '', confirmPassword: ''));
 
-      Future.delayed(Duration(seconds: 2), () {
+      Future.delayed(const Duration(seconds: 2), () {
         if (farmer.email.isNotEmpty || farmer.password.isNotEmpty) {
           Navigator.pushReplacement(
             context,
@@ -57,7 +57,7 @@ class _SignInPageState extends State<SignInPage> {
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Invalid credentials')),
+            const SnackBar(content: Text('Invalid credentials')),
           );
         }
         setState(() {
@@ -70,7 +70,7 @@ class _SignInPageState extends State<SignInPage> {
           orElse: () => BusinessOwner(
               email: '', password: '', confirmPassword: ''));
 
-      Future.delayed(Duration(seconds: 2), () {
+      Future.delayed(const Duration(seconds: 2), () {
         if (businessOwner.email.isNotEmpty ||
             businessOwner.password.isNotEmpty) {
           Navigator.pushReplacement(
@@ -81,7 +81,7 @@ class _SignInPageState extends State<SignInPage> {
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Invalid credentials')),
+            const SnackBar(content: Text('Invalid credentials')),
           );
         }
         setState(() {
@@ -94,17 +94,18 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE0F7FA),
+      backgroundColor: const Color(0xFFE0F7FA),
       body: ListView(
-        padding: EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(24.0),
         children: <Widget>[
+          const SizedBox(height: 15),
           Card(
             elevation: 4,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
             ),
             color: Colors.white,
-            child: Padding(
+            child: const Padding(
               padding: EdgeInsets.all(24.0),
               child: Column(
                 children: [
@@ -128,7 +129,7 @@ class _SignInPageState extends State<SignInPage> {
               ),
             ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 20),
           Card(
             elevation: 4,
             shape: RoundedRectangleBorder(
@@ -136,10 +137,10 @@ class _SignInPageState extends State<SignInPage> {
             ),
             color: Colors.white,
             child: Padding(
-              padding: EdgeInsets.all(24.0),
+              padding: const EdgeInsets.all(24.0),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Sign In',
                     style: TextStyle(
                       fontSize: 20,
@@ -150,23 +151,23 @@ class _SignInPageState extends State<SignInPage> {
                   Text(
                     'Enter your account details below.',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.grey[600]),
+                    style: TextStyle(color: Colors.black),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextField(
                     controller: _emailController,
                     decoration: InputDecoration(
                       labelText: 'Email',
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       prefixIcon: Icon(Icons.email, color: Colors.grey[600]),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   TextField(
                     controller: _passwordController,
                     decoration: InputDecoration(
                       labelText: 'Password',
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       prefixIcon: Icon(Icons.lock, color: Colors.grey[600]),
                       suffixIcon: IconButton(
                         icon: Icon(
@@ -184,43 +185,43 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     obscureText: !_isPasswordVisible,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                               content: Text(
                                   'Password reset link is sent to your email')),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         'Forgot Password?',
                         style: TextStyle(color: Color(0xFF4CAF50)), // Green
                       ),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: _isLoading ? null : _signIn,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF4CAF50), // Green
+                      backgroundColor: const Color(0xFF4CAF50), // Green
                       padding:
-                      EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                      textStyle: TextStyle(fontSize: 18),
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                      textStyle: const TextStyle(fontSize: 18),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                     ),
                     child: _isLoading
-                        ? CircularProgressIndicator(
+                        ? const CircularProgressIndicator(
                       valueColor:
                       AlwaysStoppedAnimation<Color>(Colors.white),
                     )
-                        : Text('Sign In', style: TextStyle(color: Colors.white)),
+                        : const Text('Sign In', style: TextStyle(color: Colors.white)),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -235,7 +236,7 @@ class _SignInPageState extends State<SignInPage> {
                             ),
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           'Sign Up',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
