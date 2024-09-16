@@ -210,7 +210,7 @@ class _LandingPageState extends State<LandingPage> {
                 const SizedBox(height: 16),
                 Text(
                   '--------  OR  --------',
-                  style: TextStyle(color: Colors.blue[800],fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: widget.userType == 'Farmer' ? Colors.green : Colors.blue[800],fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(

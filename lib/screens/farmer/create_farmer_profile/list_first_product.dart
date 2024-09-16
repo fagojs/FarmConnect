@@ -30,7 +30,11 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
       } else {
-        print('No image selected.');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No image selected!!'),
+          ),
+        );
       }
     });
   }
@@ -39,7 +43,7 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
     if (productName.isNotEmpty && _selectedCategory != null && quantity != 0 && price != 0.0) {
       if(quantity < 0 || price < 0){
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Quantity or Price cannot have negative value!'),
           ),
         );
@@ -61,17 +65,18 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
             builder: (context) => FarmerHomePage(),
           ),
         );
+        setState(() {});
       }
     }else if(quantity == 0 || price == 0){
        ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Quantity or Price must be greater than 0'),
         ),
       );
     }else{
        // Show an error message for empty fields
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Please fill in all fields to list the product or skip for now.'),
         ),
       );
@@ -86,16 +91,16 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
           child: Wrap(
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.photo_library),
-                title: Text('Photo Library'),
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Photo Library'),
                 onTap: () {
                   _pickImage(ImageSource.gallery);
                   Navigator.of(context).pop();
                 },
               ),
               ListTile(
-                leading: Icon(Icons.photo_camera),
-                title: Text('Camera'),
+                leading: const Icon(Icons.photo_camera),
+                title: const Text('Camera'),
                 onTap: () {
                   _pickImage(ImageSource.camera);
                   Navigator.of(context).pop();
@@ -111,13 +116,13 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE0F7FA),
+      backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               Scaffold.of(context).openDrawer(); // Opens the drawer
             },
@@ -130,7 +135,7 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
             child: ListView(
               padding: EdgeInsets.zero,
               children: <Widget>[
-                DrawerHeader(
+                const DrawerHeader(
                   decoration: BoxDecoration(
                     color: Colors.green,
                   ),
@@ -183,8 +188,8 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                 ),
                 Divider(color: Colors.grey[300]), // Use a lighter gray for the divider
                 ListTile(
-                  leading: Icon(Icons.logout, color: Colors.red),
-                  title: Text('Log Out'),
+                  leading: const Icon(Icons.logout, color: Colors.red),
+                  title: const Text('Log Out'),
                   onTap: () {
                     Navigator.of(context).pop();
                     Navigator.pushReplacementNamed(context, '/signin');
@@ -195,7 +200,7 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
           ),
         ),
       body:ListView(
-        padding: EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(24.0),
         children: <Widget>[
           Card(
             elevation: 4,
@@ -205,14 +210,14 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
               ),
             color: Colors.white,
             child: Padding(
-                padding: EdgeInsets.all(24.0),
+                padding: const EdgeInsets.all(24.0),
               child: Column(
                 children: [
-                  Text('Create a Farmer Profile',
+                  const Text('Create a Farmer Profile',
                     style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Color(0xFF4CAF50)
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   GestureDetector(
                     onTap: () => _showImageSourceActionSheet(context),
                     child: _image == null
@@ -223,12 +228,12 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                         color: Colors.green[300],
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.add_a_photo, size: 40),
-                            Text('Add image of your product (optional)', textAlign: TextAlign.center,style: TextStyle(color: Colors.white70),),
+                            Icon(Icons.add_a_photo, size: 40, color: Colors.white,),
+                            Text('Add image of your product (optional)', textAlign: TextAlign.center,style: TextStyle(color: Colors.white),),
                           ],
                         ),
                       ),
@@ -251,7 +256,7 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
               ),
             ),
           ),
-          SizedBox(height: 8,),
+          const SizedBox(height: 8,),
           Card(
             elevation: 4,
             shape: RoundedRectangleBorder(
@@ -259,15 +264,15 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
             ),
             color: Colors.white,
             child: Padding(
-                padding: EdgeInsets.all(24.0),
+                padding: const EdgeInsets.all(24.0),
               child: Column(
                 children: [
-                  Text(
-                    'Add details of your first product.', style: TextStyle(
+                  const Text(
+                    'Add details of your first product.',style: TextStyle(
                       fontSize: 16,fontWeight: FontWeight.w500
                   ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextField(
                     decoration: InputDecoration(
                       labelText: 'Product Name (optional)',
@@ -275,43 +280,43 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
 
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
                     onChanged: (value) => productName = value,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
                       Expanded(
                         child: TextField(
                           decoration: InputDecoration(
-                            labelText: 'Quantity in kg (optional)',
+                            labelText: 'Quantity in unit (optional)',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
 
-                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                           ),
                           onChanged: (value) => quantity = int.parse(value),
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: TextField(
                           decoration: InputDecoration(
-                            labelText: 'Price per kg (optional)',
+                            labelText: 'Price per unit (optional)',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
 
-                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                           ),
                           onChanged: (value) => price = double.parse(value),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   DropdownButtonFormField<String>(
                     decoration: InputDecoration(
                       labelText: 'Select a category (optional)',
@@ -319,7 +324,7 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
 
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
                     value: _selectedCategory,
                     onChanged: (newValue) {
@@ -334,7 +339,7 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                       );
                     }).toList(),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   TextField(
                     maxLines: 4,
                     decoration: InputDecoration(
@@ -344,11 +349,11 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                       ),
 
                       alignLabelWithHint: true,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
                     onChanged: (value) => productDescription = value,
                   ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -356,12 +361,12 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                     onPressed: (){
                       _saveFirstProduct();
                     },
-                    child: Text('SAVE',style: TextStyle(color: Colors.white),),
+                    child: const Text('SAVE',style: TextStyle(color: Colors.white),),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF4CAF50),
+                      backgroundColor: const Color(0xFF4CAF50),
                       padding:
-                      EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                      textStyle: TextStyle(fontSize: 18),
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      textStyle: const TextStyle(fontSize: 18),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),
                       ),
@@ -377,12 +382,12 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                         ),
                       );
                     },
-                    child: Text('SKIP',style: TextStyle(color: Colors.white),),
+                    child: const Text('SKIP',style: TextStyle(color: Colors.white),),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF4CAF50),
+                      backgroundColor:const Color(0xFF4CAF50),
                       padding:
-                      EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                      textStyle: TextStyle(fontSize: 18),
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      textStyle: const TextStyle(fontSize: 18),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),
                       ),
@@ -396,154 +401,6 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
           )
         ],
       )
-
-
-
-
-
-      // Padding(
-      //   padding: const EdgeInsets.all(16.0),
-      //   child: SingleChildScrollView(
-      //     child: Column(
-      //       mainAxisAlignment: MainAxisAlignment.center,
-      //       children: <Widget>[
-      //         Text(
-      //           'Create a Farmer Profile',
-      //           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      //         ),
-      //         SizedBox(height: 10),
-      //         Text(
-      //           'Add details of your first product.',
-      //           style: TextStyle(fontSize: 16),
-      //         ),
-      //         SizedBox(height: 20),
-      //         GestureDetector(
-      //           onTap: () => _showImageSourceActionSheet(context),
-      //           child: _image == null
-      //               ? Container(
-      //                   width: 150,
-      //                   height: 150,
-      //                   decoration: BoxDecoration(
-      //                     color: Colors.grey[200],
-      //                     borderRadius: BorderRadius.circular(10),
-      //                   ),
-      //                   child: Center(
-      //                     child: Column(
-      //                       mainAxisAlignment: MainAxisAlignment.center,
-      //                       children: [
-      //                         Icon(Icons.add_a_photo, size: 40),
-      //                         Text('Add image of your product (optional)', textAlign: TextAlign.center,),
-      //                       ],
-      //                     ),
-      //                   ),
-      //                 )
-      //               : Container(
-      //                   width: 150,
-      //                   height: 150,
-      //                   decoration: BoxDecoration(
-      //                     color: Colors.grey[200],
-      //                     borderRadius: BorderRadius.circular(10),
-      //                     image: DecorationImage(
-      //                       image: FileImage(_image!),
-      //                       fit: BoxFit.cover,
-      //                     ),
-      //                   ),
-      //                 ),
-      //         ),
-      //         SizedBox(height: 20),
-      //         TextField(
-      //           decoration: InputDecoration(
-      //             labelText: 'Product Name (optional)',
-      //             border: OutlineInputBorder(),
-      //           ),
-      //           onChanged: (value) => productName = value,
-      //         ),
-      //         SizedBox(height: 10),
-      //         Row(
-      //           children: [
-      //             Expanded(
-      //               child: TextField(
-      //                 decoration: InputDecoration(
-      //                   labelText: 'Quantity in kg (optional)',
-      //                   border: OutlineInputBorder(),
-      //                 ),
-      //                 onChanged: (value) => quantity = int.parse(value),
-      //               ),
-      //             ),
-      //             SizedBox(width: 10),
-      //             Expanded(
-      //               child: TextField(
-      //                 decoration: InputDecoration(
-      //                   labelText: 'Price per kg (optional)',
-      //                   border: OutlineInputBorder(),
-      //                 ),
-      //                 onChanged: (value) => price = double.parse(value),
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //         SizedBox(height: 10),
-      //         DropdownButtonFormField<String>(
-      //           decoration: InputDecoration(
-      //             labelText: 'Select a category (optional)',
-      //             border: OutlineInputBorder(),
-      //           ),
-      //           value: _selectedCategory,
-      //           onChanged: (newValue) {
-      //             setState(() {
-      //               _selectedCategory = newValue;
-      //             });
-      //           },
-      //           items: _categories.map((category) {
-      //             return DropdownMenuItem(
-      //               child: Text(category),
-      //               value: category,
-      //             );
-      //           }).toList(),
-      //         ),
-      //         SizedBox(height: 10),
-      //         TextField(
-      //           maxLines: 4,
-      //           decoration: InputDecoration(
-      //             labelText: 'Product Description (optional)',
-      //             border: OutlineInputBorder(),
-      //           ),
-      //           onChanged: (value) => productDescription = value,
-      //         ),
-      //         SizedBox(height: 20),
-      //         Row(
-      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //           children: [
-      //             ElevatedButton(
-      //               onPressed: (){
-      //                 _saveFirstProduct();
-      //               },
-      //               child: Text('SAVE'),
-      //               style: ElevatedButton.styleFrom(
-      //                 backgroundColor: Colors.orange, // background
-      //               ),
-      //             ),
-      //             ElevatedButton(
-      //               onPressed: () {
-      //                 // Navigate to the next form without saving
-      //                 Navigator.push(
-      //                   context,
-      //                   MaterialPageRoute(
-      //                     builder: (context) => FarmerHomePage(), // Replace with your next form screen
-      //                   ),
-      //                 );
-      //               },
-      //               child: Text('SKIP'),
-      //               style: ElevatedButton.styleFrom(
-      //                 backgroundColor: Colors.orange, // background
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

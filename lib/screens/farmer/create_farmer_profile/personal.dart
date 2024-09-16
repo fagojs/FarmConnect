@@ -29,7 +29,9 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
       if (pickedFile != null) {
         profileImage = File(pickedFile.path);
       } else {
-        print('No image selected.');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('No photo selected!')),
+        );
       }
     });
   }
@@ -51,7 +53,7 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
     // Check if any field is empty
     if (email.isEmpty || fullName.isEmpty || contactNumber.isEmpty || address.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('All fields are required!')),
+        const SnackBar(content: Text('All fields are required!')),
       );
       return;
     }
@@ -59,7 +61,7 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
     // Validate contact number
     if (!isValidContactNumber(contactNumber)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please enter a valid 10-digit contact number')),
+        const SnackBar(content: Text('Please enter a valid 10-digit contact number')),
       );
       return;
     }
@@ -67,7 +69,7 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
     // Validate email format
     if (!isValidEmail(email)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please enter a valid email address')),
+        const SnackBar(content: Text('Please enter a valid email address')),
       );
       return;
     }
@@ -101,16 +103,16 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
           child: Wrap(
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.photo_library),
-                title: Text('Photo Library'),
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Photo Library'),
                 onTap: () {
                   _pickImage(ImageSource.gallery);
                   Navigator.of(context).pop();
                 },
               ),
               ListTile(
-                leading: Icon(Icons.photo_camera),
-                title: Text('Camera'),
+                leading: const Icon(Icons.photo_camera),
+                title: const Text('Camera'),
                 onTap: () {
                   _pickImage(ImageSource.camera);
                   Navigator.of(context).pop();
@@ -126,14 +128,14 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE0F7FA),
+      backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
 
-        title: Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               Scaffold.of(context).openDrawer(); // Opens the drawer
             },
@@ -146,7 +148,7 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
             child: ListView(
               padding: EdgeInsets.zero,
               children: <Widget>[
-            DrawerHeader(
+            const DrawerHeader(
             decoration: BoxDecoration(
               color: Colors.green,
             ),
@@ -193,8 +195,8 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
                 ),
                 Divider(color: Colors.grey[300]),
                 ListTile(
-                leading: Icon(Icons.logout, color: Colors.red),
-                title: Text('Log Out'),
+                leading: const Icon(Icons.logout, color: Colors.red),
+                title: const Text('Log Out'),
                 onTap: () {
                 Navigator.of(context).pop();
                 Navigator.pushReplacementNamed(context, '/signin');
@@ -205,7 +207,7 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
                 ),
                 ),
       body:ListView(
-        padding: EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(24.0),
         children: <Widget>[
           Card(
             elevation: 4,
@@ -214,16 +216,16 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
             ),
             color: Colors.white,
             child: Padding(
-                padding: EdgeInsets.all(24.0),
+                padding: const EdgeInsets.all(24.0),
                     child: Column(
                 children: [
-                  Text('Create a Farmer Profile', 
+                  const Text('Create a Farmer Profile',
               style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Color(0xFF4CAF50)
               ),
                   ),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
 
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   GestureDetector(
                     onTap: () => _showImageSourceActionSheet(context),
                     child: profileImage == null
@@ -236,13 +238,13 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
                         //image: DecorationImage(image: AssetImage('images/placeholder_img.png'),
                         //fit:BoxFit.cover),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.add_a_photo, size: 40),
+                            Icon(Icons.add_a_photo, size: 40, color: Colors.white,),
                             Text(
-                              'Select your photo (optional)', textAlign: TextAlign.center,style: TextStyle(color:Colors.white70),
+                              'Select your photo (optional)', textAlign: TextAlign.center,style: TextStyle(color:Colors.white),
                             ),
                           ],
                         ),
@@ -266,33 +268,33 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
             ),
             ),
           ),
-          SizedBox(height: 8,),
+          const SizedBox(height: 8,),
           Card(
             elevation: 4,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
             ),
             color: Colors.white,
-            child: Padding(padding: EdgeInsets.all(24.0),
+            child: Padding(padding: const EdgeInsets.all(24.0),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Enter your details below.', style: TextStyle(
                     fontSize: 16,fontWeight: FontWeight.w500
                   ),
                   ),
-                SizedBox(height: 16,),
+                const SizedBox(height: 16,),
                 TextField(
                   decoration: InputDecoration(
                     labelText: 'Full Name',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0)
                     ),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16,vertical: 12),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
                   ),
                   onChanged: (value) => fullName = value,
                 ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   TextField(
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
@@ -301,11 +303,11 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
                         borderRadius: BorderRadius.circular(10.0)
 
                       ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16,vertical: 12),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
                     ),
                     onChanged: (value) => contactNumber = value,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   TextField(
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
@@ -313,33 +315,33 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16,vertical: 12)
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12)
                     ),
                     onChanged: (value) => email = value,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   TextField(
                     decoration: InputDecoration(
                       labelText: 'Address',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0)
                       ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16,vertical: 12)
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12)
                     ),
                     onChanged: (value) => address = value,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: (){
                       _goToFarmInfo();
                     },
 
-                    child: Text('CONTINUE', style: TextStyle(color: Colors.white),),
+                    child: const Text('CONTINUE', style: TextStyle(color: Colors.white),),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF4CAF50),
+                      backgroundColor: const Color(0xFF4CAF50),
                       padding:
-                      EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                      textStyle: TextStyle(fontSize: 18),
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      textStyle: const TextStyle(fontSize: 18),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),
                       ),

@@ -54,7 +54,7 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
      // Check if any field is empty
     if (farmName.isEmpty || farmAddress.isEmpty || farmDescription.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('All fields are required!')),
+        const SnackBar(content: Text('All fields are required!')),
       );
       return;
     }
@@ -91,16 +91,16 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
           child: Wrap(
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.photo_library),
-                title: Text('Photo Library'),
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Photo Library'),
                 onTap: () {
                   _pickImage(ImageSource.gallery);
                   Navigator.of(context).pop();
                 },
               ),
               ListTile(
-                leading: Icon(Icons.photo_camera),
-                title: Text('Camera'),
+                leading: const Icon(Icons.photo_camera),
+                title: const Text('Camera'),
                 onTap: () {
                   _pickImage(ImageSource.camera);
                   Navigator.of(context).pop();
@@ -116,13 +116,13 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE0F7FA),
+      backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               Scaffold.of(context).openDrawer(); // Opens the drawer
             },
@@ -135,7 +135,7 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              DrawerHeader(
+              const DrawerHeader(
                 decoration: BoxDecoration(
                   color: Colors.green,
                 ),
@@ -188,8 +188,8 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
               ),
               Divider(color: Colors.grey[300]), // Use a lighter gray for the divider
               ListTile(
-                leading: Icon(Icons.logout, color: Colors.red),
-                title: Text('Log Out'),
+                leading: const Icon(Icons.logout, color: Colors.red),
+                title: const Text('Log Out'),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.pushReplacementNamed(context, '/signin');
@@ -200,7 +200,7 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
         ),
       ),
       body:ListView(
-        padding: EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(24.0),
         children: <Widget>[
           Card(
             elevation: 4,
@@ -209,16 +209,16 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
             ),
             color: Colors.white,
             child: Padding(
-              padding: EdgeInsets.all(24.0),
+              padding: const EdgeInsets.all(24.0),
               child: Column(
                 children: [
-                  Text('Create a Farmer Profile',
+                  const Text('Create a Farmer Profile',
                     style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Color(0xFF4CAF50)
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
 
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   GestureDetector(
                     onTap: () => _showImageSourceActionSheet(context),
                     child: farmImage == null
@@ -229,15 +229,15 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
                         color: Colors.green[300],
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.add_a_photo, size: 40),
+                            Icon(Icons.add_a_photo, size: 40, color: Colors.white,),
                             Center( // Center the text
                               child: Text(
                                 'Select your farm photo (optional)',
-                                textAlign: TextAlign.center,style: TextStyle(color: Colors.white70),
+                                textAlign: TextAlign.center,style: TextStyle(color: Colors.white),
                               ),
                             ),
                           ],
@@ -263,33 +263,33 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
               ),
             ),
           ),
-          SizedBox(height: 8,),
+          const SizedBox(height: 8,),
           Card(
             elevation: 4,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
             ),
             color: Colors.white,
-            child: Padding(padding: EdgeInsets.all(24.0),
+            child: Padding(padding: const EdgeInsets.all(24.0),
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                       'Enter your Farms details below.', style: TextStyle(
                         fontSize: 16,fontWeight: FontWeight.w500
                     ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                             TextField(
                               decoration: InputDecoration(
                                 labelText: 'Farm Name',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                               ),
                               onChanged: (value) => farmName = value,
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             TextField(
                               decoration: InputDecoration(
                                 labelText: 'Farm Address',
@@ -297,11 +297,11 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
 
-                                contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                               ),
                               onChanged: (value) => farmAddress = value,
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             TextField(
                               maxLines: 4,
                               decoration: InputDecoration(
@@ -311,22 +311,22 @@ class _FarmInformationPageState extends State<FarmInformationPage> {
                                 ),
 
                                 alignLabelWithHint: true,
-                                contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                               ),
                               onChanged: (value) => farmDescription = value,
                             ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: (){
                         _saveProfile();
                       },
 
-                      child: Text('CONTINUE', style: TextStyle(color: Colors.white),),
+                      child: const Text('CONTINUE', style: TextStyle(color: Colors.white),),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF4CAF50),
+                        backgroundColor: const Color(0xFF4CAF50),
                         padding:
-                        EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                        textStyle: TextStyle(fontSize: 18),
+                        const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                        textStyle: const TextStyle(fontSize: 18),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0),
                         ),
