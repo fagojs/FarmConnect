@@ -49,7 +49,7 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
     return Scaffold(
         backgroundColor: Colors.blue[50],
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'FarmConnect',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
@@ -57,7 +57,7 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
 
           leading: Builder(
             builder: (context) => IconButton(
-              icon: Icon(Icons.menu),
+              icon: const Icon(Icons.menu),
               onPressed: () {
                 Scaffold.of(context).openDrawer(); // Opens the drawer
               },
@@ -70,7 +70,7 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
             child: ListView(
               padding: EdgeInsets.zero,
               children: <Widget>[
-                DrawerHeader(
+                const DrawerHeader(
                   decoration: BoxDecoration(
                     color: Colors.green,
                   ),
@@ -86,37 +86,49 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                   ),
                 ),
                 ListTile(
-                  leading: Icon(Icons.home, color: Colors.green),
-                  title: Text('Home'),
+                  leading: const Icon(Icons.home, color: Colors.green),
+                  title: const Text('Home'),
                   onTap: () {
                     Navigator.of(context).pop();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => BusinessOwnerHomePage()),
+                    );
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.shopping_cart, color: Colors.green),
-                  title: Text('Cart'),
+                  leading: const Icon(Icons.shopping_cart, color: Colors.green),
+                  title: const Text('Cart'),
                   onTap: () {
                     Navigator.of(context).pop();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => CartPage()),
+                    );
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.category, color: Colors.green),
-                  title: Text('Categories'),
+                  leading: const Icon(Icons.category, color: Colors.green),
+                  title: const Text('Categories'),
                   onTap: () {
                     Navigator.of(context).pop();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => CategoryPage()),
+                    );
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.settings, color: Colors.green),
-                  title: Text('Settings'),
+                  leading: const Icon(Icons.settings, color: Colors.green),
+                  title: const Text('Settings'),
                   onTap: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 Divider(color: Colors.grey[300]),
                 ListTile(
-                  leading: Icon(Icons.logout, color: Colors.red),
-                  title: Text('Log Out'),
+                  leading: const Icon(Icons.logout, color: Colors.red),
+                  title: const Text('Log Out'),
                   onTap: () {
                     Navigator.of(context).pop();
                     Navigator.pushReplacementNamed(context, '/signin');
@@ -134,23 +146,23 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
               TextField(
                 onChanged: filterProductsBySearch,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search, color: Colors.green),
+                  prefixIcon: const Icon(Icons.search, color: Colors.green),
                   hintText: 'Search local farm products',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                   filled: true,
                   fillColor: Colors.white,
-                  contentPadding: EdgeInsets.all(16),
+                  contentPadding: const EdgeInsets.all(16),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Categories Section
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Categories',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
@@ -162,14 +174,14 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                         MaterialPageRoute(builder: (context) => CategoryPage()),
                       );
                     },
-                    child: Text(
+                    child: const Text(
                       'See All',
                       style: TextStyle(color: Colors.blue),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Container(
                 height: 120,
                 child: ListView.builder(
@@ -182,7 +194,7 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                         filterProductsByCategory(categories[index]['name']!);
                       },
                       child: Container(
-                        margin: EdgeInsets.only(right: 10),
+                        margin: const EdgeInsets.only(right: 10),
                         child: Column(
                           children: [
                             Card(
@@ -205,7 +217,7 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Text(
                               categories[index]['name']!,
                               style: TextStyle(
@@ -223,17 +235,17 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                   },
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // All Products Heading
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'All Products',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
 
               // All Products Section
               Expanded(
@@ -256,7 +268,7 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                         );
                       },
                       child: Card(
-                        margin: EdgeInsets.symmetric(vertical: 8),
+                        margin: const EdgeInsets.symmetric(vertical: 8),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
@@ -270,7 +282,7 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                                 Container(
                                   height: 150,
                                   width: double.infinity,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.vertical(
                                         top: Radius.circular(12)),
                                     image: DecorationImage(
@@ -290,17 +302,17 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                                         children: [
                                           Text(
                                             product['name'],
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Text(
                                             'Price: \$${product['price']} per ${product['quantity'].split(" ")[1]}',
-                                            style: TextStyle(fontSize: 14),
+                                            style: const TextStyle(fontSize: 14),
                                           ),
                                         ],
                                       ),
-                                      SizedBox(height: 10),
+                                      const SizedBox(height: 10),
                                       Text(product['description']!),
                                     ],
                                   ),
@@ -312,7 +324,7 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                               top: 10,
                               right: 10,
                               child: IconButton(
-                                icon: Icon(Icons.add, size: 30),
+                                icon: const Icon(Icons.add, size: 30),
                                 color: Colors.green,
                                 onPressed: () {
                                   // Add to cart logic
@@ -326,7 +338,7 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text('${product['name']} added to cart!'),
-                                      duration: Duration(seconds: 1),
+                                      duration: const Duration(seconds: 1),
                                     ),
                                   );
                                 },
@@ -344,7 +356,7 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
         ),
 
     bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.category), label: 'Categories'),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
