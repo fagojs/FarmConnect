@@ -53,11 +53,11 @@ class _CartPageState extends State<CartPage> {
     return Scaffold(
       backgroundColor: Colors.blue[50],
       appBar: AppBar(
-        title: Text('CART', style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text('CART', style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.language),
+            icon: const Icon(Icons.language),
             onPressed: (){},
           ),
         ],
@@ -67,7 +67,7 @@ class _CartPageState extends State<CartPage> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
+            const DrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.green,
               ),
@@ -83,37 +83,49 @@ class _CartPageState extends State<CartPage> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.home, color: Colors.green),
-              title: Text('Home'),
+              leading: const Icon(Icons.home, color: Colors.green),
+              title: const Text('Home'),
               onTap: () {
                 Navigator.of(context).pop();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => BusinessOwnerHomePage()),
+                );
               },
             ),
             ListTile(
-              leading: Icon(Icons.shopping_cart, color: Colors.green),
-              title: Text('Cart'),
+              leading: const Icon(Icons.shopping_cart, color: Colors.green),
+              title: const Text('Cart'),
               onTap: () {
                 Navigator.of(context).pop();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => CartPage()),
+                );
               },
             ),
             ListTile(
-              leading: Icon(Icons.category, color: Colors.green),
-              title: Text('Categories'),
+              leading: const Icon(Icons.category, color: Colors.green),
+              title: const Text('Categories'),
               onTap: () {
                 Navigator.of(context).pop();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => CategoryPage()),
+                );
               },
             ),
             ListTile(
-              leading: Icon(Icons.settings, color: Colors.green),
-              title: Text('Settings'),
+              leading: const Icon(Icons.settings, color: Colors.green),
+              title: const Text('Settings'),
               onTap: () {
                 Navigator.of(context).pop();
               },
             ),
             Divider(color: Colors.grey[300]),
             ListTile(
-              leading: Icon(Icons.logout, color: Colors.red),
-              title: Text('Log Out'),
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: const Text('Log Out'),
               onTap: () {
                 Navigator.of(context).pop();
                 Navigator.pushReplacementNamed(context, '/signin');
@@ -127,7 +139,7 @@ class _CartPageState extends State<CartPage> {
         length: 2,
         child: Column(
           children: [
-            TabBar(
+            const TabBar(
               labelColor: Colors.green,
               unselectedLabelColor: Colors.black,
               indicatorColor: Colors.green,
@@ -150,7 +162,7 @@ class _CartPageState extends State<CartPage> {
 
       // Adding Bottom Navigation Bar
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.category), label: 'Categories'),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
@@ -204,7 +216,7 @@ class _CartPageState extends State<CartPage> {
             itemBuilder: (context, index) {
               return Card(
                 elevation: 4,
-                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 child: Row(
                   children: [
                     // Product Information
@@ -222,12 +234,12 @@ class _CartPageState extends State<CartPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
-                              icon: Icon(Icons.remove),
+                              icon: const Icon(Icons.remove),
                               onPressed: () => decrementQuantity(index),
                             ),
                             Text('${cartState.cartItems[index]["quantity"].toString()} ${cartState.cartItems[index]['unit']}'),
                             IconButton(
-                              icon: Icon(Icons.add),
+                              icon: const Icon(Icons.add),
                               onPressed: () => incrementQuantity(index),
                             ),
                           ],
@@ -236,7 +248,7 @@ class _CartPageState extends State<CartPage> {
                     ),
                     // Delete Icon
                     IconButton(
-                      icon: Icon(Icons.delete, color: Colors.red),
+                      icon: const Icon(Icons.delete, color: Colors.red),
                       onPressed: () {
                         // Remove specific product and show snackbar
                         setState(() {
@@ -244,7 +256,7 @@ class _CartPageState extends State<CartPage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('${cartState.cartItems[index]['name']} removed from cart'),
-                              duration: Duration(seconds: 1),
+                              duration: const Duration(seconds: 1),
                               behavior: SnackBarBehavior.floating,
                             ),
                           );
@@ -267,7 +279,7 @@ class _CartPageState extends State<CartPage> {
                 children: [
                   Text(
                     'Total: \$${getTotal().toStringAsFixed(2)}',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -284,10 +296,10 @@ class _CartPageState extends State<CartPage> {
                       cartState.clearCart();
                       setState(() {});
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Order placed successfully!')),
+                        const SnackBar(content: Text('Order placed successfully!')),
                       );
                     },
-                    child: Row(
+                    child: const Row(
                       children: [
                         Text('Checkout', style: TextStyle(color: Colors.white),),
                         SizedBox(width: 8,),
@@ -321,13 +333,13 @@ class _CartPageState extends State<CartPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.remove_shopping_cart, size: 48, color: Colors.green),
-          Text(
+          const Icon(Icons.remove_shopping_cart, size: 48, color: Colors.green),
+          const Text(
             'Your Cart is Empty!!',
             style: TextStyle(fontSize: 24),
           ),
-          Text('Browse for local farm products and fill your cart'),
-          SizedBox(height: 20),
+          const Text('Browse for local farm products and fill your cart'),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               // Navigate back to home to add items to cart
@@ -347,7 +359,7 @@ class _CartPageState extends State<CartPage> {
                 borderRadius: BorderRadius.circular(25.0),
               ),
             ),
-            child: Text('Add to Cart', style: TextStyle(color: Colors.white),),
+            child: const Text('Add to Cart', style: TextStyle(color: Colors.white),),
           ),
         ],
       ),
@@ -367,7 +379,7 @@ class _CartPageState extends State<CartPage> {
               final order = orderHistoryState.orderHistory[index];
               return Card(
                 elevation: 4,
-                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 child: Row(
                   children: [
                     Expanded(
@@ -378,7 +390,7 @@ class _CartPageState extends State<CartPage> {
                               title: Text("Order Code: ${order['code']}"),
                               subtitle: Text("Date: ${order['date']}\nStatus: ${order['status']}")
                           ),
-                          Divider(),
+                          const Divider(),
                           // Loop through products and display each in a table row
                           Column(
                             children: order['products'].map<Widget>((product) {
@@ -416,20 +428,20 @@ class _CartPageState extends State<CartPage> {
                               );
                             }).toList(),
                           ),
-                          Divider(thickness: 2.0),
+                          const Divider(thickness: 2.0),
                           // Display the total row under the price column
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Expanded(flex: 2, child: SizedBox()), // Empty space for alignment under Product
-                                Expanded(flex: 1, child: SizedBox()), // Empty space for alignment under Quantity
+                                const Expanded(flex: 2, child: SizedBox()), // Empty space for alignment under Product
+                                const Expanded(flex: 1, child: SizedBox()), // Empty space for alignment under Quantity
                                 Expanded(
                                   flex: 1,
                                   child: Text(
                                     "[Total: \$${order['total'].toStringAsFixed(2)}]",
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style: const TextStyle(fontWeight: FontWeight.bold),
                                     textAlign: TextAlign.right, // Align total under Price column
                                   ),
                                 ),
@@ -444,20 +456,20 @@ class _CartPageState extends State<CartPage> {
                               children: [
                                 Row(
                                   children: [
-                                    Icon(Icons.location_on, color: Colors.green,),
-                                    SizedBox(width: 8),
+                                    const Icon(Icons.location_on, color: Colors.green,),
+                                    const SizedBox(width: 8),
                                     Text("Delivery Address: ${order['address']} "),
                                   ],
                                 ),
                                 // Delete Icon next to address
                                 IconButton(
-                                  icon: Icon(Icons.delete, color: Colors.red),
+                                  icon: const Icon(Icons.delete, color: Colors.red),
                                   onPressed: () {
                                     setState(() {
                                       orderHistoryState.removeOrder(index);
                                     });
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
+                                      const SnackBar(
                                         content: Text('Order removed from history'),
                                         duration: Duration(seconds: 1),
                                       ),
@@ -485,13 +497,13 @@ class _CartPageState extends State<CartPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.history, size: 48, color: Colors.green),
-          Text(
+          const Icon(Icons.history, size: 48, color: Colors.green),
+          const Text(
             'No Order History',
             style: TextStyle(fontSize: 24),
           ),
-          Text('You haven\'t placed any orders yet.'),
-          SizedBox(height: 20),
+          const Text('You haven\'t placed any orders yet.'),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               // Navigate back to home to add items to cart
@@ -510,7 +522,7 @@ class _CartPageState extends State<CartPage> {
               borderRadius: BorderRadius.circular(25.0),
             ),
           ),
-            child: Text('Add to Cart', style: TextStyle(color: Colors.white),),
+            child: const Text('Add to Cart', style: TextStyle(color: Colors.white),),
           ),
         ],
       ),
