@@ -55,12 +55,6 @@ class _CartPageState extends State<CartPage> {
       appBar: AppBar(
         title: const Text('CART', style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.language),
-            onPressed: (){},
-          ),
-        ],
       ),drawer: Drawer(
       child: Container(
         color: Colors.white,
