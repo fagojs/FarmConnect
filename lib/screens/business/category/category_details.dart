@@ -49,12 +49,12 @@ class _CategorySpecificPageState extends State<CategorySpecificPage> {
       appBar: AppBar(
         title: Text(
           '${widget.category} Products',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
 
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context); // Go back to the category page
           },
@@ -69,7 +69,7 @@ class _CategorySpecificPageState extends State<CategorySpecificPage> {
               controller: _searchController,
               onChanged: _filterProducts,
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search, color: Colors.green),
+                prefixIcon: const Icon(Icons.search, color: Colors.green),
                 hintText: 'Search ${widget.category} products',
                 filled: true,
                 fillColor: Colors.white,
@@ -77,10 +77,10 @@ class _CategorySpecificPageState extends State<CategorySpecificPage> {
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide.none,
                 ),
-                contentPadding: EdgeInsets.all(16),
+                contentPadding: const EdgeInsets.all(16),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Product List
             Expanded(
@@ -103,115 +103,85 @@ class _CategorySpecificPageState extends State<CategorySpecificPage> {
                       );
                     },
                     child: Card(
-                      margin: EdgeInsets.symmetric(vertical: 8.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      elevation: 4,
+                      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            // Product Image
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset(
-                                'images/placeholder_img.png',
-                                height: 100,
-                                width: 100,
-                                fit: BoxFit.cover,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            // Product Image on Top
+                            Container(
+                              height: 150,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: const DecorationImage(
+                                  image: AssetImage('images/placeholder_img.png'), // Use product image
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
-                            SizedBox(width: 16),
-
-                            // Product Info
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-
-                                      Text(
-                                        product['name'],
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.blue[900],
-                                        ),
-                                      ),
-
-                                      Text(
-                                        product['quantity'].contains('kg')
-                                            ? '\$${product['price']} per kg'
-                                            : '\$${product['price']} per litre',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.blue[700],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 8),
-
-                                  // Product Description
+                            const SizedBox(height: 10),
+                            // Price and Product Name
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  product['name'],
+                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                ),
+                                if(product['quantity'].split(" ")[1] == "kg")
                                   Text(
-                                    product['description'],
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey[700],
-                                    ),
-                                  ),
-                                  SizedBox(height: 10),
-
-                                  // Add to Cart Button
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        // Add to cart logic
-                                        String unit = product['quantity'].contains('kg') ? 'kg' : 'litre';
-                                        cartState.addToCart({
-                                          "name": product['name'],
-                                          "price": double.parse(product['price']),
-                                          "quantity": 1,
-                                          "unit": unit,
-                                        });
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(
-                                            content: Text('${product['name']} added to cart!'),
-                                            duration: Duration(seconds: 2),
-                                          ),
-                                        );
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        foregroundColor: Colors.white,
-                                        backgroundColor: Colors.green, // White text
-                                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(4),
-                                        ),
-                                        textStyle: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      child: Text('Add to Cart'),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                    '\$${product['price']} per kg', // Price
+                                    style: const TextStyle(fontSize: 14),
+                                  )
+                                else
+                                  Text(
+                                    '\$${product['price']} per litre', // Price
+                                    style: const TextStyle(fontSize: 14),
+                                  )
+                              ],
                             ),
+                            const SizedBox(height: 10),
+
+                            // Add to Cart Button
+                            ElevatedButton(
+                              onPressed: () {
+                                // Add to cart logic
+                                String unit = "";
+                                if(product['quantity'].split(" ")[1] == "kg"){
+                                  unit = "kg";
+                                }else{
+                                  unit ="litre";
+                                }
+                                cartState.addToCart({
+                                  "name": product['name'],
+                                  "price": double.parse(product['price']),
+                                  "quantity": 1,
+                                  "unit": unit,
+                                });
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('${product['name']} added to cart!')),
+                                );
+                              },
+                              child: const Text('Add to cart'),
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.green, // White text
+                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                textStyle: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            )
                           ],
                         ),
                       ),
-                    )
-
+                    ),
                   );
                 },
               ),
@@ -220,7 +190,7 @@ class _CategorySpecificPageState extends State<CategorySpecificPage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.category), label: 'Categories'),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
