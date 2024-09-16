@@ -19,9 +19,9 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE0F7FA),
+      backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
       ),
       drawer: Drawer(
@@ -30,7 +30,7 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              DrawerHeader(
+              const DrawerHeader(
                 decoration: BoxDecoration(
                   color: Colors.green,
                 ),
@@ -46,8 +46,8 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.home, color: Colors.green),
-                title: Text('Home'),
+                leading: const Icon(Icons.home, color: Colors.green),
+                title: const Text('Home'),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.pushReplacement(context,
@@ -55,8 +55,8 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.add_circle, color: Colors.green),
-                title: Text('List Product'),
+                leading: const Icon(Icons.add_circle, color: Colors.green),
+                title: const Text('List Product'),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.pushReplacement(context,
@@ -64,8 +64,8 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.person, color: Colors.green),
-                title: Text('Profile'),
+                leading: const Icon(Icons.person, color: Colors.green),
+                title: const Text('Profile'),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.pushReplacement(context,
@@ -73,16 +73,16 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.settings, color: Colors.green),
-                title: Text('Settings'),
+                leading: const Icon(Icons.settings, color: Colors.green),
+                title: const Text('Settings'),
                 onTap: () {
                   Navigator.of(context).pop();
                 },
               ),
               Divider(color: Colors.grey[300]),
               ListTile(
-                leading: Icon(Icons.logout, color: Colors.red),
-                title: Text('Log Out'),
+                leading: const Icon(Icons.logout, color: Colors.red),
+                title: const Text('Log Out'),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.pushReplacementNamed(context, '/signin');
@@ -121,7 +121,7 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                       const SizedBox(height: 10),
                       Text(currentUser.fullName ?? 'Name not provided', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                       //Text('John Smith', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                      const Text('Farmer', style: TextStyle(color: Colors.grey, fontSize: 16)),
+                      const Text('Farmer', style: TextStyle(color: Colors.black, fontSize: 16)),
                     ],
                 ),
                 ),
@@ -146,10 +146,10 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                       const SizedBox(height: 10),
                       Row(
                         children: [
-                          const Icon(Icons.location_on, color: Colors.grey),
+                          const Icon(Icons.email, color: Colors.grey),
                           const SizedBox(width: 10),
-                          //Text(contactInfo['location']),
-                           Text(currentUser.address ?? 'Location not provided'),
+                          //Text(contactInfo['email']),
+                          Text(currentUser.email ?? 'Email not provided'),
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -164,10 +164,10 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                       const SizedBox(height: 10),
                       Row(
                         children: [
-                          const Icon(Icons.email, color: Colors.grey),
+                          const Icon(Icons.location_on, color: Colors.grey),
                           const SizedBox(width: 10),
-                          //Text(contactInfo['email']),
-                          Text(currentUser.email ?? 'Email not provided'),
+                          //Text(contactInfo['location']),
+                           Text(currentUser.address ?? 'Location not provided'),
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -181,11 +181,11 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                       );
                       setState(() {});
                     },
-                    child:const Text('Edit', style: TextStyle(color: Colors.white),),
+                    child: const Text('Edit', style: TextStyle(color: Colors.white),),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.deepPurpleAccent,
-                      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 4),
-                      textStyle: TextStyle(fontSize: 18),
+                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 4),
+                      textStyle: const TextStyle(fontSize: 18),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0)
                       )
@@ -207,7 +207,7 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         children: [
                           const Icon(Icons.home, color: Colors.grey),
@@ -219,18 +219,18 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                       const SizedBox(height: 10),
                       Row(
                         children: [
-                          const Icon(Icons.location_on, color: Colors.grey),
+                          const Icon(Icons.info, color: Colors.grey),
                           const SizedBox(width: 10),
-                          Text(currentUser.farmAddress ?? 'Farm address not provided'),
+                          // Expanded(child: Text(farmInfo['description'])),
+                          Expanded(child: Text(currentUser.farmDescription ?? 'No farm description provided')),
                         ],
                       ),
                       const SizedBox(height: 10),
                       Row(
                         children: [
-                          const Icon(Icons.info, color: Colors.grey),
+                          const Icon(Icons.location_on, color: Colors.grey),
                           const SizedBox(width: 10),
-                         // Expanded(child: Text(farmInfo['description'])),
-                          Expanded(child: Text(currentUser.farmDescription ?? 'No farm description provided')),
+                          Text(currentUser.farmAddress ?? 'Farm address not provided'),
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -247,8 +247,8 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                     child: const Text('Edit', style: TextStyle(color: Colors.white),),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.deepPurpleAccent,
-                          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 4),
-                          textStyle: TextStyle(fontSize: 18),
+                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 4),
+                          textStyle: const TextStyle(fontSize: 18),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25.0)
                           )
