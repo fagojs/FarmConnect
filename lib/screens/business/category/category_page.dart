@@ -185,7 +185,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                   const SizedBox(height: 8),
                                   Text(
                                     'Discover fresh and locally produced ${filteredCategories[index].toLowerCase()}.',
-                                    style: const TextStyle(fontSize: 14, color: Colors.grey),
+                                    style: const TextStyle(fontSize: 14, color: Colors.black),
                                   ),
                                 ],
                               ),
