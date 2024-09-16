@@ -20,13 +20,13 @@ class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE0F7FA),
+      backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               Scaffold.of(context).openDrawer(); // Opens the drawer
             },
@@ -39,7 +39,7 @@ class _LandingPageState extends State<LandingPage> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              DrawerHeader(
+              const DrawerHeader(
                 decoration: BoxDecoration(
                   color: Colors.green,
                 ),
@@ -56,8 +56,8 @@ class _LandingPageState extends State<LandingPage> {
               ),
               widget.userType == 'Farmer'
                   ? ListTile(
-                leading: Icon(Icons.person, color: Colors.green),
-                title: Text('Create Business Profile'),
+                leading: const Icon(Icons.person, color: Colors.green),
+                title: const Text('Create Business Profile'),
                 onTap: () {
                   setState(() {
                     selectedPage = 'Create Business Profile';
@@ -70,8 +70,8 @@ class _LandingPageState extends State<LandingPage> {
                 },
               )
                   : ListTile(
-                leading: Icon(Icons.person, color: Colors.green),
-                title: Text('Create Farmer Profile'),
+                leading: const Icon(Icons.person, color: Colors.green),
+                title: const Text('Create Farmer Profile'),
                 onTap: () {
                   setState(() {
                     selectedPage = 'Create Farmer Profile';
@@ -85,8 +85,8 @@ class _LandingPageState extends State<LandingPage> {
               ),
               widget.userType == 'Farmer'
                   ? ListTile(
-                leading: Icon(Icons.agriculture, color: Colors.green),
-                title: Text('Create Farmer Profile'),
+                leading: const Icon(Icons.agriculture, color: Colors.green),
+                title: const Text('Create Farmer Profile'),
                 onTap: () {
                   setState(() {
                     selectedPage = 'Create Farmer Profile';
@@ -100,8 +100,8 @@ class _LandingPageState extends State<LandingPage> {
                 },
               )
                   : ListTile(
-                leading: Icon(Icons.agriculture, color: Colors.green),
-                title: Text('Create Business Profile'),
+                leading: const Icon(Icons.agriculture, color: Colors.green),
+                title: const Text('Create Business Profile'),
                 onTap: () {
                   setState(() {
                     selectedPage = 'Create Business Profile';
@@ -115,8 +115,8 @@ class _LandingPageState extends State<LandingPage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.settings, color: Colors.green),
-                title: Text('Settings'),
+                leading: const Icon(Icons.settings, color: Colors.green),
+                title: const Text('Settings'),
                 onTap: () {
                   setState(() {
                     selectedPage = 'Settings';
@@ -126,8 +126,8 @@ class _LandingPageState extends State<LandingPage> {
               ),
               Divider(color: Colors.grey[300]),
               ListTile(
-                leading: Icon(Icons.logout, color: Colors.red),
-                title: Text('Log Out'),
+                leading: const Icon(Icons.logout, color: Colors.red),
+                title: const Text('Log Out'),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.pushReplacementNamed(context, '/signin');
@@ -148,7 +148,7 @@ class _LandingPageState extends State<LandingPage> {
               borderRadius: BorderRadius.circular(16.0),
             ),
             color: Colors.white,
-            child: Padding(padding: EdgeInsets.all(24.0),
+            child: Padding(padding: const EdgeInsets.all(24.0),
             child: Column(
               children: [
                 Text('Welcome to FarmConnect',
@@ -186,7 +186,7 @@ class _LandingPageState extends State<LandingPage> {
                   style: TextStyle(color: widget.userType== 'Farmer' ? Colors.green : Colors.blue[900],
                       fontSize: 18,fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
                     // Navigate to Farmer Profile Creation
@@ -197,22 +197,22 @@ class _LandingPageState extends State<LandingPage> {
                       return widget.userType == 'Farmer' ? CreateFarmerPersonalProfile() : BusinessPersonalInfoPage();
                     }));
                   },
-                  child: Text('Create ${(widget.userType)} Profile',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18,color: Colors.white),),
+                  child: Text('Create ${(widget.userType)} Profile',style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 18,color: Colors.white),),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: widget.userType== 'Farmer'?Colors.green: Colors.blue[900],
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                    textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25.0)
                     )// background
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Text(
-                  'OR',
-                  style: TextStyle(color: Colors.green[800],fontSize: 16, fontWeight: FontWeight.bold),
+                  '--------  OR  --------',
+                  style: TextStyle(color: Colors.blue[800],fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
                     // Navigate to Farmer Home Page
@@ -222,11 +222,11 @@ class _LandingPageState extends State<LandingPage> {
                         return widget.userType == 'Farmer'? FarmerHomePage() : BusinessOwnerHomePage();
                       }));
                   },
-                  child: Text('Go to Home Page',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18,color: Colors.white)),
+                  child: const Text('Go to Home Page',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18,color: Colors.white)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: widget.userType== 'Farmer' ? Colors.green : Colors.blue[900] ,
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                    textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),// background
                   ),
