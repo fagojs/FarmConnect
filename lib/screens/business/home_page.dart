@@ -44,20 +44,22 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.blue[50],
+
         appBar: AppBar(
           title: const Text(
             'FarmConnect',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
           ),
           centerTitle: true,
+          backgroundColor: Colors.green,
 
           leading: Builder(
             builder: (context) => IconButton(
-              icon: const Icon(Icons.menu),
+              icon: const Icon(Icons.menu,color: Colors.white,),
               onPressed: () {
                 Scaffold.of(context).openDrawer(); // Opens the drawer
               },
@@ -138,7 +140,19 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
             ),
           ),
         ),
-        body: Padding(
+        body: Container(
+    decoration: const BoxDecoration(
+    gradient: LinearGradient(
+    colors: [
+    Color(0xFFd4fc79),
+    Color(0xFF96e6a1),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    ),
+    ),
+
+        child:Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
@@ -148,12 +162,18 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.search, color: Colors.green),
                   hintText: 'Search local farm products',
+                  hintStyle: TextStyle(color: Colors.grey[400]),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide(color: Colors.lightGreenAccent)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide(color: Colors.green),
                   ),
                   filled: true,
                   fillColor: Colors.white,
-                  contentPadding: const EdgeInsets.all(16),
+                  contentPadding: const EdgeInsets.all(12),
                 ),
               ),
               const SizedBox(height: 20),
@@ -164,7 +184,7 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                 children: [
                   const Text(
                     'Categories',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -176,12 +196,12 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                     },
                     child: const Text(
                       'See All',
-                      style: TextStyle(color: Colors.blue),
+                      style: TextStyle(color: Colors.green, fontSize: 16, fontWeight: FontWeight.w500),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 4),
               Container(
                 height: 120,
                 child: ListView.builder(
@@ -206,22 +226,23 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                                   ? Colors.green
                                   : Colors.white,
                               child: Container(
-                                width: 80,
+                                width: 100,
                                 height: 80,
                                 decoration: BoxDecoration(
+                                  color: selectedCategory== categories[index]['name']? Colors.green: Colors.white,
                                   borderRadius: BorderRadius.circular(12.0),
                                   image: DecorationImage(
                                     image: AssetImage(categories[index]['image']!),
                                     fit: BoxFit.cover,
-                                  ),
                                 ),
+                              ),
                               ),
                             ),
                             const SizedBox(height: 5),
                             Text(
                               categories[index]['name']!,
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: selectedCategory == categories[index]['name']
                                     ? Colors.green // Change text color if selected
@@ -235,19 +256,19 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
                   },
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
 
               // All Products Heading
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'All Products',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
               ),
-              const SizedBox(height: 10),
 
-              // All Products Section
+
+
               Expanded(
                 child: ListView.builder(
                   itemCount: filteredProducts.length,
@@ -353,7 +374,7 @@ class _BusinessOwnerHomePageState extends State<BusinessOwnerHomePage> {
               ),
             ],
           ),
-        ),
+        ),),
 
     bottomNavigationBar: BottomNavigationBar(
         items: const [

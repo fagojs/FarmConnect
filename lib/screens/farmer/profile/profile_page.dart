@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import './edit_contact.dart';
@@ -9,20 +8,30 @@ import '../manage_order/manage_orders.dart';
 import '../../../data/currentuser.dart';
 
 class FarmerProfilePage extends StatefulWidget {
-
   @override
   _FarmerProfilePageState createState() => _FarmerProfilePageState();
-
 }
- 
+
 class _FarmerProfilePageState extends State<FarmerProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text(
+          'FarmConnect',
+          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
+        ),
         centerTitle: true,
+        backgroundColor: Colors.green,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu,color: Colors.white,),
+            onPressed: () {
+              Scaffold.of(context).openDrawer(); // Opens the drawer
+            },
+          ),
+        ),
+
       ),
       drawer: Drawer(
         child: Container(
@@ -50,8 +59,10 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                 title: const Text('Home'),
                 onTap: () {
                   Navigator.of(context).pop();
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => FarmerHomePage()));
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => FarmerHomePage()),
+                  );
                 },
               ),
               ListTile(
@@ -59,8 +70,10 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                 title: const Text('List Product'),
                 onTap: () {
                   Navigator.of(context).pop();
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => ListProductPage()));
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => ListProductPage()),
+                  );
                 },
               ),
               ListTile(
@@ -68,8 +81,10 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                 title: const Text('Profile'),
                 onTap: () {
                   Navigator.of(context).pop();
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => FarmerProfilePage()));
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => FarmerProfilePage()),
+                  );
                 },
               ),
               ListTile(
@@ -92,201 +107,202 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-              height: 250,
-              width: 400,
-
-              child: Card(
-                elevation: 2,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.0)
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFFd4fc79),
+                  Color(0xFF96e6a1),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
-            color: Colors.white,
-                margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 32.0),
-                  child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      const CircleAvatar(
-                        radius: 50,
-                        backgroundImage: AssetImage('images/placeholder_img.png'), // Placeholder image
-                      ),
-                      const SizedBox(height: 10),
-                      Text(currentUser.fullName ?? 'Name not provided', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                      //Text('John Smith', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                      const Text('Farmer', style: TextStyle(color: Colors.black, fontSize: 16)),
-                    ],
-                ),
-                ),
-
-
+            ),
           ),
-              ),
-              const SizedBox(height: 20),
-
-              // Contact Information Card
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0)
-                ),
-                color: Colors.white,
-                child: ListTile(
-                  title: const Text('Contact Information', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: Colors.green),),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          const Icon(Icons.email, color: Colors.grey),
-                          const SizedBox(width: 10),
-                          //Text(contactInfo['email']),
-                          Text(currentUser.email ?? 'Email not provided'),
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 250,
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 32.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          const CircleAvatar(
+                            radius: 50,
+                            backgroundImage: AssetImage('images/placeholder_img.png'),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            currentUser.fullName ?? 'Name not provided',
+                            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          const Text('Farmer', style: TextStyle(color: Colors.black, fontSize: 16)),
                         ],
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          const Icon(Icons.phone, color: Colors.grey),
-                          const SizedBox(width: 10),
-                          //Text(contactInfo['phone']),
-                          Text(currentUser.contactNumber ?? 'Contact not provided'),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          const Icon(Icons.location_on, color: Colors.grey),
-                          const SizedBox(width: 10),
-                          //Text(contactInfo['location']),
-                           Text(currentUser.address ?? 'Location not provided'),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                    ],
+                    ),
                   ),
-                  trailing: ElevatedButton(
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => EditContactInfoPage()),
-                      );
-                      setState(() {});
-                    },
-                    child: const Text('Edit', style: TextStyle(color: Colors.white),),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurpleAccent,
-                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 4),
-                      textStyle: const TextStyle(fontSize: 18),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.0)
-                      )
-                    )
-                    
-                  ),
-                ),
-              ),
-
-              // Farm Information Card
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0)
-                ),
-                color: Colors.white,
-                child: ListTile(
-                  title: const Text('Farm Information', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: Colors.green)),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 10),
-                      Row(
+                  // Contact Information Card
+                  Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    color: Colors.white,
+                    child: ListTile(
+                      title: const Text('Contact Information',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: Colors.green)),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Icon(Icons.home, color: Colors.grey),
-                          const SizedBox(width: 10),
-                          //Text(farmInfo['farmName']),
-                          Text(currentUser.farmName ?? 'Farm name not provided'),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              const Icon(Icons.email, color: Colors.grey),
+                              const SizedBox(width: 10),
+                              Text(currentUser.email ?? 'Email not provided'),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              const Icon(Icons.phone, color: Colors.grey),
+                              const SizedBox(width: 10),
+                              Text(currentUser.contactNumber ?? 'Contact not provided'),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              const Icon(Icons.location_on, color: Colors.grey),
+                              const SizedBox(width: 10),
+                              Text(currentUser.address ?? 'Location not provided'),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
                         ],
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          const Icon(Icons.info, color: Colors.grey),
-                          const SizedBox(width: 10),
-                          // Expanded(child: Text(farmInfo['description'])),
-                          Expanded(child: Text(currentUser.farmDescription ?? 'No farm description provided')),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          const Icon(Icons.location_on, color: Colors.grey),
-                          const SizedBox(width: 10),
-                          Text(currentUser.farmAddress ?? 'Farm address not provided'),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                    ],
-                  ),
-                  trailing: ElevatedButton(
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => EditFarmInfoPage()),
-                      );
-                      setState(() {});
-                    },
-                    child: const Text('Edit', style: TextStyle(color: Colors.white),),
-                      style: ElevatedButton.styleFrom(
+                      trailing: ElevatedButton(
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => EditContactInfoPage()),
+                          );
+                          setState(() {});
+                        },
+                        child: const Text('Edit', style: TextStyle(color: Colors.white)),
+                        style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.deepPurpleAccent,
                           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 4),
                           textStyle: const TextStyle(fontSize: 18),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25.0)
-                          )
-                      )
+                            borderRadius: BorderRadius.circular(25.0),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 16),
+                  // Farm Information Card
+                  Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    color: Colors.white,
+                    child: ListTile(
+                      title: const Text('Farm Information',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: Colors.green)),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              const Icon(Icons.home, color: Colors.grey),
+                              const SizedBox(width: 10),
+                              Text(currentUser.farmName ?? 'Farm name not provided'),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              const Icon(Icons.info, color: Colors.grey),
+                              const SizedBox(width: 10),
+                              Expanded(child: Text(currentUser.farmDescription ?? 'No farm description provided')),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              const Icon(Icons.location_on, color: Colors.grey),
+                              const SizedBox(width: 10),
+                              Expanded(child: Text(currentUser.farmAddress ?? 'Farm address not provided')),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                        ],
+                      ),
+                      trailing: ElevatedButton(
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => EditFarmInfoPage()),
+                          );
+                          setState(() {});
+                        },
+                        child: const Text('Edit', style: TextStyle(color: Colors.white)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.deepPurpleAccent,
+                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 4),
+                          textStyle: const TextStyle(fontSize: 18),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 3, // Profile tab selected
+        currentIndex: 3,
         onTap: (index) {
           switch (index) {
             case 0:
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => FarmerHomePage()), // Replace with your Orders page
-            );
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => FarmerHomePage()),
+              );
               break;
             case 1:
               Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => ListProductPage()), // Replace with your Orders page
-            );
+                context,
+                MaterialPageRoute(builder: (context) => ListProductPage()),
+              );
               break;
             case 2:
               Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => OrdersPage()), // Replace with your Orders page
-            );
+                context,
+                MaterialPageRoute(builder: (context) => OrdersPage()),
+              );
               break;
             case 3:
               Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => FarmerProfilePage()), // Replace with your Orders page
-            );
+                context,
+                MaterialPageRoute(builder: (context) => FarmerProfilePage()),
+              );
               break;
           }
         },

@@ -17,13 +17,13 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+        backgroundColor: Colors.green,
         centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: const Icon(Icons.menu),
+            icon: const Icon(Icons.menu,color: Colors.white,),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
@@ -105,24 +105,31 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
+      body:Stack(
+          children: [
+      Container(
+      decoration: const BoxDecoration(
+      gradient: LinearGradient(
+          colors: [
+          Color(0xFFd4fc79),
+      Color(0xFF96e6a1),
+      ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    ),
+    ),
+    ),
+            SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 height: 250,
-                width: 400,
+                width: double.infinity,
 
-                child: Card(
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0)
-                  ),
-                  color: Colors.white,
-                  margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
-                  child: Padding(
+                child:  Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 32.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -136,13 +143,12 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                         //Text('John Smith', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                         const Text('Business Owner', style: TextStyle(color: Colors.black, fontSize: 16)),
                       ],
-                    ),
+
                   ),
 
 
                 ),
               ),
-              const SizedBox(height: 20),
 
               // Contact Information Card
               Card(
@@ -160,7 +166,7 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                       Row(
                         children: [
                           const Icon(Icons.email, color: Colors.grey),
-                          const SizedBox(width: 10),
+                          const SizedBox(width: 4),
                           //Text(contactInfo['email']),
                           Text(currentUser.email ?? 'Email not provided'),
                         ],
@@ -169,7 +175,7 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                       Row(
                         children: [
                           const Icon(Icons.phone, color: Colors.grey),
-                          const SizedBox(width: 10),
+                          const SizedBox(width: 4),
                           //Text(contactInfo['phone']),
                           Text(currentUser.contactNumber ?? 'Contact not provided'),
                         ],
@@ -178,7 +184,7 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                       Row(
                         children: [
                           const Icon(Icons.location_on, color: Colors.grey),
-                          const SizedBox(width: 10),
+                          const SizedBox(width: 4),
                           //Text(contactInfo['location']),
                           Text(currentUser.address ?? 'Location not provided'),
                         ],
@@ -207,7 +213,7 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                   ),
                 ),
               ),
-
+              const SizedBox(height: 16,),
               // Business Information Card
               Card(
                 elevation: 4,
@@ -221,19 +227,22 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 10),
+
+
                       Row(
                         children: [
                           const Icon(Icons.home, color: Colors.grey),
-                          const SizedBox(width: 10),
+                          const SizedBox(width: 4),
                           //Text(farmInfo['farmName']),
-                          Text(currentUser.businessName ?? 'Business name not provided'),
+                          Expanded(child: Text(currentUser.businessName ?? 'Business name not provided'),)
+
                         ],
                       ),
                       const SizedBox(height: 10),
                       Row(
                         children: [
                           const Icon(Icons.info, color: Colors.grey),
-                          const SizedBox(width: 10),
+                          const SizedBox(width: 4),
                           // Expanded(child: Text(farmInfo['description'])),
                           Expanded(child: Text(currentUser.businessDescription ?? 'No Business description provided')),
                         ],
@@ -242,8 +251,9 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
                       Row(
                         children: [
                           const Icon(Icons.location_on, color: Colors.grey),
-                          const SizedBox(width: 10),
-                          Text(currentUser.businessAddress ?? 'Business address not provided'),
+                          const SizedBox(width: 4),
+                          Expanded(child: Text(currentUser.businessAddress ?? 'Business address not provided'),)
+
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -272,7 +282,7 @@ class _BusinessProfilePageState extends State<BusinessProfilePage> {
             ],
           ),
         ),
-      ),
+      ),]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 3,
         onTap: (index) {

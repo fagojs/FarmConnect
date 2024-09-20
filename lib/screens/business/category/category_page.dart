@@ -31,17 +31,17 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[50],
+
       appBar: AppBar(
         title: const Text(
           'FarmConnect',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
         ),
         centerTitle: true,
-
+        backgroundColor: Colors.green,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: const Icon(Icons.menu),
+            icon: const Icon(Icons.menu,color: Colors.white,),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
@@ -122,7 +122,20 @@ class _CategoryPageState extends State<CategoryPage> {
           ),
         ),
       ),
-      body: Padding(
+      body:
+    Container(
+    decoration: const BoxDecoration(
+    gradient: LinearGradient(
+    colors: [
+    Color(0xFFd4fc79),
+    Color(0xFF96e6a1),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    ),
+    ),
+
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
@@ -133,8 +146,14 @@ class _CategoryPageState extends State<CategoryPage> {
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search, color: Colors.green),
                 hintText: 'Search category type',
+                hintStyle: TextStyle(color: Colors.grey[400]),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.lightGreenAccent)
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide(color: Colors.green),
                 ),
                 filled: true,
                 fillColor: Colors.white,
@@ -214,7 +233,7 @@ class _CategoryPageState extends State<CategoryPage> {
             ),
           ],
         ),
-      ),
+      ),),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),

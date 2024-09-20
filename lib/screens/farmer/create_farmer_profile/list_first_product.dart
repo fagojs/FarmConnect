@@ -116,13 +116,14 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE0F7FA),
+
       appBar: AppBar(
-        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+        backgroundColor: Colors.green,
         centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: const Icon(Icons.menu),
+            icon: const Icon(Icons.menu,color: Colors.white,),
             onPressed: () {
               Scaffold.of(context).openDrawer(); // Opens the drawer
             },
@@ -363,10 +364,11 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                     },
                     child: const Text('SAVE',style: TextStyle(color: Colors.white),),
                     style: ElevatedButton.styleFrom(
+                      minimumSize: Size(MediaQuery.of(context).size.width * 0.3, 25),
                       backgroundColor: const Color(0xFF4CAF50),
                       padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                      textStyle: const TextStyle(fontSize: 18),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),
                       ),
@@ -384,10 +386,10 @@ class _ListFirstProductPageState extends State<ListFirstProductPage> {
                     },
                     child: const Text('SKIP',style: TextStyle(color: Colors.white),),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:const Color(0xFF4CAF50),
+                      minimumSize: Size(MediaQuery.of(context).size.width * 0.3, 25),
+                      backgroundColor: const Color(0xFF4CAF50),
                       padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                      textStyle: const TextStyle(fontSize: 18),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),
                       ),

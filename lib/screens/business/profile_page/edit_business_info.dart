@@ -34,15 +34,34 @@ class _EditBusinessInformationState extends State<EditBusinessInformation> {
     return Scaffold(
       backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: const Text('Edit Your Business Information',style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Edit Your Business Information',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white)),
+        backgroundColor: Colors.green,
+        centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back,color: Colors.white,),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
       ),
-    body: SingleChildScrollView(
+    body:
+    Stack(
+        children: [
+    Container(
+    decoration: const BoxDecoration(
+    gradient: LinearGradient(
+        colors: [
+        Color(0xFFd4fc79),
+      Color(0xFF96e6a1),
+      ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    ),
+    ),
+    ),
+
+
+    SingleChildScrollView(
       child: Padding(padding: const EdgeInsets.all(20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,7 +71,7 @@ class _EditBusinessInformationState extends State<EditBusinessInformation> {
               width: 150,
               height: 150,
               decoration: BoxDecoration(
-                color: Colors.blue[900],
+                color: Colors.green[300],
                 borderRadius: BorderRadius.circular(10),
               ),
               child: const Center(
@@ -119,12 +138,9 @@ class _EditBusinessInformationState extends State<EditBusinessInformation> {
                 _updateBusinessInfo();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue[900],
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                textStyle: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                minimumSize: Size(MediaQuery.of(context).size.width * 0.7, 50),
+                backgroundColor: const Color(0xFF4CAF50),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0),
                 ),
@@ -138,6 +154,6 @@ class _EditBusinessInformationState extends State<EditBusinessInformation> {
       ),
       ),
     ),
-    );
+    ],),);
   }
 }

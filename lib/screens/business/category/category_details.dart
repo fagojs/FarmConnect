@@ -45,22 +45,35 @@ class _CategorySpecificPageState extends State<CategorySpecificPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[50],
       appBar: AppBar(
         title: Text(
           '${widget.category} Products',
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
+        backgroundColor: Colors.green,
         centerTitle: true,
 
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back,color: Colors.white,),
           onPressed: () {
             Navigator.pop(context); // Go back to the category page
           },
         ),
       ),
-      body: Padding(
+      body:
+    Container(
+    decoration: const BoxDecoration(
+    gradient: LinearGradient(
+    colors: [
+    Color(0xFFd4fc79),
+    Color(0xFF96e6a1),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    ),
+    ),
+
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
@@ -71,11 +84,19 @@ class _CategorySpecificPageState extends State<CategorySpecificPage> {
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search, color: Colors.green),
                 hintText: 'Search ${widget.category} products',
+                hintStyle: TextStyle(color: Colors.grey[400]),
+                border: OutlineInputBorder(
+
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide(
+                    color: Colors.lightGreenAccent,
+                  ),
+                ),
                 filled: true,
                 fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide(color: Colors.green),
                 ),
                 contentPadding: const EdgeInsets.all(16),
               ),
@@ -188,7 +209,7 @@ class _CategorySpecificPageState extends State<CategorySpecificPage> {
             ),
           ],
         ),
-      ),
+      ),),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),

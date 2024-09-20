@@ -62,18 +62,30 @@ class _AddProductPageState extends State<AddProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE0F7FA),
-      appBar: AppBar(
-        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+            appBar: AppBar(
+        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
         centerTitle: true,
+        backgroundColor: Colors.green,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back,color: Colors.white,),
           onPressed: () {
             Navigator.pop(context); // Navigate back to List Product Page
           },
         ),
       ),
-      body:ListView(
+      body:Container(
+    decoration: const BoxDecoration(
+    gradient: LinearGradient(
+    colors: [
+    Color(0xFFd4fc79),
+    Color(0xFF96e6a1),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    ),
+    ),
+
+      child: ListView(
         padding: EdgeInsets.all(24.0),
         children: <Widget>[
           Card(
@@ -210,9 +222,11 @@ class _AddProductPageState extends State<AddProductPage> {
                   },
                   child: Text('Add Product',style: TextStyle(color: Colors.white),),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF4CAF50),
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                    textStyle: TextStyle(fontSize: 18),
+                      minimumSize: Size(MediaQuery.of(context).size.width * 0.7, 50),
+                      backgroundColor: const Color(0xFF4CAF50),
+                      padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                    // textStyle: TextStyle(fontSize: 18),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     )
@@ -224,7 +238,7 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
           )
         ],
-      )
+      ),)
     );
   }
 }

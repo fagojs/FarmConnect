@@ -94,42 +94,50 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE0F7FA),
-      body: ListView(
+
+      body: Container(
+    decoration: const BoxDecoration(
+    gradient: LinearGradient(
+    colors: [
+    Color(0xFFd4fc79),
+    Color(0xFF96e6a1),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    ),
+    ),
+
+
+        child: ListView(
         padding: const EdgeInsets.all(24.0),
         children: <Widget>[
-          const SizedBox(height: 15),
-          Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            color: Colors.white,
-            child: const Padding(
-              padding: EdgeInsets.all(24.0),
-              child: Column(
-                children: [
-                  Text(
-                    'Hi there,',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF4CAF50), // Green
-                    ),
+          const SizedBox(height: 120),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'FarmConnect',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF4CAF50), // Green
                   ),
-                  Text(
-                    'Welcome Back',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF4CAF50), // Green
-                    ),
+                ),
+                Text(
+                  'Hi, Wecome Back! 👋',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF4CAF50), // Green
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 20),
+
+          const SizedBox(height: 24),
           Card(
             elevation: 4,
             shape: RoundedRectangleBorder(
@@ -143,38 +151,63 @@ class _SignInPageState extends State<SignInPage> {
                   const Text(
                     'Sign In',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF4CAF50), // Green
                     ),
                   ),
+                  const SizedBox(height: 8,),
                   Text(
                     'Enter your account details below.',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.black
+                    ,
+                    fontSize: 14),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 24),
                   TextField(
                     controller: _emailController,
                     decoration: InputDecoration(
                       labelText: 'Email',
+                      labelStyle: TextStyle(
+                        color: Colors.green,
+                        fontSize: 16
+                      ),
                       border: const OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.email, color: Colors.grey[600]),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide: BorderSide(
+                          color: Colors.green,
+                          width: 3.0,
+                        ),
+                      ),
+                      prefixIcon: Icon(Icons.email, color: Colors.green[600]),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 24),
                   TextField(
                     controller: _passwordController,
                     decoration: InputDecoration(
                       labelText: 'Password',
+                      labelStyle: TextStyle(
+                          color: Colors.green,
+                          fontSize: 16
+                      ),
                       border: const OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.lock, color: Colors.grey[600]),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide: BorderSide(
+                          color: Colors.green,
+                          width: 3.0,
+                        ),
+                      ),
+                      prefixIcon: Icon(Icons.lock, color: Colors.green[600]),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _isPasswordVisible
                               ? Icons.visibility
                               : Icons.visibility_off,
-                          color: Colors.grey[600],
+                          color: Colors.green[600],
                         ),
                         onPressed: () {
                           setState(() {
@@ -185,7 +218,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     obscureText: !_isPasswordVisible,
                   ),
-                  const SizedBox(height: 8),
+
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
@@ -197,36 +230,44 @@ class _SignInPageState extends State<SignInPage> {
                         );
                       },
                       child: const Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: Color(0xFF4CAF50)), // Green
+                        'Forgot Password',
+                        style: TextStyle(color: Color(0xFF4CAF50),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16), // Green
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: _isLoading ? null : _signIn,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF4CAF50), // Green
-                      padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                      textStyle: const TextStyle(fontSize: 18),
+                      minimumSize: Size(MediaQuery.of(context).size.width * 0.7, 50),
+                      backgroundColor: const Color(0xFF388E3C), // Green
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                      // textStyle: const TextStyle(fontSize: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                     ),
                     child: _isLoading
-                        ? const CircularProgressIndicator(
-                      valueColor:
-                      AlwaysStoppedAnimation<Color>(Colors.white),
+                        ? const SizedBox(
+                      height: 24,
+                      width: 24,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation(Colors.white),
+                      ),
                     )
-                        : const Text('Sign In', style: TextStyle(color: Colors.white)),
-                  ),
+                        : const Text('Sign In', style: TextStyle(fontSize:16,
+
+                        
+                        color: Colors.white)),
+                  ), // <-- Closing the ElevatedButton here.
+
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Don’t have an account?',
-                          style: TextStyle(color: Colors.grey[600])),
+                      Text('Don’t have an account?', style: TextStyle(color: Colors.grey[600])),
                       TextButton(
                         onPressed: () {
                           Navigator.pushReplacement(
@@ -246,12 +287,14 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                     ],
                   ),
+
                 ],
               ),
             ),
           ),
         ],
       ),
+    ),
     );
   }
 }

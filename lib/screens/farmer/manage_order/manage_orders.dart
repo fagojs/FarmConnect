@@ -36,10 +36,18 @@ class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: Text('FarmConnect', style: TextStyle(fontWeight: FontWeight.bold)),
-        centerTitle: true,
+        title: Text('FarmConnect', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white)),
+        backgroundColor: Colors.green,
+        centerTitle: true,leading: Builder(
+        builder: (context) => IconButton(
+          icon: const Icon(Icons.menu,color: Colors.white,),
+          onPressed: () {
+            Scaffold.of(context).openDrawer(); // Opens the drawer
+          },
+        ),
+      ),
+
         bottom: TabBar(
           controller: _tabController,
           tabs: [
@@ -116,13 +124,26 @@ class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateM
           ),
         ),
       ),
-      body: TabBarView(
+      body: Container(
+    decoration: const BoxDecoration(
+    gradient: LinearGradient(
+    colors: [
+    Color(0xFFd4fc79),
+    Color(0xFF96e6a1),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    ),
+    ),
+
+
+      child: TabBarView(
         controller: _tabController,
         children: [
           _buildNewOrdersTab(),
           _buildOrderHistoryTab(),
         ],
-      ),
+      ),),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 2,
         onTap: (index) {
@@ -280,9 +301,10 @@ class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateM
                         },
                         child: Text('Completed', style: TextStyle(color: Colors.white),),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green, // Button color
-                          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                          textStyle: TextStyle(fontSize: 16),
+                          minimumSize: Size(MediaQuery.of(context).size.width * 0.7, 50),
+                          backgroundColor: const Color(0xFF4CAF50),
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25.0),
                           ),

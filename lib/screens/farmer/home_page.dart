@@ -43,11 +43,12 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
     return Scaffold(
       backgroundColor: Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
         centerTitle: true,
+        backgroundColor: Colors.white,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: const Icon(Icons.menu),
+            icon: const Icon(Icons.menu,color: Colors.white,),
             onPressed: () {
               Scaffold.of(context).openDrawer(); // Opens the drawer
             },
@@ -122,7 +123,19 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
           ),
         ),
       ),
-      body: Column(
+      body:Container(
+    decoration: const BoxDecoration(
+    gradient: LinearGradient(
+    colors: [
+    Color(0xFFd4fc79),
+    Color(0xFF96e6a1),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    ),
+    ),
+
+      child: Column(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -151,7 +164,7 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
             ),
           ),
         ],
-      ),
+      ),),
   bottomNavigationBar: BottomNavigationBar(
   currentIndex: _currentIndex, // Set the current index
   onTap: (index) {
@@ -243,10 +256,10 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
               decoration: BoxDecoration(
                 color: _getStatusColor(order.status),
-                borderRadius: BorderRadius.circular(2.0),
+                borderRadius: BorderRadius.circular(4.0),
               ),
               child: Text(
                 order.status,

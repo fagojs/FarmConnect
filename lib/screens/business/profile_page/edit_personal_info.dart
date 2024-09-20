@@ -37,18 +37,35 @@ class _EditBusinessPersonalProfileState extends State<EditBusinessPersonalProfil
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE0F7FA),
+
       appBar: AppBar(
-        title: const Text('Edit Contact Information', style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text('Edit Contact Information', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+        backgroundColor: Colors.green,
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back,color: Colors.white,),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
       ),
-        body: Padding(
+        body:
+        Stack(
+            children: [
+        Container(
+        decoration: const BoxDecoration(
+        gradient: LinearGradient(
+            colors: [
+            Color(0xFFd4fc79),
+      Color(0xFF96e6a1),
+      ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    ),
+    ),
+    ),
+
+        Padding(
           padding: const EdgeInsets.all(20.0),
           child: SingleChildScrollView(
             child: Column(
@@ -59,7 +76,7 @@ class _EditBusinessPersonalProfileState extends State<EditBusinessPersonalProfil
                     width: 150,
                     height: 150,
                     decoration: BoxDecoration(
-                      color: Colors.blue[900],
+                      color: Colors.green[300],
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child:const  Center(
@@ -122,12 +139,10 @@ class _EditBusinessPersonalProfileState extends State<EditBusinessPersonalProfil
                       _updatePersonalInfo();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[900],
-                      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
-                      textStyle: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      minimumSize: Size(MediaQuery.of(context).size.width * 0.7, 50),
+                      backgroundColor: const Color(0xFF4CAF50),
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),
                       ),
@@ -139,6 +154,7 @@ class _EditBusinessPersonalProfileState extends State<EditBusinessPersonalProfil
             ),
           ),
         )
+    ],),
     );
   }
 }

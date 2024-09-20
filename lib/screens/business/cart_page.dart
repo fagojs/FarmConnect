@@ -52,10 +52,19 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[50],
       appBar: AppBar(
-        title: const Text('CART', style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text('CART', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+        backgroundColor: Colors.green,
         centerTitle: true,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu,color: Colors.white,),
+            onPressed: () {
+              Scaffold.of(context).openDrawer(); // Opens the drawer
+            },
+          ),
+        ),
+
       ),drawer: Drawer(
       child: Container(
         color: Colors.white,
@@ -130,7 +139,18 @@ class _CartPageState extends State<CartPage> {
         ),
       ),
     ),
-      body: DefaultTabController(
+      body: Container(
+    decoration: const BoxDecoration(
+    gradient: LinearGradient(
+    colors: [
+    Color(0xFFd4fc79),
+    Color(0xFF96e6a1),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    ),
+    ),
+    child: DefaultTabController(
         length: 2,
         child: Column(
           children: [
@@ -153,7 +173,7 @@ class _CartPageState extends State<CartPage> {
             ),
           ],
         ),
-      ),
+      ),),
 
       // Adding Bottom Navigation Bar
       bottomNavigationBar: BottomNavigationBar(
@@ -304,12 +324,9 @@ class _CartPageState extends State<CartPage> {
                       ],
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      minimumSize: Size(MediaQuery.of(context).size.width * 0.3, 50),
+                      backgroundColor: const Color(0xFF4CAF50),
                       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 32),
-                      textStyle: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),
                       ),
@@ -346,11 +363,12 @@ class _CartPageState extends State<CartPage> {
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
-              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 32),
+              backgroundColor: const Color(0xFF4CAF50),
+              minimumSize: Size(MediaQuery.of(context).size.width * 0.7, 50),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
               textStyle: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+                // fontSize: 20,
+                // fontWeight: FontWeight.bold,
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25.0),
@@ -508,12 +526,9 @@ class _CartPageState extends State<CartPage> {
                 MaterialPageRoute(builder: (context) => BusinessOwnerHomePage()),
               );
             },style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.green,
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 32),
-            textStyle: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            minimumSize: Size(MediaQuery.of(context).size.width * 0.7, 50),
+            backgroundColor: const Color(0xFF4CAF50),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25.0),
             ),

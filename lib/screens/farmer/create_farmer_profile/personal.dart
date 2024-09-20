@@ -128,14 +128,15 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE0F7FA),
+
       appBar: AppBar(
 
-        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
         centerTitle: true,
+        backgroundColor: Colors.green,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: const Icon(Icons.menu),
+            icon: const Icon(Icons.menu,color: Colors.white,),
             onPressed: () {
               Scaffold.of(context).openDrawer(); // Opens the drawer
             },
@@ -338,9 +339,10 @@ class _CreateFarmerPersonalProfileState extends State<CreateFarmerPersonalProfil
 
                     child: const Text('CONTINUE', style: TextStyle(color: Colors.white),),
                     style: ElevatedButton.styleFrom(
+                      minimumSize: Size(MediaQuery.of(context).size.width * 0.7, 50),
                       backgroundColor: const Color(0xFF4CAF50),
                       padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                       textStyle: const TextStyle(fontSize: 18),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),

@@ -95,13 +95,14 @@ class _BusinessPersonalInfoPageState extends State<BusinessPersonalInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[50],
+
       appBar: AppBar(
-        title: Text('FarmConnect', style: TextStyle(fontWeight: FontWeight.bold),),
+        title: Text('FarmConnect', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
         centerTitle: true,
+        backgroundColor: Colors.green,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
+            icon: Icon(Icons.menu,color: Colors.white,),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
@@ -156,7 +157,19 @@ class _BusinessPersonalInfoPageState extends State<BusinessPersonalInfoPage> {
             ),
           ),
         ),
-      body: ListView(
+      body: Container(
+    decoration: const BoxDecoration(
+    gradient: LinearGradient(
+    colors: [
+    Color(0xFFd4fc79),
+    Color(0xFF96e6a1),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    ),
+    ),
+
+      child:ListView(
         padding: EdgeInsets.all(24.0),
         children: <Widget>[
           Card(
@@ -183,7 +196,7 @@ class _BusinessPersonalInfoPageState extends State<BusinessPersonalInfoPage> {
                       width: 150,
                       height: 150,
                       decoration: BoxDecoration(
-                        color: Colors.blue[300],
+                        color: Colors.blue[400],
                         borderRadius: BorderRadius.circular(10),
                         //image: DecorationImage(image: AssetImage('images/placeholder_img.png'),
                         //fit:BoxFit.cover),
@@ -288,10 +301,11 @@ class _BusinessPersonalInfoPageState extends State<BusinessPersonalInfoPage> {
 
                       child: Text('CONTINUE', style: TextStyle(color: Colors.white),),
                       style: ElevatedButton.styleFrom(
+                        minimumSize: Size(MediaQuery.of(context).size.width * 0.7, 50),
                         backgroundColor: Colors.blue[900],
                         padding:
-                        EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                        textStyle: TextStyle(fontSize: 18),
+                        EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                        textStyle: TextStyle(),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0),
                         ),
@@ -302,7 +316,8 @@ class _BusinessPersonalInfoPageState extends State<BusinessPersonalInfoPage> {
             ),
           )
         ],
-      )
+      ),
+      ),
     );
   }
 }

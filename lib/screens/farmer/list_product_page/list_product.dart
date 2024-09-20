@@ -39,13 +39,13 @@ class _ListProductPageState extends State<ListProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE0F7FA),
-      appBar: AppBar(
-        title: const Text('FarmConnect', style: TextStyle(fontWeight: FontWeight.bold),),
+            appBar: AppBar(
+        title: const Text('FarmConnect', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
         centerTitle: true,
+        backgroundColor: Colors.green,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: const Icon(Icons.menu),
+            icon: const Icon(Icons.menu,color: Colors.white,),
             onPressed: () {
               Scaffold.of(context).openDrawer(); // Opens the drawer
             },
@@ -120,7 +120,19 @@ class _ListProductPageState extends State<ListProductPage> {
           ),
         ),
       ),
-      body: Column(
+      body:Container(
+    decoration: const BoxDecoration(
+    gradient: LinearGradient(
+    colors: [
+    Color(0xFFd4fc79),
+    Color(0xFF96e6a1),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    ),
+    ),
+
+      child: Column(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -177,7 +189,7 @@ class _ListProductPageState extends State<ListProductPage> {
               ),
             ),
         ],
-      ),
+      ),),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           // Navigate to Add Product Form and await the result

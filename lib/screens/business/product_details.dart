@@ -30,22 +30,39 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE0F7FA),
+
       appBar: AppBar(
         title: Text(
           'Product Details',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         centerTitle: true,
+        backgroundColor: Colors.green,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back,color: Colors.white,),
           onPressed: () {
             Navigator.pop(context); // Navigates back to the previous page
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body:
+      Stack(
+          children: [
+      Container(
+      decoration: const BoxDecoration(
+      gradient: LinearGradient(
+          colors: [
+          Color(0xFFd4fc79),
+      Color(0xFF96e6a1),
+      ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    ),
+    ),
+    ),
+
+       Padding(
+        padding: const EdgeInsets.all(24.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,21 +93,21 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 'Product Details',
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue[900],
+                  fontWeight: FontWeight.w500,
+                  color: Colors.green[800],
                 ),
               ),
-              SizedBox(height: 10),
+
               Text(
                 'Product Name: ${widget.productName}',
                 style: TextStyle(fontSize: 16,  ),
               ),
-              SizedBox(height: 5),
+
               Text(
                 'Quantity Available: ${widget.quantity}',
                 style: TextStyle(fontSize: 16, ),
               ),
-              SizedBox(height: 5),
+
               if (widget.quantity.split(" ")[1] == "kg")
                 Text(
                   'Price: \$${widget.price} per kg',
@@ -101,12 +118,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   'Price: \$${widget.price} per litre',
                   style: TextStyle(fontSize: 16, ),
                 ),
-              SizedBox(height: 5),
+
               Text(
                 'Description: ${widget.description}',
                 style: TextStyle(fontSize: 16,),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 8),
 
               // Toggle Farmer Information
               GestureDetector(
@@ -119,41 +136,41 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue[900],
+                        color: Colors.green[800],
                       ),
                     ),
                     Icon(
                       showFarmerInfo
                           ? Icons.keyboard_arrow_up
                           : Icons.keyboard_arrow_down,
-                      color: Colors.blue[900],
+                      color: Colors.green[800],
                     ),
                   ],
                 ),
               ),
               if (showFarmerInfo) ...[
-                SizedBox(height: 10),
+
                 Text(
                   'Farmer Name: John Wick',
                   style: TextStyle(fontSize: 16,),
                 ),
-                SizedBox(height: 5),
+
                 Text(
                   'Farm Location: Sydney, Australia',
                   style: TextStyle(fontSize: 16, ),
                 ),
-                SizedBox(height: 5),
+
                 Text(
                   'Contact Number: 042867456',
                   style: TextStyle(fontSize: 16,),
                 ),
-                SizedBox(height: 5),
+
                 Text(
                   'Email: johnwick@gmail.com',
                   style: TextStyle(fontSize: 16, ),
                 ),
               ],
-              SizedBox(height: 30),
+              SizedBox(height: 32),
 
               // Add to Cart Button
               Center(
@@ -176,13 +193,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   },
                   child: Text(
                     'ADD TO CART',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                    style: TextStyle(color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green, // Button background color
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    minimumSize: Size(MediaQuery.of(context).size.width * 0.7, 50),
+                    backgroundColor: const Color(0xFF4CAF50),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(25),
                     ),
                     elevation: 5, // Elevation to make it more prominent
                   ),
@@ -191,7 +209,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             ],
           ),
         ),
-      ),
+      ),],),
     );
   }
 }

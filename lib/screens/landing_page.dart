@@ -20,13 +20,13 @@ class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text('FarmConnect',style: TextStyle(fontWeight: FontWeight.bold,),),
+        backgroundColor: Colors.green,
         centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: const Icon(Icons.menu),
+            icon: const Icon(Icons.menu,color: Colors.white,),
             onPressed: () {
               Scaffold.of(context).openDrawer(); // Opens the drawer
             },
@@ -137,34 +137,42 @@ class _LandingPageState extends State<LandingPage> {
           ),
         ),
       ),
-      body: Padding(
+      body:Container(
+    decoration: const BoxDecoration(
+    gradient: LinearGradient(
+    colors: [
+    Color(0xFFd4fc79),
+    Color(0xFF96e6a1),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    ),
+    ),
+
+      child: Padding(
         padding: const EdgeInsets.all(24.0),
         child:Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            color: Colors.white,
-            child: Padding(padding: const EdgeInsets.all(24.0),
+          const SizedBox(height: 120,),
+          Center(
             child: Column(
-              children: [
-                Text('Welcome to FarmConnect',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                      color: widget.userType== 'Farmer' ? Colors.green : Colors.blue[900]),)
-              ],
-            ),
-            ),
-          ),
+            mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+
+
+
+          Text('Welcome to FarmConnect',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+                color: widget.userType== 'Farmer' ? Colors.green : Colors.blue[900]),),],),),
           const SizedBox(height: 20,),
           _buildUserOptions(context)
         ]
       ),
-      ),
+      ),),
     );
   }
 
